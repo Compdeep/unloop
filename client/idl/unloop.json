@@ -1,0 +1,5578 @@
+{
+  "address": "3bPsoRTKT1J9U6V6Zua42VKHVBZ9XAuBPJq3RFFF3Qdz",
+  "metadata": {
+    "name": "unloop",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Unloop escrow, claim priority, and settlement"
+  },
+  "instructions": [
+    {
+      "name": "initialize_config",
+      "discriminator": [
+        208,
+        127,
+        21,
+        1,
+        194,
+        190,
+        196,
+        70
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config",
+          "writable": true
+        },
+        {
+          "name": "treasury",
+          "docs": [
+            "upgrade authority who sets it; enforced at collection via",
+            "`token::authority = config.treasury`."
+          ]
+        },
+        {
+          "name": "program",
+          "docs": [
+            "Only the program's upgrade authority may initialise it. Without this,",
+            "whoever sent the first transaction after deployment became the",
+            "permanent config authority."
+          ],
+          "address": "3bPsoRTKT1J9U6V6Zua42VKHVBZ9XAuBPJq3RFFF3Qdz"
+        },
+        {
+          "name": "program_data"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "treasury_bps",
+          "type": "u16"
+        },
+        {
+          "name": "buyback_bps",
+          "type": "u16"
+        }
+      ]
+    },
+    {
+      "name": "update_config",
+      "discriminator": [
+        29,
+        158,
+        252,
+        191,
+        10,
+        83,
+        219,
+        99
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true
+        },
+        {
+          "name": "config",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "treasury_bps",
+          "type": "u16"
+        },
+        {
+          "name": "buyback_bps",
+          "type": "u16"
+        }
+      ]
+    },
+    {
+      "name": "create_colony",
+      "discriminator": [
+        190,
+        29,
+        247,
+        217,
+        14,
+        84,
+        216,
+        165
+      ],
+      "accounts": [
+        {
+          "name": "leader",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "colony",
+          "writable": true
+        },
+        {
+          "name": "payment_mint"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "slug",
+          "type": "string"
+        },
+        {
+          "name": "consensus",
+          "type": {
+            "defined": {
+              "name": "ConsensusPolicy"
+            }
+          }
+        },
+        {
+          "name": "admission",
+          "type": {
+            "defined": {
+              "name": "AdmissionTerms"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "qualify",
+      "discriminator": [
+        24,
+        142,
+        225,
+        227,
+        13,
+        113,
+        157,
+        224
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "colony",
+          "writable": true
+        },
+        {
+          "name": "validator",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "address",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "post_bond",
+      "discriminator": [
+        168,
+        151,
+        202,
+        119,
+        163,
+        58,
+        147,
+        247
+      ],
+      "accounts": [
+        {
+          "name": "validator",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "colony",
+          "writable": true
+        },
+        {
+          "name": "record",
+          "writable": true
+        },
+        {
+          "name": "token_config"
+        },
+        {
+          "name": "mint",
+          "writable": true
+        },
+        {
+          "name": "source",
+          "writable": true
+        },
+        {
+          "name": "bond",
+          "docs": [
+            "Holds the bond and is its own authority, so only this program can move",
+            "it \u2014 out to the validator on exit, or to nothing on a proven fault."
+          ],
+          "writable": true
+        },
+        {
+          "name": "token_program"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "withdraw_bond",
+      "discriminator": [
+        222,
+        199,
+        141,
+        31,
+        188,
+        93,
+        155,
+        40
+      ],
+      "accounts": [
+        {
+          "name": "validator",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "colony",
+          "writable": true
+        },
+        {
+          "name": "record",
+          "writable": true
+        },
+        {
+          "name": "token_config"
+        },
+        {
+          "name": "mint",
+          "writable": true
+        },
+        {
+          "name": "bond",
+          "writable": true
+        },
+        {
+          "name": "destination",
+          "writable": true
+        },
+        {
+          "name": "token_program"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "select_validators",
+      "discriminator": [
+        193,
+        199,
+        83,
+        227,
+        17,
+        245,
+        231,
+        139
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "signer": true
+        },
+        {
+          "name": "claim",
+          "writable": true
+        },
+        {
+          "name": "objective"
+        },
+        {
+          "name": "colony",
+          "docs": [
+            "Read for the size of its pool, which the selection is drawn from."
+          ]
+        },
+        {
+          "name": "slot_hashes",
+          "docs": [
+            "whole \u2014 it is over sixteen kilobytes and Anchor would copy all of it."
+          ]
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "slash_bond",
+      "discriminator": [
+        143,
+        246,
+        51,
+        243,
+        88,
+        198,
+        217,
+        48
+      ],
+      "accounts": [
+        {
+          "name": "caller",
+          "signer": true
+        },
+        {
+          "name": "colony",
+          "writable": true
+        },
+        {
+          "name": "objective",
+          "docs": [
+            "Tied to the colony, so a fault in one colony burns only the bond",
+            "posted in it."
+          ]
+        },
+        {
+          "name": "claim"
+        },
+        {
+          "name": "validation"
+        },
+        {
+          "name": "record",
+          "writable": true
+        },
+        {
+          "name": "token_config"
+        },
+        {
+          "name": "mint",
+          "writable": true
+        },
+        {
+          "name": "bond",
+          "writable": true
+        },
+        {
+          "name": "token_program"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "update_colony",
+      "discriminator": [
+        228,
+        195,
+        37,
+        231,
+        37,
+        24,
+        160,
+        87
+      ],
+      "accounts": [
+        {
+          "name": "leader",
+          "signer": true
+        },
+        {
+          "name": "colony",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "consensus",
+          "type": {
+            "defined": {
+              "name": "ConsensusPolicy"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "set_validation_fee",
+      "discriminator": [
+        91,
+        250,
+        15,
+        133,
+        1,
+        123,
+        36,
+        211
+      ],
+      "accounts": [
+        {
+          "name": "leader",
+          "signer": true
+        },
+        {
+          "name": "colony",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "validation_fee",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "set_bond",
+      "discriminator": [
+        25,
+        234,
+        144,
+        175,
+        69,
+        98,
+        12,
+        132
+      ],
+      "accounts": [
+        {
+          "name": "leader",
+          "signer": true
+        },
+        {
+          "name": "colony",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "bond",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "set_objective_uri",
+      "discriminator": [
+        24,
+        145,
+        112,
+        131,
+        86,
+        96,
+        236,
+        166
+      ],
+      "accounts": [
+        {
+          "name": "leader",
+          "signer": true
+        },
+        {
+          "name": "colony"
+        },
+        {
+          "name": "objective",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "uri",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "rejoin",
+      "discriminator": [
+        59,
+        57,
+        36,
+        98,
+        122,
+        171,
+        242,
+        10
+      ],
+      "accounts": [
+        {
+          "name": "validator",
+          "signer": true
+        },
+        {
+          "name": "colony",
+          "writable": true
+        },
+        {
+          "name": "record",
+          "writable": true
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "set_trusted",
+      "discriminator": [
+        218,
+        20,
+        17,
+        246,
+        100,
+        83,
+        244,
+        88
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true
+        },
+        {
+          "name": "colony",
+          "writable": true
+        },
+        {
+          "name": "record",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "trusted",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "revoke_qualification",
+      "discriminator": [
+        34,
+        79,
+        56,
+        154,
+        11,
+        132,
+        5,
+        138
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true
+        },
+        {
+          "name": "colony",
+          "writable": true
+        },
+        {
+          "name": "record",
+          "writable": true
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "record_absence",
+      "discriminator": [
+        96,
+        17,
+        41,
+        92,
+        133,
+        142,
+        183,
+        88
+      ],
+      "accounts": [
+        {
+          "name": "caller",
+          "docs": [
+            "Anybody. Pays for the marker below, which is the whole cost of the call."
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "colony",
+          "writable": true
+        },
+        {
+          "name": "objective"
+        },
+        {
+          "name": "claim"
+        },
+        {
+          "name": "record",
+          "writable": true
+        },
+        {
+          "name": "validation",
+          "docs": [
+            "Where the validator's commitment would be. Created here, empty, so the",
+            "same absence cannot be counted twice \u2014 and it cannot be created at all",
+            "if the validator did commit."
+          ],
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "submit_entry_proof",
+      "discriminator": [
+        148,
+        52,
+        29,
+        64,
+        108,
+        142,
+        220,
+        223
+      ],
+      "accounts": [
+        {
+          "name": "validator",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "colony",
+          "writable": true
+        },
+        {
+          "name": "objective"
+        },
+        {
+          "name": "record",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "test_result",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "branch",
+          "type": {
+            "vec": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "create_objective",
+      "discriminator": [
+        208,
+        99,
+        164,
+        10,
+        27,
+        173,
+        138,
+        240
+      ],
+      "accounts": [
+        {
+          "name": "leader",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "colony",
+          "writable": true
+        },
+        {
+          "name": "objective",
+          "writable": true
+        },
+        {
+          "name": "vault",
+          "writable": true
+        },
+        {
+          "name": "payment_mint"
+        },
+        {
+          "name": "funding_account",
+          "writable": true
+        },
+        {
+          "name": "token_program"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "terms",
+          "type": {
+            "defined": {
+              "name": "ObjectiveTerms"
+            }
+          }
+        },
+        {
+          "name": "pool",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "top_up_objective",
+      "discriminator": [
+        210,
+        59,
+        181,
+        64,
+        246,
+        168,
+        115,
+        191
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "objective",
+          "writable": true
+        },
+        {
+          "name": "vault",
+          "writable": true
+        },
+        {
+          "name": "payment_mint"
+        },
+        {
+          "name": "funding_account",
+          "writable": true
+        },
+        {
+          "name": "token_program"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "withdraw_unencumbered",
+      "discriminator": [
+        138,
+        28,
+        38,
+        196,
+        205,
+        243,
+        255,
+        0
+      ],
+      "accounts": [
+        {
+          "name": "leader",
+          "signer": true
+        },
+        {
+          "name": "colony"
+        },
+        {
+          "name": "objective",
+          "writable": true
+        },
+        {
+          "name": "vault",
+          "writable": true
+        },
+        {
+          "name": "payment_mint"
+        },
+        {
+          "name": "destination",
+          "writable": true
+        },
+        {
+          "name": "token_program"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "close_objective",
+      "discriminator": [
+        78,
+        75,
+        230,
+        120,
+        119,
+        212,
+        28,
+        178
+      ],
+      "accounts": [
+        {
+          "name": "leader",
+          "signer": true
+        },
+        {
+          "name": "colony"
+        },
+        {
+          "name": "objective",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "cancelled",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "record_claim",
+      "discriminator": [
+        111,
+        123,
+        69,
+        192,
+        195,
+        228,
+        137,
+        30
+      ],
+      "accounts": [
+        {
+          "name": "agent",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "objective",
+          "writable": true
+        },
+        {
+          "name": "claim",
+          "docs": [
+            "Keyed by the claim hash and the agent, so an agent cannot file the same",
+            "thing twice and nobody can file in another's place."
+          ],
+          "writable": true
+        },
+        {
+          "name": "colony",
+          "docs": [
+            "The colony the fee is set by."
+          ]
+        },
+        {
+          "name": "token_config",
+          "optional": true
+        },
+        {
+          "name": "mint",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "source",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "fees",
+          "docs": [
+            "What this objective's claimants have put up for its validators, and",
+            "what its validators are paid from. One account rather than one per claim,",
+            "because a token account per claim would add its own rent to every",
+            "claim filed."
+          ],
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "token_program",
+          "optional": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "claim_hash",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "award_index",
+          "type": "u8"
+        },
+        {
+          "name": "roots",
+          "type": {
+            "vec": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          }
+        },
+        {
+          "name": "max_validation_fee",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "commit_validation",
+      "discriminator": [
+        5,
+        80,
+        150,
+        242,
+        46,
+        72,
+        254,
+        242
+      ],
+      "accounts": [
+        {
+          "name": "validator",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "colony"
+        },
+        {
+          "name": "record",
+          "docs": [
+            "This validator's record in this colony: whether it is in the pool."
+          ],
+          "writable": true
+        },
+        {
+          "name": "objective"
+        },
+        {
+          "name": "claim",
+          "writable": true
+        },
+        {
+          "name": "validation",
+          "docs": [
+            "Derived from the claim and the validator, so one identity cannot hold",
+            "two commitments and open whichever turned out better."
+          ],
+          "writable": true
+        },
+        {
+          "name": "slot_hashes",
+          "docs": [
+            "Read only where the claim's seed is not fixed yet, so the first",
+            "validator to commit fixes it rather than the claim waiting for somebody",
+            "to call `select_validators`."
+          ]
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "commitment",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "reveal_validation",
+      "discriminator": [
+        255,
+        176,
+        11,
+        128,
+        241,
+        82,
+        167,
+        19
+      ],
+      "accounts": [
+        {
+          "name": "validator",
+          "signer": true
+        },
+        {
+          "name": "record",
+          "docs": [
+            "Credited here, because history the protocol *sent* you is the only",
+            "kind that is independent by construction."
+          ],
+          "writable": true
+        },
+        {
+          "name": "colony",
+          "docs": [
+            "Read for what it asks of a validator still on probation, and nothing",
+            "else."
+          ]
+        },
+        {
+          "name": "objective",
+          "docs": [
+            "Read for its windows and nothing else, so reveals from different",
+            "validators do not queue behind each other on a write lock."
+          ]
+        },
+        {
+          "name": "claim",
+          "writable": true
+        },
+        {
+          "name": "validation",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "reason",
+          "type": {
+            "defined": {
+              "name": "Reason"
+            }
+          }
+        },
+        {
+          "name": "claim_support",
+          "type": {
+            "defined": {
+              "name": "Finding"
+            }
+          }
+        },
+        {
+          "name": "alignment",
+          "type": {
+            "defined": {
+              "name": "Finding"
+            }
+          }
+        },
+        {
+          "name": "novelty_bps",
+          "type": "u16"
+        },
+        {
+          "name": "score_bps",
+          "type": "u16"
+        },
+        {
+          "name": "reproduction",
+          "type": {
+            "defined": {
+              "name": "Repro"
+            }
+          }
+        },
+        {
+          "name": "finding",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "nonce",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "resolve_claim",
+      "discriminator": [
+        63,
+        99,
+        216,
+        44,
+        183,
+        52,
+        190,
+        140
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true
+        },
+        {
+          "name": "objective",
+          "writable": true
+        },
+        {
+          "name": "claim",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "admit",
+          "type": "bool"
+        },
+        {
+          "name": "novelty_bps",
+          "type": "u16"
+        },
+        {
+          "name": "score_bps",
+          "type": "u16"
+        },
+        {
+          "name": "roots_confirmed",
+          "type": "u8"
+        }
+      ]
+    },
+    {
+      "name": "expire_claim",
+      "discriminator": [
+        176,
+        78,
+        241,
+        29,
+        159,
+        81,
+        26,
+        6
+      ],
+      "accounts": [
+        {
+          "name": "caller",
+          "signer": true
+        },
+        {
+          "name": "objective",
+          "writable": true
+        },
+        {
+          "name": "claim",
+          "writable": true
+        },
+        {
+          "name": "slot_hashes",
+          "docs": [
+            "whole \u2014 it is over sixteen kilobytes and Anchor would copy all of it."
+          ]
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "award_claim",
+      "discriminator": [
+        14,
+        63,
+        200,
+        173,
+        72,
+        43,
+        249,
+        161
+      ],
+      "accounts": [
+        {
+          "name": "caller",
+          "docs": [
+            "Anybody. Nothing here is the caller's to choose: the amount comes from",
+            "the award's allocation and the claim's own settled figures, and the",
+            "escrow's address derives from the claim's own agent, so paying anybody",
+            "else would need an account that does not exist.",
+            "",
+            "In practice the agent calls it, because it is the one who wants the",
+            "money and the one who pays the escrow's rent the first time. A stranger",
+            "may, and would be paying that rent as a gift."
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "objective",
+          "writable": true
+        },
+        {
+          "name": "claim",
+          "writable": true
+        },
+        {
+          "name": "escrow",
+          "docs": [
+            "The agent's pool for this objective, and the reason there is no",
+            "recipient to check: the address derives from the claim's own agent, so",
+            "paying anybody else would need a PDA that does not exist. It is its own",
+            "authority, so only this program can move what is in it."
+          ],
+          "writable": true
+        },
+        {
+          "name": "vault",
+          "writable": true
+        },
+        {
+          "name": "payment_mint"
+        },
+        {
+          "name": "token_program"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "collect",
+      "discriminator": [
+        208,
+        47,
+        194,
+        155,
+        17,
+        98,
+        82,
+        236
+      ],
+      "accounts": [
+        {
+          "name": "agent",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config"
+        },
+        {
+          "name": "objective"
+        },
+        {
+          "name": "escrow",
+          "docs": [
+            "Derived from the signer, which is the whole of the access rule: an",
+            "escrow can only be drained by the agent it belongs to."
+          ],
+          "writable": true
+        },
+        {
+          "name": "payment_mint"
+        },
+        {
+          "name": "destination",
+          "writable": true
+        },
+        {
+          "name": "treasury_account",
+          "docs": [
+            "Must be owned by the configured treasury. An earlier version accepted",
+            "any token account of the right mint here, so every collector could",
+            "name their own account and keep the fee."
+          ],
+          "writable": true
+        },
+        {
+          "name": "buyback_account",
+          "docs": [
+            "Where the buyback share accumulates, in the mint the fee was paid in.",
+            "",
+            "One account per payment mint, its own authority, created on the first",
+            "collection that needs it. Separate from the treasury's because two",
+            "declared shares with one destination is an earmark nothing can count \u2014",
+            "which is what this was until now."
+          ],
+          "writable": true
+        },
+        {
+          "name": "token_program"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "initialize_token",
+      "discriminator": [
+        38,
+        209,
+        150,
+        50,
+        190,
+        117,
+        16,
+        54
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "token_config",
+          "writable": true
+        },
+        {
+          "name": "mint",
+          "docs": [
+            "The mint authority is `token_config`, so issuance has exactly one path",
+            "and it runs through the cap."
+          ]
+        },
+        {
+          "name": "program",
+          "docs": [
+            "Gated on the upgrade authority for the same reason `initialize_config`",
+            "is: otherwise whoever sends the first transaction after deployment",
+            "becomes the permanent authority over the supply (AUDIT A7)."
+          ],
+          "address": "3bPsoRTKT1J9U6V6Zua42VKHVBZ9XAuBPJq3RFFF3Qdz"
+        },
+        {
+          "name": "program_data"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "supply_cap",
+          "type": "u64"
+        },
+        {
+          "name": "edge_rate",
+          "type": "u64"
+        },
+        {
+          "name": "citer_rate",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "set_edge_rates",
+      "discriminator": [
+        41,
+        64,
+        189,
+        198,
+        122,
+        37,
+        126,
+        102
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true
+        },
+        {
+          "name": "token_config",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "edge_rate",
+          "type": "u64"
+        },
+        {
+          "name": "citer_rate",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "set_colony_mintable",
+      "discriminator": [
+        22,
+        24,
+        248,
+        18,
+        95,
+        136,
+        204,
+        105
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "token_config"
+        },
+        {
+          "name": "colony",
+          "docs": [
+            "nothing that exists."
+          ]
+        },
+        {
+          "name": "mintable",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "enabled",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "mint_edge_reward",
+      "discriminator": [
+        199,
+        234,
+        110,
+        147,
+        253,
+        253,
+        74,
+        248
+      ],
+      "accounts": [
+        {
+          "name": "caller",
+          "docs": [
+            "Either end of the edge may call it, and neither can redirect anything:",
+            "both destinations are constrained to owners the accounts already name.",
+            "So the signer pays the transaction fee and chooses nothing."
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "token_config",
+          "writable": true
+        },
+        {
+          "name": "mint",
+          "writable": true
+        },
+        {
+          "name": "objective"
+        },
+        {
+          "name": "mintable",
+          "docs": [
+            "The whitelist entry for the colony the work was done in."
+          ]
+        },
+        {
+          "name": "claim",
+          "docs": [
+            "Tied to the objective the whitelist was checked against. Without this",
+            "the two could be different objectives \u2014 a claim in an unlisted colony",
+            "paid under a listed colony's entry."
+          ],
+          "writable": true
+        },
+        {
+          "name": "root"
+        },
+        {
+          "name": "root_account",
+          "writable": true
+        },
+        {
+          "name": "citer_account",
+          "writable": true
+        },
+        {
+          "name": "token_program"
+        }
+      ],
+      "args": [
+        {
+          "name": "root_index",
+          "type": "u8"
+        }
+      ]
+    },
+    {
+      "name": "collect_validation_fee",
+      "discriminator": [
+        68,
+        73,
+        142,
+        193,
+        144,
+        248,
+        85,
+        161
+      ],
+      "accounts": [
+        {
+          "name": "validator",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "objective"
+        },
+        {
+          "name": "claim"
+        },
+        {
+          "name": "validation",
+          "writable": true
+        },
+        {
+          "name": "record",
+          "docs": [
+            "This validator's record in the colony, so its accuracy can be folded in",
+            "here. Collecting is the one moment the program holds both the answer it",
+            "gave and what the claim settled to."
+          ],
+          "writable": true
+        },
+        {
+          "name": "token_config"
+        },
+        {
+          "name": "mint"
+        },
+        {
+          "name": "fees",
+          "writable": true
+        },
+        {
+          "name": "destination",
+          "writable": true
+        },
+        {
+          "name": "token_program"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "refund_validation_fee",
+      "discriminator": [
+        186,
+        91,
+        246,
+        91,
+        99,
+        119,
+        94,
+        68
+      ],
+      "accounts": [
+        {
+          "name": "agent",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "objective"
+        },
+        {
+          "name": "claim",
+          "writable": true
+        },
+        {
+          "name": "token_config"
+        },
+        {
+          "name": "mint"
+        },
+        {
+          "name": "fees",
+          "writable": true
+        },
+        {
+          "name": "destination",
+          "writable": true
+        },
+        {
+          "name": "token_program"
+        }
+      ],
+      "args": []
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Claim",
+      "discriminator": [
+        155,
+        70,
+        22,
+        176,
+        123,
+        215,
+        246,
+        102
+      ]
+    },
+    {
+      "name": "Colony",
+      "discriminator": [
+        44,
+        194,
+        217,
+        63,
+        246,
+        42,
+        216,
+        242
+      ]
+    },
+    {
+      "name": "Config",
+      "discriminator": [
+        155,
+        12,
+        170,
+        224,
+        30,
+        250,
+        204,
+        130
+      ]
+    },
+    {
+      "name": "Objective",
+      "discriminator": [
+        167,
+        41,
+        90,
+        3,
+        203,
+        55,
+        34,
+        21
+      ]
+    },
+    {
+      "name": "Mintable",
+      "discriminator": [
+        75,
+        6,
+        19,
+        154,
+        63,
+        250,
+        193,
+        164
+      ]
+    },
+    {
+      "name": "TokenConfig",
+      "discriminator": [
+        92,
+        73,
+        255,
+        43,
+        107,
+        51,
+        117,
+        101
+      ]
+    },
+    {
+      "name": "Validation",
+      "discriminator": [
+        130,
+        241,
+        151,
+        113,
+        169,
+        195,
+        219,
+        148
+      ]
+    },
+    {
+      "name": "Validator",
+      "discriminator": [
+        108,
+        40,
+        172,
+        51,
+        190,
+        198,
+        22,
+        15
+      ]
+    }
+  ],
+  "events": [
+    {
+      "discriminator": [
+        16,
+        173,
+        185,
+        48,
+        229,
+        249,
+        239,
+        175
+      ],
+      "name": "AbsenceRecorded"
+    },
+    {
+      "discriminator": [
+        39,
+        196,
+        2,
+        142,
+        202,
+        74,
+        107,
+        205
+      ],
+      "name": "BondPosted"
+    },
+    {
+      "discriminator": [
+        247,
+        218,
+        61,
+        85,
+        144,
+        97,
+        233,
+        217
+      ],
+      "name": "BondSet"
+    },
+    {
+      "discriminator": [
+        59,
+        7,
+        252,
+        195,
+        234,
+        156,
+        42,
+        54
+      ],
+      "name": "BondSlashed"
+    },
+    {
+      "discriminator": [
+        111,
+        192,
+        154,
+        231,
+        58,
+        115,
+        130,
+        103
+      ],
+      "name": "BondWithdrawn"
+    },
+    {
+      "discriminator": [
+        20,
+        216,
+        175,
+        37,
+        97,
+        13,
+        81,
+        85
+      ],
+      "name": "ClaimAwarded"
+    },
+    {
+      "discriminator": [
+        46,
+        183,
+        32,
+        80,
+        59,
+        171,
+        138,
+        224
+      ],
+      "name": "ClaimRecorded"
+    },
+    {
+      "discriminator": [
+        122,
+        96,
+        69,
+        207,
+        25,
+        50,
+        43,
+        204
+      ],
+      "name": "ClaimResolved"
+    },
+    {
+      "discriminator": [
+        61,
+        57,
+        233,
+        149,
+        2,
+        174,
+        238,
+        22
+      ],
+      "name": "ClaimValidated"
+    },
+    {
+      "discriminator": [
+        113,
+        68,
+        208,
+        186,
+        25,
+        171,
+        48,
+        226
+      ],
+      "name": "ColonyCreated"
+    },
+    {
+      "discriminator": [
+        35,
+        183,
+        220,
+        239,
+        29,
+        45,
+        94,
+        160
+      ],
+      "name": "ColonyMintableSet"
+    },
+    {
+      "discriminator": [
+        157,
+        45,
+        214,
+        83,
+        209,
+        174,
+        159,
+        174
+      ],
+      "name": "ColonyUpdated"
+    },
+    {
+      "discriminator": [
+        40,
+        241,
+        230,
+        122,
+        11,
+        19,
+        198,
+        194
+      ],
+      "name": "ConfigUpdated"
+    },
+    {
+      "discriminator": [
+        205,
+        250,
+        247,
+        141,
+        165,
+        159,
+        101,
+        106
+      ],
+      "name": "EdgeRatesUpdated"
+    },
+    {
+      "discriminator": [
+        67,
+        131,
+        251,
+        73,
+        167,
+        143,
+        31,
+        74
+      ],
+      "name": "EdgeRewarded"
+    },
+    {
+      "discriminator": [
+        123,
+        180,
+        4,
+        87,
+        76,
+        245,
+        196,
+        243
+      ],
+      "name": "EscrowCollected"
+    },
+    {
+      "discriminator": [
+        20,
+        184,
+        87,
+        148,
+        111,
+        250,
+        171,
+        201
+      ],
+      "name": "ObjectiveClosed"
+    },
+    {
+      "discriminator": [
+        85,
+        191,
+        204,
+        212,
+        134,
+        164,
+        191,
+        27
+      ],
+      "name": "ObjectiveCreated"
+    },
+    {
+      "discriminator": [
+        215,
+        209,
+        247,
+        36,
+        235,
+        197,
+        118,
+        80
+      ],
+      "name": "ObjectiveToppedUp"
+    },
+    {
+      "discriminator": [
+        23,
+        188,
+        254,
+        212,
+        149,
+        89,
+        245,
+        109
+      ],
+      "name": "ObjectiveUriSet"
+    },
+    {
+      "discriminator": [
+        31,
+        245,
+        96,
+        151,
+        99,
+        158,
+        7,
+        249
+      ],
+      "name": "ObjectiveWithdrawn"
+    },
+    {
+      "discriminator": [
+        207,
+        116,
+        106,
+        5,
+        130,
+        48,
+        122,
+        18
+      ],
+      "name": "QualificationRevoked"
+    },
+    {
+      "discriminator": [
+        77,
+        70,
+        233,
+        124,
+        236,
+        92,
+        204,
+        0
+      ],
+      "name": "TokenInitialized"
+    },
+    {
+      "discriminator": [
+        80,
+        173,
+        45,
+        218,
+        242,
+        69,
+        7,
+        110
+      ],
+      "name": "TrustSet"
+    },
+    {
+      "discriminator": [
+        6,
+        90,
+        254,
+        206,
+        224,
+        89,
+        228,
+        76
+      ],
+      "name": "ValidationCommitted"
+    },
+    {
+      "discriminator": [
+        152,
+        133,
+        64,
+        10,
+        97,
+        31,
+        43,
+        172
+      ],
+      "name": "ValidationFeeRefunded"
+    },
+    {
+      "discriminator": [
+        199,
+        157,
+        51,
+        25,
+        43,
+        130,
+        137,
+        201
+      ],
+      "name": "ValidationFeeSet"
+    },
+    {
+      "discriminator": [
+        172,
+        243,
+        46,
+        203,
+        229,
+        240,
+        33,
+        242
+      ],
+      "name": "ValidationPaid"
+    },
+    {
+      "discriminator": [
+        182,
+        41,
+        201,
+        198,
+        87,
+        155,
+        217,
+        124
+      ],
+      "name": "ValidatorQualified"
+    },
+    {
+      "discriminator": [
+        49,
+        103,
+        103,
+        186,
+        224,
+        183,
+        80,
+        226
+      ],
+      "name": "ValidatorQualifiedByProof"
+    },
+    {
+      "discriminator": [
+        213,
+        243,
+        185,
+        137,
+        41,
+        163,
+        72,
+        23
+      ],
+      "name": "ValidatorRejoined"
+    },
+    {
+      "discriminator": [
+        124,
+        127,
+        154,
+        107,
+        53,
+        2,
+        207,
+        140
+      ],
+      "name": "ValidatorsSelected"
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "NotLeader",
+      "msg": "Only the colony leader may do this"
+    },
+    {
+      "code": 6001,
+      "name": "NotSettlementAuthority",
+      "msg": "Only the objective's settlement authority may do this"
+    },
+    {
+      "code": 6002,
+      "name": "NotUpgradeAuthority",
+      "msg": "Only the program's upgrade authority may initialise it"
+    },
+    {
+      "code": 6003,
+      "name": "SlugTooLong",
+      "msg": "Slug exceeds the 32-byte seed limit"
+    },
+    {
+      "code": 6004,
+      "name": "ColonyTermsInvalid",
+      "msg": "A public colony needs a bond"
+    },
+    {
+      "code": 6005,
+      "name": "NotAdmissionAuthority",
+      "msg": "Only the colony's admission authority may do this"
+    },
+    {
+      "code": 6006,
+      "name": "ValidatorNotEligible",
+      "msg": "This validator is not in the pool"
+    },
+    {
+      "code": 6007,
+      "name": "BondMismatch",
+      "msg": "The bond posted does not match what the colony requires"
+    },
+    {
+      "code": 6008,
+      "name": "BondAlreadyWithdrawn",
+      "msg": "This bond has already been withdrawn"
+    },
+    {
+      "code": 6009,
+      "name": "BondLocked",
+      "msg": "A bond cannot be withdrawn until the objective's validations have closed"
+    },
+    {
+      "code": 6010,
+      "name": "ValidatorsNotSelected",
+      "msg": "This claim has not selected its validators yet"
+    },
+    {
+      "code": 6011,
+      "name": "ValidatorsAlreadySelected",
+      "msg": "This claim has already selected its validators"
+    },
+    {
+      "code": 6012,
+      "name": "SeedBlockNotProduced",
+      "msg": "The block this claim's selection is seeded from has not been produced yet"
+    },
+    {
+      "code": 6013,
+      "name": "SeedWindowClosed",
+      "msg": "The chain no longer holds the claim's own block, so its seed can never be fixed"
+    },
+    {
+      "code": 6014,
+      "name": "SeedWindowOpen",
+      "msg": "This claim can still be seeded, so it has not expired"
+    },
+    {
+      "code": 6015,
+      "name": "NotSelected",
+      "msg": "This validator was not selected for this claim"
+    },
+    {
+      "code": 6016,
+      "name": "NoFaultProven",
+      "msg": "No fault has been proven against this validator"
+    },
+    {
+      "code": 6017,
+      "name": "AwardCountOutOfRange",
+      "msg": "An objective must declare between one and three awards"
+    },
+    {
+      "code": 6018,
+      "name": "AwardIndexOutOfRange",
+      "msg": "Award index is out of range for this objective"
+    },
+    {
+      "code": 6019,
+      "name": "AwardClosed",
+      "msg": "That award is closed"
+    },
+    {
+      "code": 6020,
+      "name": "RateAwardNeedsAmount",
+      "msg": "An objective that pays a rate must declare a non-zero rate on every award"
+    },
+    {
+      "code": 6021,
+      "name": "AllocationsExceedPool",
+      "msg": "Award allocations exceed the funded pool"
+    },
+    {
+      "code": 6022,
+      "name": "SharesExceedWhole",
+      "msg": "The protocol fee must total under the whole"
+    },
+    {
+      "code": 6023,
+      "name": "DeadlineInvalid",
+      "msg": "Deadlines must satisfy now < claim_deadline <= commit_deadline <= validation_deadline"
+    },
+    {
+      "code": 6024,
+      "name": "CommitWindowClosed",
+      "msg": "Commitments are closed for this objective"
+    },
+    {
+      "code": 6025,
+      "name": "RevealWindowNotOpen",
+      "msg": "Nothing may be revealed until commitments have closed"
+    },
+    {
+      "code": 6026,
+      "name": "RevealWindowClosed",
+      "msg": "The reveal window has closed"
+    },
+    {
+      "code": 6027,
+      "name": "AlreadyRevealed",
+      "msg": "This commitment has already been opened"
+    },
+    {
+      "code": 6028,
+      "name": "CommitmentMismatch",
+      "msg": "The revealed values do not match what was committed"
+    },
+    {
+      "code": 6029,
+      "name": "ValidationStillOpen",
+      "msg": "Commitments are still open, or outstanding ones have not been revealed"
+    },
+    {
+      "code": 6030,
+      "name": "ClaimWasValidated",
+      "msg": "This claim was validated, so its fee belongs to its validators"
+    },
+    {
+      "code": 6031,
+      "name": "ObjectiveNotOpen",
+      "msg": "This objective is not open"
+    },
+    {
+      "code": 6032,
+      "name": "ClaimDeadlinePassed",
+      "msg": "The claim deadline has passed"
+    },
+    {
+      "code": 6033,
+      "name": "SelfRoot",
+      "msg": "A claim may not name itself as a root"
+    },
+    {
+      "code": 6034,
+      "name": "TooManyRoots",
+      "msg": "Too many roots declared"
+    },
+    {
+      "code": 6035,
+      "name": "DuplicateRoot",
+      "msg": "The same root may not be declared twice"
+    },
+    {
+      "code": 6036,
+      "name": "RootInvalid",
+      "msg": "A root must be an admitted claim in this objective from an earlier slot"
+    },
+    {
+      "code": 6037,
+      "name": "RootAccountsMismatch",
+      "msg": "Root accounts must be supplied, one per declared root, in order"
+    },
+    {
+      "code": 6038,
+      "name": "ClaimNotPending",
+      "msg": "This claim is not pending"
+    },
+    {
+      "code": 6039,
+      "name": "ValidationFeeAccountsMissing",
+      "msg": "This colony charges for validation, so the fee accounts are required"
+    },
+    {
+      "code": 6040,
+      "name": "ValidationFeeAboveMaximum",
+      "msg": "This colony charges more for validation than the claim agreed to pay"
+    },
+    {
+      "code": 6041,
+      "name": "UriTooLong",
+      "msg": "The metadata URI is longer than the account can hold"
+    },
+    {
+      "code": 6042,
+      "name": "ObjectiveHasNoEntryProof",
+      "msg": "This objective publishes no entry proof, so there is no door to open"
+    },
+    {
+      "code": 6043,
+      "name": "EntryProofIndexOutOfRange",
+      "msg": "That is not the entry proof this address gets"
+    },
+    {
+      "code": 6044,
+      "name": "EntryProofBranchTooLong",
+      "msg": "The proof branch is longer than any set this deep"
+    },
+    {
+      "code": 6045,
+      "name": "EntryProofWrong",
+      "msg": "That is not the answer to this entry proof"
+    },
+    {
+      "code": 6046,
+      "name": "ColonyNotOpenToEntryProofs",
+      "msg": "This colony admits by key or by choice, so an entry proof opens nothing"
+    },
+    {
+      "code": 6047,
+      "name": "EntryProofRequired",
+      "msg": "This colony requires an entry proof, so an attestation admits nobody"
+    },
+    {
+      "code": 6048,
+      "name": "RootsConfirmedOutOfRange",
+      "msg": "A root cannot be confirmed that was never declared"
+    },
+    {
+      "code": 6049,
+      "name": "ScoreOutOfRange",
+      "msg": "Score and novelty must be at most 10000 basis points"
+    },
+    {
+      "code": 6050,
+      "name": "FailedEvaluationCarriesNumbers",
+      "msg": "A failed evaluation measures nothing, so its score and novelty must be zero"
+    },
+    {
+      "code": 6051,
+      "name": "FindingMissing",
+      "msg": "An evaluated validation must carry a finding hash"
+    },
+    {
+      "code": 6052,
+      "name": "ExceedsWithdrawable",
+      "msg": "The amount requested exceeds what is not spoken for"
+    },
+    {
+      "code": 6053,
+      "name": "ClaimNotAdmitted",
+      "msg": "Only an admitted claim can be awarded"
+    },
+    {
+      "code": 6054,
+      "name": "ClaimAlreadyAwarded",
+      "msg": "This claim has already been awarded"
+    },
+    {
+      "code": 6055,
+      "name": "EntryExceedsAward",
+      "msg": "The award exceeds the award's remaining allocation"
+    },
+    {
+      "code": 6056,
+      "name": "VaultCannotCoverAward",
+      "msg": "The vault does not hold enough to pay this award"
+    },
+    {
+      "code": 6057,
+      "name": "PrizeMustBePaidInFull",
+      "msg": "A winner-take-all award is a prize and must be paid its allocation exactly"
+    },
+    {
+      "code": 6058,
+      "name": "NothingOwed",
+      "msg": "This escrow is empty"
+    },
+    {
+      "code": 6059,
+      "name": "SupplyCapInvalid",
+      "msg": "A supply cap must be greater than zero"
+    },
+    {
+      "code": 6060,
+      "name": "SupplyCapReached",
+      "msg": "The token supply cap has been reached"
+    },
+    {
+      "code": 6061,
+      "name": "ColonyNotMintable",
+      "msg": "This colony's work cannot mint the protocol token"
+    },
+    {
+      "code": 6062,
+      "name": "RewardRateIsZero",
+      "msg": "That rate is zero, so there is nothing to pay"
+    },
+    {
+      "code": 6063,
+      "name": "CiterRateAboveEdge",
+      "msg": "The citer's share of an edge cannot exceed the root's"
+    },
+    {
+      "code": 6064,
+      "name": "EdgeNotPayable",
+      "msg": "That edge is unconfirmed, already paid, or not this root"
+    },
+    {
+      "code": 6065,
+      "name": "AlreadyRewarded",
+      "msg": "This reward has already been taken"
+    },
+    {
+      "code": 6066,
+      "name": "NotTheRecipient",
+      "msg": "Only the party a reward is owed to may take it"
+    },
+    {
+      "code": 6067,
+      "name": "SelfReward",
+      "msg": "A reward cannot be paid to the agent whose claim it is"
+    },
+    {
+      "code": 6068,
+      "name": "ClaimNotInObjective",
+      "msg": "That claim does not belong to the objective whose colony was checked"
+    },
+    {
+      "code": 6069,
+      "name": "ValidationDidNotCount",
+      "msg": "A validation that did not evaluate the claim earns nothing"
+    },
+    {
+      "code": 6070,
+      "name": "ClaimNotResolved",
+      "msg": "This claim has not been resolved"
+    },
+    {
+      "code": 6071,
+      "name": "Overflow",
+      "msg": "Arithmetic overflow"
+    },
+    {
+      "code": 6072,
+      "name": "CommitmentStillSealed",
+      "msg": "A commitment is still sealed; open it, or wait for it to be slashed"
+    },
+    {
+      "code": 6073,
+      "name": "PolicyInvalid",
+      "msg": "A consensus policy needs a vote, thresholds within 10000, and reject below accept"
+    },
+    {
+      "code": 6074,
+      "name": "ValidatorsPerClaimInvalid",
+      "msg": "An objective must select at least one validator, and no fewer than its minimum votes"
+    },
+    {
+      "code": 6075,
+      "name": "PoolExhausted",
+      "msg": "This ongoing objective's unreserved funds cannot cover another claim"
+    },
+    {
+      "code": 6076,
+      "name": "PrizeAlreadyWon",
+      "msg": "This prize already has an admitted claim, and a later one cannot win it"
+    },
+    {
+      "code": 6077,
+      "name": "PrizeNotYetDecided",
+      "msg": "A claim on this prize is still being judged, and it may be earlier"
+    },
+    {
+      "code": 6078,
+      "name": "NotThePrizeWinner",
+      "msg": "An earlier admitted claim won this prize"
+    },
+    {
+      "code": 6079,
+      "name": "PublicFloorNotMet",
+      "msg": "A public colony needs at least five votes to bind a claim, and three validators drawn for each"
+    }
+  ],
+  "types": [
+    {
+      "name": "AdmissionTerms",
+      "docs": [
+        "What a leader states about who may validate here. A struct because the",
+        "four move together and a create instruction with nine loose arguments is",
+        "one whose call sites drift."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "admission",
+            "type": {
+              "defined": {
+                "name": "Admission"
+              }
+            }
+          },
+          {
+            "name": "authority",
+            "docs": [
+              "Who records a qualification. Not necessarily the leader."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "bond",
+            "docs": [
+              "What a validator puts at risk. A public colony must ask for one: it is",
+              "what a withheld reveal burns, and without it withholding costs nothing."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "validation_fee",
+            "docs": [
+              "What one validator is paid for judging one claim here."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "entry_proof_required",
+            "docs": [
+              "Whether an attestation is enough to get in, or an entry proof is",
+              "required. False at creation for every colony, because a colony exists",
+              "before any of its objectives do and there is nothing to answer yet."
+            ],
+            "type": "bool"
+          },
+          {
+            "name": "probation_validations",
+            "docs": [
+              "How many answers a new validator reveals before they count and are",
+              "paid. Zero means no probation."
+            ],
+            "type": "u32"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ObjectiveTerms",
+      "docs": [
+        "What the leader states when creating an objective."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "payout",
+            "type": {
+              "defined": {
+                "name": "Payout"
+              }
+            }
+          },
+          {
+            "name": "criteria_hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "claim_form_hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "entry_proof_root",
+            "docs": [
+              "Commitment to the worked samples a validator answers to get in, and",
+              "how many there are. A zero root is an objective with no sample."
+            ],
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "entry_proof_count",
+            "type": "u32"
+          },
+          {
+            "name": "uri",
+            "docs": [
+              "Where the document this objective commits to can be fetched. A hint,",
+              "checked against the hashes above before it is believed. Empty means",
+              "bus-only."
+            ],
+            "type": "string"
+          },
+          {
+            "name": "awards",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "AwardTerms"
+                }
+              }
+            }
+          },
+          {
+            "name": "validators_per_claim",
+            "type": "u8"
+          },
+          {
+            "name": "claim_deadline",
+            "type": "i64"
+          },
+          {
+            "name": "commit_deadline",
+            "type": "i64"
+          },
+          {
+            "name": "validation_deadline",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Claim",
+      "docs": [
+        "A recorded discovery.",
+        "",
+        "The account address derives from the objective, the claim hash and the",
+        "agent. So an agent cannot file the same thing twice, and \u2014 the reason the",
+        "agent is in it \u2014 nobody can file in anybody else's place.",
+        "",
+        "It was the objective and the hash alone, which made an exact duplicate",
+        "impossible and handed the hash to whoever filed it first, found or not.",
+        "Where an objective's answers can be listed, anybody could file every",
+        "candidate before the work was done and lock the finder out for good; a",
+        "leader could do it to its own prize, have its empty claims rejected, get",
+        "the validation fees back because nothing was evaluated, and withdraw the",
+        "prize. Two agents filing the same discovery now both hold a claim, and",
+        "what was already built decides between them: a winner-take-all prize goes",
+        "to the earliest admitted, and a later copy is no novelty."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "objective",
+            "type": "pubkey"
+          },
+          {
+            "name": "agent",
+            "docs": [
+              "Paid here. The economic identity, distinct from the libp2p identity",
+              "that the body was gossiped from."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "award_index",
+            "type": "u8"
+          },
+          {
+            "name": "claim_slot",
+            "docs": [
+              "The slot this claim was recorded in.",
+              "",
+              "This account is never closed, which is deliberate: its rent deposit is",
+              "what a claim costs, and a cost that could be reclaimed would not be",
+              "one. That sunk deposit is the whole of the protocol's answer to spam \u2014",
+              "there is no separate bond. The protocol's only total order,",
+              "and therefore the whole of its answer to \"who was first\". A gossip bus",
+              "delivers to different peers in different orders and never agrees on",
+              "one, so priority cannot come from there."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "status",
+            "type": {
+              "defined": {
+                "name": "ClaimStatus"
+              }
+            }
+          },
+          {
+            "name": "roots",
+            "docs": [
+              "Admitted claims this one derives from, by account address. Not by hash:",
+              "two agents can hold claims with the same hash, and an edge named by one",
+              "could be paid to the other. Declaring one is free and",
+              "concealing one is not: a root a validator finds undeclared costs",
+              "novelty, and novelty multiplies the whole award. None of that is",
+              "enforced here \u2014 the program checks that a root exists, is admitted and",
+              "is earlier, and validators judge whether the claim was built on it.",
+              "",
+              "A fixed array rather than a `Vec`, and the reason is retrieval. A Vec's",
+              "entries sit at a position that depends on how many came before, so no",
+              "fixed byte offset holds \"a root\", and asking the chain \"which claims",
+              "cite P1\" is impossible as a filtered query \u2014 it degrades to fetching",
+              "every claim and checking each one. Fixed slots put root N at a known",
+              "offset, so the same question is eight ordinary filtered queries against",
+              "an RPC, with no database in the path. It is also three bytes smaller."
+            ],
+            "type": {
+              "array": [
+                {
+                  "array": [
+                    "u8",
+                    32
+                  ]
+                },
+                8
+              ]
+            }
+          },
+          {
+            "name": "root_count",
+            "type": "u8"
+          },
+          {
+            "name": "roots_confirmed",
+            "docs": [
+              "Which declared roots the validators confirmed the claim was built on,",
+              "one bit per root, transcribed at resolution like the numbers beside it.",
+              "",
+              "A declared root is judged like an evidence item, so a claim can be",
+              "admitted with one of its roots found spurious. The per-item findings",
+              "are off chain, so the chain cannot tell the two apart by itself \u2014 and",
+              "an edge that pays without being confirmed would pay for the listing",
+              "rather than for the relationship."
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "roots_paid",
+            "docs": [
+              "Which confirmed edges have already been paid. One bit per root, so a",
+              "second attempt has nothing to pay and needs no account to say so."
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "validation_fee",
+            "docs": [
+              "What this claim put up for its validators, in the protocol's token.",
+              "",
+              "`colony.validation_fee x objective.validators_per_claim` at the moment it was",
+              "filed \u2014 the attention it is about to consume, priced then so that",
+              "changing the fee later cannot reach back into claims already made.",
+              "Each validator that opened its commitment selects an equal share, and if",
+              "none did the whole of it returns to the claimant."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "selection_seed",
+            "docs": [
+              "Fixes which validators this claim selects.",
+              "",
+              "Taken from the hash of a slot a fixed distance after the claim was",
+              "recorded, so nobody chooses it: not the claimant, who filed before it",
+              "existed, and not the validator who seeds it, who had no say in which",
+              "slot it is. Zero until the validators are selected, and no commitment is",
+              "accepted before then."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "selection_pool",
+            "docs": [
+              "The size of the pool the selection is drawn from, fixed with the seed.",
+              "",
+              "The pool changes as validators join and leave, and the selection is",
+              "`mod` its size \u2014 so read live, who was selected for this claim would",
+              "change with it. A validator that rightly skipped the claim could later",
+              "read as selected and be counted absent, and anybody adding or",
+              "withdrawing identities could steer which. Fixed here, who was selected",
+              "is a fact about the claim."
+            ],
+            "type": "u32"
+          },
+          {
+            "name": "commitments",
+            "docs": [
+              "Commitments made against this claim, revealed or not."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "reveals",
+            "docs": [
+              "Commitments opened. The difference between this and `commitments` is",
+              "how many validators committed and then thought better of it."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "validations",
+            "docs": [
+              "Validations that counted. One that failed to evaluate is recorded as",
+              "an account and is not one of these: `ERROR` enters no tally, so the",
+              "number that would be quoted as \"this claim was checked by n nodes\" is",
+              "the number of nodes that actually checked it."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "novelty_sum",
+            "docs": [
+              "The range the validators returned, folded in as the votes arrive.",
+              "",
+              "This is what makes the settled numbers checkable without handing",
+              "`resolve_claim` an account per validation \u2014 a list that cannot be",
+              "assembled past about 29 of them, and that the caller would be choosing",
+              "the contents of. The program still cannot compute the right answer,",
+              "which needs standing it does not have; it can refuse one nobody gave.",
+              "Meaningless while `validations` is zero.",
+              "Running totals, which is the whole reason the settled figure can be an",
+              "average rather than something a leader types.",
+              "",
+              "A median would be better and the program cannot compute one: it needs",
+              "every value at once and there is nowhere to hold them. A sum is one",
+              "addition per vote and nothing held. At most 65535 votes of at most",
+              "10000 each is 655 million, so a u32 cannot overflow here."
+            ],
+            "type": "u32"
+          },
+          {
+            "name": "score_sum",
+            "type": "u32"
+          },
+          {
+            "name": "passes",
+            "docs": [
+              "How many validators passed the claim: both the evidence holding up and",
+              "the work answering the objective. The one number admission needs, and",
+              "the last thing a leader was deciding that the program could not."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "novelty_lo",
+            "type": "u16"
+          },
+          {
+            "name": "novelty_hi",
+            "type": "u16"
+          },
+          {
+            "name": "score_lo",
+            "type": "u16"
+          },
+          {
+            "name": "score_hi",
+            "type": "u16"
+          },
+          {
+            "name": "novelty_bps",
+            "docs": [
+              "Settled at resolution, and zero before it."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "score_bps",
+            "type": "u16"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "decided_by",
+            "docs": [
+              "`None` until the claim is resolved."
+            ],
+            "type": {
+              "option": {
+                "defined": {
+                  "name": "DecidedBy"
+                }
+              }
+            }
+          },
+          {
+            "name": "awarded",
+            "docs": [
+              "What this claim was paid, set once by `award`.",
+              "",
+              "`None` rather than zero, and the distinction carries weight: novelty",
+              "can settle at zero, so a claim awarded nothing is a real outcome and",
+              "not a claim still waiting to be paid. `None` is also what makes",
+              "awarding once-only \u2014 there is no second state to check."
+            ],
+            "type": {
+              "option": "u64"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "ClaimStatus",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Pending"
+          },
+          {
+            "name": "Admitted"
+          },
+          {
+            "name": "Rejected"
+          }
+        ]
+      }
+    },
+    {
+      "name": "DecidedBy",
+      "docs": [
+        "What settled a claim. Recorded so that a claim marked `Consensus` is",
+        "falsifiable: every `Validation` is an account anyone can enumerate by claim",
+        "and recompute over, and this says which answer the authority claimed to be",
+        "transcribing."
+      ],
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Consensus"
+          },
+          {
+            "name": "Leader"
+          },
+          {
+            "name": "Deadline"
+          },
+          {
+            "name": "Unseeded"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Colony",
+      "docs": [
+        "A trust domain: one topic, one leader, one bus, one set of rules.",
+        "",
+        "Because a colony is one topic, standing inside it is already topic",
+        "standing. Nothing in the protocol classifies subject matter."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "leader",
+            "type": "pubkey"
+          },
+          {
+            "name": "slug",
+            "type": "string"
+          },
+          {
+            "name": "payment_mint",
+            "docs": [
+              "SPL mint objectives in this colony are funded in."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "consensus",
+            "type": {
+              "defined": {
+                "name": "ConsensusPolicy"
+              }
+            }
+          },
+          {
+            "name": "admission",
+            "docs": [
+              "Who may validate here, and who says so.",
+              "",
+              "All three settings take the same path on chain \u2014 the admission",
+              "authority records that an address qualified \u2014 and differ in whom it is",
+              "willing to record. A separate field from the leader for the reason",
+              "`settlement_authority` is: a leader whose objectives are being judged",
+              "should not also be choosing who may judge them."
+            ],
+            "type": {
+              "defined": {
+                "name": "Admission"
+              }
+            }
+          },
+          {
+            "name": "admission_authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "entry_proof_required",
+            "docs": [
+              "Whether an attestation is enough to get in, or an entry proof is",
+              "required.",
+              "",
+              "A colony calling itself public and admitting by attestation is not",
+              "public: somebody still lets every validator in by hand. Setting this",
+              "closes that door \u2014 `qualify` is refused and the only way in is to",
+              "answer one of the colony's objectives' entry proofs, which nobody",
+              "administers and anybody can attempt.",
+              "",
+              "It cannot be the default, because a colony exists before any of its",
+              "objectives do and there is nothing to answer until one is published. A",
+              "colony turns it on once it has work."
+            ],
+            "type": "bool"
+          },
+          {
+            "name": "bond",
+            "docs": [
+              "What a validator must put at risk to be eligible. Equal for everybody",
+              "who joins under it, because weight by stake would mean the largest",
+              "holder owns every outcome, and money should buy entry and never",
+              "influence. The leader may reprice it (`set_bond`) for validators who",
+              "join afterwards; each validator keeps, and gets back, what it posted."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "probation_validations",
+            "docs": [
+              "How many answers a new validator reveals before they count towards",
+              "what claims settle to, and before it is paid for them. Zero means no",
+              "probation."
+            ],
+            "type": "u32"
+          },
+          {
+            "name": "eligible",
+            "docs": [
+              "The pool: every validator that passed the test and put up what the",
+              "colony asks, less those removed or withdrawn. The denominator a claim's",
+              "selection is drawn against, fixed on the claim when its seed is."
+            ],
+            "type": "u32"
+          },
+          {
+            "name": "trusted",
+            "docs": [
+              "How many of those the admission authority has marked trusted. They are",
+              "picked for every claim, so the random pick is drawn from the rest."
+            ],
+            "type": "u32"
+          },
+          {
+            "name": "validation_fee",
+            "docs": [
+              "What one validator is paid for judging one claim here, in the",
+              "protocol's token.",
+              "",
+              "Paid by the claimant rather than minted, because the claimant is the",
+              "party consuming the attention and it is standing right there. Minting",
+              "for validation funds it by inflation, which has to stop eventually,",
+              "and pays a lazy validator in new supply rather than out of a pot",
+              "somebody put up.",
+              "",
+              "Per colony because the cost of judging is a property of the domain: a",
+              "deterministic check is a machine's afternoon and a semantic reading is",
+              "a person's. Zero is a real setting and is what a colony older than the",
+              "token has."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "objective_count",
+            "docs": [
+              "Objectives created under this colony. Never decreases; used for seeds."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ConsensusPolicy",
+      "docs": [
+        "The four numbers by which a leader says how much of the decision to",
+        "delegate, plus the floor on who may vote at all.",
+        "",
+        "Held on chain because settlement is checked against them. The interval",
+        "itself is computed off chain \u2014 it is a pure function of the votes and these",
+        "numbers, so every party derives the same answer and none of them needs the",
+        "program to do the arithmetic."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "min_votes",
+            "docs": [
+              "Votes CAST. Never votes possible: a validator that did not vote might be",
+              "working, unsure, or absent, and those cannot be told apart. Non-response",
+              "is missing data and is excluded."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "accept_threshold_bps",
+            "type": "u16"
+          },
+          {
+            "name": "reject_threshold_bps",
+            "type": "u16"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Config",
+      "docs": [
+        "Protocol configuration. One account for the whole program.",
+        "",
+        "The fee split is stored rather than compiled in so it can be tuned without",
+        "a redeployment. The buyback share is accumulated here and swapped by a",
+        "separate treasury operation: a swap that fails must never be able to make a",
+        "payment fail, so the two are not in the same instruction."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "treasury",
+            "type": "pubkey"
+          },
+          {
+            "name": "treasury_bps",
+            "docs": [
+              "Share of each collected payment retained by the treasury."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "buyback_bps",
+            "docs": [
+              "Share of each collected payment set aside to buy the network token.",
+              "",
+              "It lands in its own account \u2014 `[\"buyback\"]`, owned by the program and",
+              "its own authority \u2014 rather than in the treasury's. The swap itself is a",
+              "separate operation and deliberately not part of a payment: a swap that",
+              "fails must never be able to stop an agent collecting what it earned."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Award",
+      "docs": [
+        "A named part of an objective that money is attached to."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "mode",
+            "type": {
+              "defined": {
+                "name": "AwardMode"
+              }
+            }
+          },
+          {
+            "name": "allocation",
+            "type": "u64"
+          },
+          {
+            "name": "awarded",
+            "docs": [
+              "Paid out against this award so far. Written only by `settle`."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "pending",
+            "docs": [
+              "Claims recorded against this award and not yet resolved. Written only",
+              "by `record_claim` and `resolve_claim`."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "awaiting",
+            "docs": [
+              "Claims admitted against this award and not yet paid.",
+              "",
+              "Without this an ongoing objective reserves nothing between the moment a",
+              "claim is admitted and the moment it is awarded: `pending` falls at",
+              "resolution and the rate it reserved falls with it, so a leader could",
+              "admit the work, withdraw the money, and leave `award` with an empty",
+              "vault. An absolute objective never had the gap, because its promise is",
+              "the award's whole unspent allocation either way."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "closed",
+            "docs": [
+              "No longer payable: won outright, or its allocation is spent. Only an",
+              "absolute objective's awards close; an ongoing one pays its rate for as",
+              "long as the objective takes claims."
+            ],
+            "type": "bool"
+          },
+          {
+            "name": "first_slot",
+            "docs": [
+              "The earliest claim admitted against a prize that goes to the first \u2014",
+              "by filing slot, and by hash between two filed in the same slot \u2014 and",
+              "the only claim it pays. `u64::MAX` until one is admitted.",
+              "",
+              "Without it the prize went to whichever admitted claim somebody asked to",
+              "be paid first, and anybody may ask. So a later claim took the prize from",
+              "an earlier one, and the slot a claim was filed in \u2014 the one order the",
+              "protocol has, and the reason a claim is recorded before it is published \u2014",
+              "decided nothing."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "first_hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "AwardMode",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "WinnerTakeAll"
+          },
+          {
+            "name": "Graded"
+          }
+        ]
+      }
+    },
+    {
+      "name": "AwardTerms",
+      "docs": [
+        "What the leader states about an award at creation. Only these two fields",
+        "are caller-supplied; the program owns everything else about an award.",
+        "",
+        "This type exists because the alternative \u2014 accepting a whole `Award` from",
+        "the caller \u2014 let a leader create an objective with every award already",
+        "marked `closed`, which zeroed the exposure and unlocked the entire pool for",
+        "withdrawal the moment agents began work."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "mode",
+            "type": {
+              "defined": {
+                "name": "AwardMode"
+              }
+            }
+          },
+          {
+            "name": "allocation",
+            "docs": [
+              "Prize amount when the objective pays prizes; per-discovery rate when it",
+              "pays a rate."
+            ],
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Objective",
+      "docs": [
+        "A funded goal inside a colony."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "colony",
+            "type": "pubkey"
+          },
+          {
+            "name": "settlement_authority",
+            "docs": [
+              "Who may write settlements. A field rather than an assumption that the",
+              "leader signs, so moving to a quorum later changes a value instead of",
+              "needing a new program."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "payment_mint",
+            "docs": [
+              "Copied from the colony so every money instruction can pin its mint",
+              "without carrying the colony account."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "consensus",
+            "docs": [
+              "Copied from the colony at creation, and never from it again.",
+              "",
+              "The policy a claim is settled against must not be editable after the",
+              "work was done. Left on the colony it would be: `update_colony` is one",
+              "transaction, and a leader could raise the thresholds while claims were",
+              "in flight and change how they resolve. Pinning it here means an",
+              "objective settles under the rules that were published with it, and a",
+              "leader changing the colony's policy changes only what happens next."
+            ],
+            "type": {
+              "defined": {
+                "name": "ConsensusPolicy"
+              }
+            }
+          },
+          {
+            "name": "index",
+            "type": "u64"
+          },
+          {
+            "name": "payout",
+            "type": {
+              "defined": {
+                "name": "Payout"
+              }
+            }
+          },
+          {
+            "name": "status",
+            "type": {
+              "defined": {
+                "name": "ObjectiveStatus"
+              }
+            }
+          },
+          {
+            "name": "criteria_hash",
+            "docs": [
+              "Commitment to the criteria text, which lives off chain."
+            ],
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "claim_form_hash",
+            "docs": [
+              "Commitment to the claim form in force for this objective."
+            ],
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "entry_proof_root",
+            "docs": [
+              "Merkle root over the answers to this objective's worked samples, and",
+              "how many there are. A zero root means no sample and no door: entry is",
+              "the admission authority's to grant.",
+              "",
+              "What a sample tests is **reach**, not judgement: can this node get at",
+              "the dataset, the API, the instrument, the tooling this objective's work",
+              "needs at all. That is why every mode can have one. Judgement has no",
+              "single right answer under `semantic` and the program could not check it",
+              "\u2014 but reach has exactly one answer in every mode, and it is a hash. A",
+              "semantic objective over a private corpus asks for the hash of record",
+              "4,182's canonical form: one answer, one comparison, and it proves the",
+              "access while proving nothing about taste.",
+              "",
+              "The sample itself travels on the bus; only the commitment is here. Note",
+              "that the program does not know an objective's validation mode \u2014 it is",
+              "committed inside the criteria and never read \u2014 so this door was never",
+              "mode-specific and could not be.",
+              "",
+              "It is the pre-emptive form of something already on the wire.",
+              "`cannot_verify.blocker` has an `out_of_reach` value, excluded from the",
+              "objection ratio, for a validator that was selected and could not get at",
+              "the work. A sample establishes reach before the selection instead, so the",
+              "a validator's selection is not spent finding out.",
+              "",
+              "**A sample leaks the first time it is answered.** The answering",
+              "transaction puts the value in the ledger, and any address that selects",
+              "the same sample afterwards copies it from there. That is why the set",
+              "is a set rather than one example \u2014 an address selects one of `count`,",
+              "so a leak admits only the addresses that get that one, and the",
+              "leader can extend the set as it fills.",
+              "",
+              "It is not Sybil resistance and must not be read as any. The selection is",
+              "keyed by the address, and addresses are free to generate, so an",
+              "attacker holding one answer grinds keypairs until one selects that",
+              "sample. What the selection buys is spread across honest validators. What",
+              "costs an attacker per identity is the bond, and what",
+              "makes an incapable identity worthless is that it still has to",
+              "open a real commitment once it is selected."
+            ],
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "entry_proof_count",
+            "type": "u32"
+          },
+          {
+            "name": "awards",
+            "type": {
+              "array": [
+                {
+                  "defined": {
+                    "name": "Award"
+                  }
+                },
+                3
+              ]
+            }
+          },
+          {
+            "name": "award_count",
+            "type": "u8"
+          },
+          {
+            "name": "pool",
+            "docs": [
+              "Everything deposited, less everything withdrawn by the leader.",
+              "",
+              "What has been awarded is not subtracted here: it is on the awards,",
+              "where `balance()` folds it. An awarded amount has already left the",
+              "vault for the agent's escrow, which is why it no longer encumbers",
+              "anything \u2014 it is not in the vault to encumber."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "pending_claims",
+            "docs": [
+              "Claims recorded and not yet admitted or rejected, across all awards."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "validators_per_claim",
+            "docs": [
+              "How many validators a claim here selects.",
+              "",
+              "A security parameter with a number attached rather than a hope: an",
+              "attacker holding a fraction `f` of the eligible population takes a",
+              "majority of `k` selected validators with probability the binomial tail, which",
+              "at `f = 0.2` falls from about 10% at three to 0.1% at twenty-one. So a",
+              "large award selects more validators \u2014 not because more bond is at risk,",
+              "which is a capital requirement rather than an attack cost, but because",
+              "the chance of capture falls off a cliff."
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "claim_deadline",
+            "type": "i64"
+          },
+          {
+            "name": "commit_deadline",
+            "docs": [
+              "Commitments close here and reveals open. Nothing may be revealed",
+              "before it, or the last validator to commit would be committing with",
+              "everybody else's answers in front of it \u2014 which is the whole of what",
+              "the commitment is for."
+            ],
+            "type": "i64"
+          },
+          {
+            "name": "validation_deadline",
+            "type": "i64"
+          },
+          {
+            "name": "vault_bump",
+            "type": "u8"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "uri",
+            "docs": [
+              "Where to find what this objective committed to. Last in the struct",
+              "because a `String` is variable-length in borsh, so anything after it",
+              "would move when it is set \u2014 the same reason `Claim`'s two options sit",
+              "at its end.",
+              "",
+              "A **hint, not an authority.** The criteria and the claim form are",
+              "already committed by hash, and the samples by root, so whatever this",
+              "serves is checked before it is believed and a wrong document is",
+              "rejected rather than trusted. That is what makes the field safe to",
+              "change: a leader repointing it can only point at content that either",
+              "verifies or does not.",
+              "",
+              "It exists because the chain otherwise commits to a hash and says",
+              "nothing about where the document lives. A bus subscriber has the",
+              "document from `objective.publish`; gossip keeps no history, so anybody",
+              "arriving afterwards has a hash and nowhere to take it. Empty is a real",
+              "value and means bus-only, which is what every objective created before",
+              "this field had."
+            ],
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ObjectiveStatus",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Open"
+          },
+          {
+            "name": "Closed"
+          },
+          {
+            "name": "Cancelled"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Payout",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Prize"
+          },
+          {
+            "name": "Rate"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Mintable",
+      "docs": [
+        "Whether a colony's work can mint.",
+        "",
+        "Without this the self-citation attack is free rather than merely cheap:",
+        "anybody could create a colony, fund nothing, file claims that cite each",
+        "other, resolve them as leader and mint the difference. Requiring a",
+        "whitelisted colony does not solve the attack \u2014 an operator with several",
+        "identities inside a real colony still has it \u2014 but it takes the zero-cost",
+        "version away, and it retires the same way standing's bootstrap does, by",
+        "substitution rather than rewrite."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "colony",
+            "type": "pubkey"
+          },
+          {
+            "name": "enabled",
+            "type": "bool"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "TokenConfig",
+      "docs": [
+        "The protocol's own token, and the three things it pays for.",
+        "",
+        "It exists because an objective's pool must fund discoveries and nothing",
+        "else. A leader whose objective is being judged should not also be paying",
+        "the judges, and a share passed back to the claims a discovery cited cannot",
+        "keep paying once the objective that produced it has closed \u2014 a pool is",
+        "eventually exhausted and a good root goes on being useful. Both payments",
+        "therefore leave the pool entirely and are made here.",
+        "",
+        "The discretion did not disappear with them. It moved: somebody sets what",
+        "an edge pays and what a validation pays, and somebody holds the key that",
+        "changes it. That somebody is no longer the leader of the colony being",
+        "judged, which is the whole of the trade."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "docs": [
+              "Who may change the rates and the colony whitelist. Deliberately a",
+              "different field from `Config.authority`: the protocol fee and the",
+              "token supply are different powers and their governance paths diverge."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "mint",
+            "docs": [
+              "The mint. This account is its mint authority, so nothing outside the",
+              "program can issue a single unit."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "supply_cap",
+            "docs": [
+              "The ceiling, in the mint's smallest unit. Fixed at initialisation and",
+              "never raised: a supply cap that an authority can lift is not one."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "minted",
+            "docs": [
+              "Issued so far. The only thing that moves it is a reward being taken."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "edge_rate",
+            "docs": [
+              "What one validator-confirmed root edge pays the root's agent.",
+              "",
+              "The only thing this program mints, and it is worth saying why it is",
+              "the one. An edge is minted rather than selected from the objective's pool,",
+              "so it pays whatever is left in that pool \u2014 including nothing, which is",
+              "what an exhausted or withdrawn pool holds. The objective promised its",
+              "awards and an edge is not one of them, so there is no pot for it to",
+              "come out of and nobody to charge. Everything else has a payer standing",
+              "right there \u2014 the funder for an award, the claimant for a validation \u2014",
+              "so it is paid rather than printed.",
+              "",
+              "Note what this does *not* buy: longevity. A root can only be cited by",
+              "claims in its own objective (see `PLAN.md` section A2), so the edge",
+              "outlives the pool and not the objective."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "citer_rate",
+            "docs": [
+              "What the same edge pays the claim that declared it.",
+              "",
+              "Citing used to be free and unrewarded, and the only pressure to do it",
+              "was that concealing a root collapses the award through novelty. That",
+              "deterrent depends on a validator noticing the concealment, so it is",
+              "exactly as strong as the attention a claim happens to get \u2014 which is a",
+              "thin thing to build a graph on.",
+              "",
+              "Paying the citer looks farmable and is not, because the validators confirm",
+              "each root individually: a spurious root gets no bit in",
+              "`Claim.roots_confirmed` and pays nothing at either end. It is the same",
+              "judgement that already justifies paying the root, so it carries the same",
+              "evidence.",
+              "",
+              "Less than `edge_rate`, and the program enforces it rather than trusting",
+              "whoever sets the rates: being cited should be worth more than citing,",
+              "or the incentive is to cite rather than to be worth citing. Zero is a",
+              "real setting and restores the old behaviour."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Finding",
+      "docs": [
+        "What a validator concluded about one predicate.",
+        "",
+        "`Insufficient` is not a soft `Fail`. It says the claim as submitted does",
+        "not carry enough to decide, which sends the claim back to the thread for",
+        "more evidence rather than rejecting it."
+      ],
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Pass"
+          },
+          {
+            "name": "Fail"
+          },
+          {
+            "name": "Insufficient"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Reason",
+      "docs": [
+        "Why an evaluation did not happen.",
+        "",
+        "`None` is the ordinary case and means the validator evaluated the claim, so",
+        "the findings mean what they say. Anything else means the validation failed",
+        "as a whole: it is a fact about the validator's run, not a judgement of",
+        "somebody's discovery, and it enters no tally. A reader that counts a",
+        "timeout as a vote is counting broken tooling as evidence."
+      ],
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "None"
+          },
+          {
+            "name": "Refused"
+          },
+          {
+            "name": "Unavailable"
+          },
+          {
+            "name": "AccessDenied"
+          },
+          {
+            "name": "Timeout"
+          },
+          {
+            "name": "Unsupported"
+          },
+          {
+            "name": "Environment"
+          },
+          {
+            "name": "ResourceLimit"
+          },
+          {
+            "name": "Internal"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Repro",
+      "docs": [
+        "Whether the validator reproduced the claim.",
+        "",
+        "Reproduction is optional under every mode and separate from the findings,",
+        "so a validator that did not attempt it says so rather than leaving it to be",
+        "inferred from silence."
+      ],
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "NotAttempted"
+          },
+          {
+            "name": "Pass"
+          },
+          {
+            "name": "Fail"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Validation",
+      "docs": [
+        "One validator's judgement of one claim.",
+        "",
+        "Carries no standing weight. An earlier version took `weight` as an argument",
+        "from the validator \u2014 which meant every validator could declare whatever",
+        "standing it liked, and the on-chain gate against low-standing voters was",
+        "satisfied by writing a large number. Standing is a fold over settlement",
+        "history that anyone can recompute; the program stores the vote and the",
+        "reader weights it.",
+        "",
+        "The per-evidence-item findings are not here either. They are a list whose",
+        "length is the claim's, which is unbounded, so the account holds their hash",
+        "and the list travels with the claim. What is on chain is what consensus is",
+        "computed over and what a reader must not be able to alter afterwards."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "claim",
+            "type": "pubkey"
+          },
+          {
+            "name": "validator",
+            "type": "pubkey"
+          },
+          {
+            "name": "commitment",
+            "docs": [
+              "What was committed before anything was revealed.",
+              "",
+              "All zeros is a recorded absence rather than a commitment: the validator",
+              "was selected and never committed, and `record_absence` wrote this so the",
+              "same absence cannot be counted twice. `commit_validation` refuses a zero",
+              "commitment, so the two cannot be confused.",
+              "",
+              "Reading a claim costs something and copying somebody else's answer",
+              "costs nothing, so a validation published in the clear is one the next",
+              "validator can simply repeat. That is not only free money: the",
+              "consensus interval assumes independent observations, and twenty",
+              "copied votes look like twenty and are really one."
+            ],
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "revealed",
+            "docs": [
+              "Until this is true, every field below is zero and means nothing."
+            ],
+            "type": "bool"
+          },
+          {
+            "name": "reason",
+            "docs": [
+              "Not `None` means the evaluation failed and nothing below is a",
+              "judgement. Ask `evaluated()` rather than reading the fields."
+            ],
+            "type": {
+              "defined": {
+                "name": "Reason"
+              }
+            }
+          },
+          {
+            "name": "claim_support",
+            "docs": [
+              "Does the evidence, taken together, establish the claim?"
+            ],
+            "type": {
+              "defined": {
+                "name": "Finding"
+              }
+            }
+          },
+          {
+            "name": "alignment",
+            "docs": [
+              "Does the claim answer the objective it was sent to?"
+            ],
+            "type": {
+              "defined": {
+                "name": "Finding"
+              }
+            }
+          },
+          {
+            "name": "novelty_bps",
+            "docs": [
+              "How much the claim adds to the record, 0 to 10000."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "score_bps",
+            "docs": [
+              "Usefulness against the award criteria, 0 to 10000."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "reproduction",
+            "type": {
+              "defined": {
+                "name": "Repro"
+              }
+            }
+          },
+          {
+            "name": "finding",
+            "docs": [
+              "Hash of the per-item findings, which live off chain under it."
+            ],
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "slot",
+            "type": "u64"
+          },
+          {
+            "name": "paid",
+            "docs": [
+              "Whether this validation's token reward has been taken. The reward is",
+              "for the work, so it is paid on a claim that resolved either way: a",
+              "validator that correctly rejects a bad claim did the same work as one",
+              "that confirmed a good one, and paying only for admissions would leave",
+              "the bad claims unread."
+            ],
+            "type": "bool"
+          },
+          {
+            "name": "counted",
+            "docs": [
+              "Whether this answer counted towards what the claim settled to \u2014 and so",
+              "whether it is one of the shares the claim's fee is divided into.",
+              "",
+              "Decided once, at the reveal, and read at collection rather than asked",
+              "again. Asked again, a validator on probation when it revealed and off it",
+              "by the time it collected was paid a share it was never counted in \u2014",
+              "from a pot every claim in the objective shares \u2014 and one whose share was",
+              "zero could not collect at all, so its accuracy went unrecorded."
+            ],
+            "type": "bool"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Admission",
+      "docs": [
+        "How a colony decides who may validate in it.",
+        "",
+        "All three take the same path on chain \u2014 an admission authority records that",
+        "an address qualified \u2014 and differ only in whom that authority is willing to",
+        "record. The value is here so the policy is legible rather than inferred",
+        "from who has been admitted so far."
+      ],
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Public"
+          },
+          {
+            "name": "Keyed"
+          },
+          {
+            "name": "Private"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Entry",
+      "docs": [
+        "How an address got in.",
+        "",
+        "Recorded because the two doors are not worth the same. An entry proof is a",
+        "fact the program checked: this address produced the right bytes for a task",
+        "it could not choose, so it can reach what the work needs. An attestation is",
+        "somebody's word for the same claim, worth the honesty of whoever gave it.",
+        "",
+        "Without this on the account, telling them apart needs the whole event",
+        "history, which makes \"trust only validators that proved their entry\" a",
+        "question nobody can answer from state. With it, it is one field."
+      ],
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Attested"
+          },
+          {
+            "name": "Proved"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Validator",
+      "docs": [
+        "One address, qualified to validate in one colony.",
+        "",
+        "The account is the eligible set: it is what random selection selects from, and it is",
+        "what an attacker has to multiply. Everything that makes multiplying it",
+        "expensive is on it \u2014 when the test was passed, what bond is at risk, and",
+        "how much history the protocol has actually sent this validator.",
+        "",
+        "**Qualification is recorded, not judged.** The test is domain work and the",
+        "chain cannot mark it: the admission authority checks the answer off chain",
+        "and attests here. That attestation is worth exactly the honesty of whoever",
+        "makes it, which is the same trust shape as the token's colony whitelist and",
+        "is stated rather than dressed up."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "colony",
+            "type": "pubkey"
+          },
+          {
+            "name": "address",
+            "type": "pubkey"
+          },
+          {
+            "name": "qualified_at",
+            "docs": [
+              "When the qualification was recorded."
+            ],
+            "type": "i64"
+          },
+          {
+            "name": "bond",
+            "docs": [
+              "Held against mechanical faults, and returned on exit after a lock.",
+              "Equal for every validator: money buys entry here and never influence."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "selected_and_revealed",
+            "docs": [
+              "Validations this validator was selected for and then opened.",
+              "",
+              "It counts only work the protocol *sent*, which random selection supplies for",
+              "free: you could not choose the claim or the counterparty, so history",
+              "accrued this way is independent by construction rather than by",
+              "assertion. That is what makes it worth recording.",
+              "",
+              "Nothing reads it. It gates no instruction and weights no vote \u2014 it is",
+              "an input to the standing fold in `docs/ROADMAP.md` section 1, for",
+              "whoever writes it."
+            ],
+            "type": "u32"
+          },
+          {
+            "name": "faults",
+            "docs": [
+              "Faults proven against it. Nobody decides these; they are derived."
+            ],
+            "type": "u32"
+          },
+          {
+            "name": "sealed",
+            "docs": [
+              "Commitments it has made and not opened.",
+              "",
+              "What makes the slash stick. A commitment is only a fault once its",
+              "reveal window has closed, and without this a validator could commit,",
+              "watch the other answers arrive, take its bond out before the window",
+              "closed and never open its own \u2014 so the slash found nothing to burn.",
+              "The bond cannot leave while this is above zero."
+            ],
+            "type": "u32"
+          },
+          {
+            "name": "absences",
+            "docs": [
+              "Selections missed in a row: selected for a claim and never committed.",
+              "A commitment resets it, and reaching `MAX_ABSENCES` suspends the",
+              "validator until it rejoins \u2014 bond and trust intact, because being absent",
+              "is not an attack."
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "committed_slot",
+            "docs": [
+              "The filing slot of the latest claim it committed to.",
+              "",
+              "What makes \"in a row\" mean claim order rather than the order somebody",
+              "sent the proofs in. An absence is only counted for a claim filed after",
+              "this, so an old miss cannot be recorded behind a later commitment to",
+              "build a run that never happened."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "scored",
+            "docs": [
+              "How close this validator's answers have been to what the claims",
+              "actually settled to: how many it has been paid for, and the total",
+              "distance between its numbers and the settled ones.",
+              "",
+              "**A metric, and nothing acts on it.** It is here for standing to read.",
+              "It is written only where the validator collects, so a validator that",
+              "skips collecting leaves those answers out; standing should compute the",
+              "same distance over every `Validation` and `Claim` \u2014 which are complete",
+              "and permanent \u2014 and treat these two numbers as a convenience.",
+              "",
+              "The average error falls out of the two, and it is the only measure of a",
+              "validator's *judgement* the program can keep. Everything else it records",
+              "\u2014 age, what is at risk, how much work \u2014 measures presence rather than",
+              "quality.",
+              "",
+              "**Why closeness is earned here and would be worthless elsewhere.** In",
+              "most systems, scoring agreement with the crowd rewards copying: a node",
+              "that reads nothing and echoes the others leaves an identical record. It",
+              "cannot here, because a finding is committed sealed before anybody has",
+              "revealed. Landing near the settled figure means predicting it without",
+              "seeing it, and the way to do that is to judge the work.",
+              "",
+              "**What it costs, stated rather than discovered.** A validator that is",
+              "right while the rest are lazy is furthest from the average and loses by",
+              "it. No purely numerical measure escapes that, which is the reason this",
+              "is one input to standing rather than standing itself.",
+              "",
+              "Written where the validator collects its fee, because that is the one",
+              "place the program holds both halves \u2014 the answer it gave and what the",
+              "claim settled to \u2014 and the validator does it to itself by taking the",
+              "money. Nobody has to be chased and nothing is enumerated."
+            ],
+            "type": "u32"
+          },
+          {
+            "name": "error_sum",
+            "type": "u64"
+          },
+          {
+            "name": "entry",
+            "docs": [
+              "Which door this address came through. Never changes: an attestation is",
+              "not upgraded by later proving, because what a reader wants to know is",
+              "whether the entry itself was checked."
+            ],
+            "type": {
+              "defined": {
+                "name": "Entry"
+              }
+            }
+          },
+          {
+            "name": "activated",
+            "docs": [
+              "In the pool: counted in `Colony.eligible`, and so selectable.",
+              "",
+              "The one answer to \"may this validator be selected\", because being in",
+              "the pool is all it takes \u2014 passed the test, put up the bond the colony",
+              "asks for, not removed, not withdrawn.",
+              "",
+              "Set once everything the colony asked for at the time was put up, and",
+              "never re-checked against the colony's later terms: a validator that",
+              "joined under one bond is not thrown out when the leader sets another,",
+              "and the pool count never has to be recomputed \u2014 which the program could",
+              "not do, because it cannot iterate its own accounts."
+            ],
+            "type": "bool"
+          },
+          {
+            "name": "trusted",
+            "docs": [
+              "Marked trusted by the colony's admission authority: picked for every",
+              "claim rather than drawn at random. Only a validator already in the",
+              "queue can be \u2014 it passed the test and posted the bond like anybody \u2014",
+              "and it loses the mark when it leaves."
+            ],
+            "type": "bool"
+          },
+          {
+            "name": "suspended",
+            "docs": [
+              "Out of the queue for missed selections, and able to come back with",
+              "`rejoin`. Unlike `revoked`, which is for good."
+            ],
+            "type": "bool"
+          },
+          {
+            "name": "revoked",
+            "docs": [
+              "Withdrawn by the admission authority.",
+              "",
+              "Not a slash: the bond is still the validator's and still withdrawable.",
+              "Revocation stops future work reaching an address and takes nothing it",
+              "has already earned, which is the distinction that lets it exist at all",
+              "\u2014 the program cannot tell a bad judgement from a minority one, so",
+              "nothing here punishes a judgement."
+            ],
+            "type": "bool"
+          },
+          {
+            "name": "withdrawn",
+            "docs": [
+              "Set when the bond is withdrawn. The account stays, because the history",
+              "on it is what standing is computed from and deleting it would let a",
+              "validator shed a record by leaving."
+            ],
+            "type": "bool"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "docs": [
+        "A selection a validator missed, and whether it was the one that removed it."
+      ],
+      "name": "AbsenceRecorded",
+      "type": {
+        "fields": [
+          {
+            "name": "colony",
+            "type": "pubkey"
+          },
+          {
+            "name": "validator",
+            "type": "pubkey"
+          },
+          {
+            "name": "claim",
+            "type": "pubkey"
+          },
+          {
+            "docs": [
+              "In a row, including this one."
+            ],
+            "name": "absences",
+            "type": "u8"
+          },
+          {
+            "docs": [
+              "Whether this one reached `MAX_ABSENCES` and suspended it."
+            ],
+            "name": "suspended",
+            "type": "bool"
+          },
+          {
+            "name": "eligible",
+            "type": "u32"
+          },
+          {
+            "name": "trusted",
+            "type": "u32"
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "name": "BondPosted",
+      "type": {
+        "fields": [
+          {
+            "name": "colony",
+            "type": "pubkey"
+          },
+          {
+            "name": "validator",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "docs": [
+              "The population the selection threshold is computed against, so an indexer",
+              "can recompute any claim's validators from the log alone."
+            ],
+            "name": "eligible",
+            "type": "u32"
+          },
+          {
+            "name": "trusted",
+            "type": "u32"
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "docs": [
+        "The bond a validator joining from now on must post. Nobody already in is",
+        "touched: each keeps, and gets back, what it posted."
+      ],
+      "name": "BondSet",
+      "type": {
+        "fields": [
+          {
+            "name": "colony",
+            "type": "pubkey"
+          },
+          {
+            "name": "bond",
+            "type": "u64"
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "name": "BondSlashed",
+      "type": {
+        "fields": [
+          {
+            "name": "colony",
+            "type": "pubkey"
+          },
+          {
+            "name": "validator",
+            "type": "pubkey"
+          },
+          {
+            "name": "claim",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "eligible",
+            "type": "u32"
+          },
+          {
+            "name": "trusted",
+            "type": "u32"
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "name": "BondWithdrawn",
+      "type": {
+        "fields": [
+          {
+            "name": "colony",
+            "type": "pubkey"
+          },
+          {
+            "name": "validator",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "eligible",
+            "type": "u32"
+          },
+          {
+            "name": "trusted",
+            "type": "u32"
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "docs": [
+        "A claim paid into its agent's escrow. Carries the two numbers the amount",
+        "was computed from, so an indexer can check the arithmetic without fetching",
+        "the claim back."
+      ],
+      "name": "ClaimAwarded",
+      "type": {
+        "fields": [
+          {
+            "name": "claim",
+            "type": "pubkey"
+          },
+          {
+            "name": "objective",
+            "type": "pubkey"
+          },
+          {
+            "name": "agent",
+            "type": "pubkey"
+          },
+          {
+            "name": "escrow",
+            "type": "pubkey"
+          },
+          {
+            "name": "award_index",
+            "type": "u8"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "score_bps",
+            "type": "u16"
+          },
+          {
+            "name": "novelty_bps",
+            "type": "u16"
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "docs": [
+        "`claim_slot` is the protocol's only total order; `roots` are carried in",
+        "full so the whole graph is rebuildable from the log stream alone."
+      ],
+      "name": "ClaimRecorded",
+      "type": {
+        "fields": [
+          {
+            "name": "claim",
+            "type": "pubkey"
+          },
+          {
+            "name": "objective",
+            "type": "pubkey"
+          },
+          {
+            "name": "agent",
+            "type": "pubkey"
+          },
+          {
+            "name": "hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "award_index",
+            "type": "u8"
+          },
+          {
+            "name": "claim_slot",
+            "type": "u64"
+          },
+          {
+            "name": "roots",
+            "type": {
+              "vec": {
+                "array": [
+                  "u8",
+                  32
+                ]
+              }
+            }
+          },
+          {
+            "docs": [
+              "What this claim put up for its validators. A reader works out what is",
+              "refundable from this and the resolution, without fetching the claim."
+            ],
+            "name": "validation_fee",
+            "type": "u64"
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "docs": [
+        "Carries what was settled and what settled it, so an indexer holds the",
+        "judgement without fetching the claim back."
+      ],
+      "name": "ClaimResolved",
+      "type": {
+        "fields": [
+          {
+            "name": "claim",
+            "type": "pubkey"
+          },
+          {
+            "name": "objective",
+            "type": "pubkey"
+          },
+          {
+            "name": "admitted",
+            "type": "bool"
+          },
+          {
+            "name": "decided_by",
+            "type": {
+              "defined": {
+                "name": "DecidedBy"
+              }
+            }
+          },
+          {
+            "name": "roots_confirmed",
+            "type": "u8"
+          },
+          {
+            "docs": [
+              "Commitments that were never opened: `commitments - reveals`."
+            ],
+            "name": "unrevealed",
+            "type": "u16"
+          },
+          {
+            "name": "novelty_bps",
+            "type": "u16"
+          },
+          {
+            "name": "score_bps",
+            "type": "u16"
+          },
+          {
+            "name": "validations",
+            "type": "u16"
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "docs": [
+        "`reason` decides whether the rest of this is a judgement at all: not",
+        "`None` and the validation failed, which enters no tally."
+      ],
+      "name": "ClaimValidated",
+      "type": {
+        "fields": [
+          {
+            "name": "claim",
+            "type": "pubkey"
+          },
+          {
+            "name": "validator",
+            "type": "pubkey"
+          },
+          {
+            "name": "reason",
+            "type": {
+              "defined": {
+                "name": "Reason"
+              }
+            }
+          },
+          {
+            "name": "claim_support",
+            "type": {
+              "defined": {
+                "name": "Finding"
+              }
+            }
+          },
+          {
+            "name": "alignment",
+            "type": {
+              "defined": {
+                "name": "Finding"
+              }
+            }
+          },
+          {
+            "name": "novelty_bps",
+            "type": "u16"
+          },
+          {
+            "name": "score_bps",
+            "type": "u16"
+          },
+          {
+            "name": "reproduction",
+            "type": {
+              "defined": {
+                "name": "Repro"
+              }
+            }
+          },
+          {
+            "name": "finding",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "docs": [
+              "Whether it counted towards what the claim settles to \u2014 not if the",
+              "validator was on probation, or the evaluation failed. The claim's tally",
+              "is the sum of the answers that did."
+            ],
+            "name": "counted",
+            "type": "bool"
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "name": "ColonyCreated",
+      "type": {
+        "fields": [
+          {
+            "name": "colony",
+            "type": "pubkey"
+          },
+          {
+            "name": "leader",
+            "type": "pubkey"
+          },
+          {
+            "name": "slug",
+            "type": "string"
+          },
+          {
+            "name": "payment_mint",
+            "type": "pubkey"
+          },
+          {
+            "docs": [
+              "Everything a reader needs to say what this colony is and what it costs",
+              "to work in. Carried in full rather than pointed at, because an index",
+              "built from the log should not have to fetch back the account the log",
+              "just announced."
+            ],
+            "name": "consensus",
+            "type": {
+              "defined": {
+                "name": "ConsensusPolicy"
+              }
+            }
+          },
+          {
+            "name": "admission",
+            "type": {
+              "defined": {
+                "name": "Admission"
+              }
+            }
+          },
+          {
+            "name": "admission_authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "bond",
+            "type": "u64"
+          },
+          {
+            "name": "validation_fee",
+            "type": "u64"
+          },
+          {
+            "name": "entry_proof_required",
+            "type": "bool"
+          },
+          {
+            "name": "probation_validations",
+            "type": "u32"
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "name": "ColonyMintableSet",
+      "type": {
+        "fields": [
+          {
+            "name": "colony",
+            "type": "pubkey"
+          },
+          {
+            "name": "enabled",
+            "type": "bool"
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "docs": [
+        "The whole policy, not the one number of it a reader happened to ask about",
+        "first. A partial event is an index that has to fetch, which is the thing",
+        "events exist to avoid."
+      ],
+      "name": "ColonyUpdated",
+      "type": {
+        "fields": [
+          {
+            "name": "colony",
+            "type": "pubkey"
+          },
+          {
+            "name": "consensus",
+            "type": {
+              "defined": {
+                "name": "ConsensusPolicy"
+              }
+            }
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "name": "ConfigUpdated",
+      "type": {
+        "fields": [
+          {
+            "name": "authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "treasury",
+            "type": "pubkey"
+          },
+          {
+            "name": "treasury_bps",
+            "type": "u16"
+          },
+          {
+            "name": "buyback_bps",
+            "type": "u16"
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "name": "EdgeRatesUpdated",
+      "type": {
+        "fields": [
+          {
+            "name": "edge_rate",
+            "type": "u64"
+          },
+          {
+            "name": "citer_rate",
+            "type": "u64"
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "docs": [
+        "The discovery graph being paid, one confirmed edge at a time. Minted, so",
+        "it pays out of an exhausted pool where an objective-funded share could not",
+        "\u2014 though only to claims inside the same objective, so it outlives the money",
+        "rather than the objective."
+      ],
+      "name": "EdgeRewarded",
+      "type": {
+        "fields": [
+          {
+            "name": "claim",
+            "type": "pubkey"
+          },
+          {
+            "name": "root",
+            "type": "pubkey"
+          },
+          {
+            "docs": [
+              "The root's agent, for having been worth building on."
+            ],
+            "name": "recipient",
+            "type": "pubkey"
+          },
+          {
+            "docs": [
+              "The citer, for having said so. Bounded by the root's share."
+            ],
+            "name": "citer",
+            "type": "pubkey"
+          },
+          {
+            "name": "root_index",
+            "type": "u8"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "citer_amount",
+            "type": "u64"
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "name": "EscrowCollected",
+      "type": {
+        "fields": [
+          {
+            "name": "objective",
+            "type": "pubkey"
+          },
+          {
+            "name": "agent",
+            "type": "pubkey"
+          },
+          {
+            "name": "escrow",
+            "type": "pubkey"
+          },
+          {
+            "name": "gross",
+            "type": "u64"
+          },
+          {
+            "docs": [
+              "The whole fee, and the two shares it was declared as. Carried",
+              "separately because one figure cannot be split back into two afterwards,",
+              "and the buyback share is the one somebody has to account for."
+            ],
+            "name": "fee",
+            "type": "u64"
+          },
+          {
+            "name": "treasury_share",
+            "type": "u64"
+          },
+          {
+            "name": "buyback_share",
+            "type": "u64"
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "name": "ObjectiveClosed",
+      "type": {
+        "fields": [
+          {
+            "name": "objective",
+            "type": "pubkey"
+          },
+          {
+            "name": "cancelled",
+            "type": "bool"
+          },
+          {
+            "name": "pending_claims",
+            "type": "u64"
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "docs": [
+        "One award as it was declared. The state on it \u2014 awarded, pending, closed \u2014",
+        "is not here: that moves, and a copy of a moving number in a log is a second",
+        "source of truth for money."
+      ],
+      "name": "AwardAnnounced",
+      "type": {
+        "fields": [
+          {
+            "name": "index",
+            "type": "u8"
+          },
+          {
+            "name": "mode",
+            "type": {
+              "defined": {
+                "name": "AwardMode"
+              }
+            }
+          },
+          {
+            "name": "allocation",
+            "type": "u64"
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "docs": [
+        "What the objective committed to, in full.",
+        "",
+        "The two hashes are the reason this is not a short event: the criteria and",
+        "the claim form live off chain and are checked against these, so a platform",
+        "that holds the text cannot prove it holds the right text without them. The",
+        "consensus policy is the objective's pinned copy rather than the colony's",
+        "current one, which is the whole point of pinning it."
+      ],
+      "name": "ObjectiveCreated",
+      "type": {
+        "fields": [
+          {
+            "name": "objective",
+            "type": "pubkey"
+          },
+          {
+            "name": "colony",
+            "type": "pubkey"
+          },
+          {
+            "name": "index",
+            "type": "u64"
+          },
+          {
+            "name": "payout",
+            "type": {
+              "defined": {
+                "name": "Payout"
+              }
+            }
+          },
+          {
+            "name": "settlement_authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "payment_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "pool",
+            "type": "u64"
+          },
+          {
+            "name": "criteria_hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "claim_form_hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "entry_proof_root",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "entry_proof_count",
+            "type": "u32"
+          },
+          {
+            "name": "uri",
+            "type": "string"
+          },
+          {
+            "name": "consensus",
+            "type": {
+              "defined": {
+                "name": "ConsensusPolicy"
+              }
+            }
+          },
+          {
+            "name": "validators_per_claim",
+            "type": "u8"
+          },
+          {
+            "name": "awards",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "AwardAnnounced"
+                }
+              }
+            }
+          },
+          {
+            "name": "claim_deadline",
+            "type": "i64"
+          },
+          {
+            "name": "commit_deadline",
+            "type": "i64"
+          },
+          {
+            "name": "validation_deadline",
+            "type": "i64"
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "name": "ObjectiveToppedUp",
+      "type": {
+        "fields": [
+          {
+            "name": "objective",
+            "type": "pubkey"
+          },
+          {
+            "name": "payer",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "pool",
+            "type": "u64"
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "docs": [
+        "Where an objective's document can be fetched, changed.",
+        "",
+        "Not a change to what the objective committed to \u2014 that is the hashes, and",
+        "they do not move. A reader that already holds a verified document ignores",
+        "this; one that could not fetch the old location tries the new."
+      ],
+      "name": "ObjectiveUriSet",
+      "type": {
+        "fields": [
+          {
+            "name": "objective",
+            "type": "pubkey"
+          },
+          {
+            "name": "uri",
+            "type": "string"
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "docs": [
+        "Carries the encumbered figure as well as the amount taken, because what",
+        "matters to a watching agent is not what left but what is still beyond reach."
+      ],
+      "name": "ObjectiveWithdrawn",
+      "type": {
+        "fields": [
+          {
+            "name": "objective",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "pool",
+            "type": "u64"
+          },
+          {
+            "name": "encumbered",
+            "type": "u64"
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "docs": [
+        "A validator removed for a record worse than the colony's bar, or, in a",
+        "private colony, by the admission authority. The bond is untouched \u2014 this",
+        "stops future work reaching an address and takes nothing it has earned."
+      ],
+      "name": "QualificationRevoked",
+      "type": {
+        "fields": [
+          {
+            "name": "colony",
+            "type": "pubkey"
+          },
+          {
+            "name": "validator",
+            "type": "pubkey"
+          },
+          {
+            "name": "eligible",
+            "type": "u32"
+          },
+          {
+            "name": "trusted",
+            "type": "u32"
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "name": "TokenInitialized",
+      "type": {
+        "fields": [
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "supply_cap",
+            "type": "u64"
+          },
+          {
+            "name": "edge_rate",
+            "type": "u64"
+          },
+          {
+            "name": "citer_rate",
+            "type": "u64"
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "docs": [
+        "A validator marked trusted, or unmarked, and how many the colony now has."
+      ],
+      "name": "TrustSet",
+      "type": {
+        "fields": [
+          {
+            "name": "colony",
+            "type": "pubkey"
+          },
+          {
+            "name": "validator",
+            "type": "pubkey"
+          },
+          {
+            "name": "trusted",
+            "type": "bool"
+          },
+          {
+            "name": "count",
+            "type": "u32"
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "docs": [
+        "A commitment, which says nothing except that somebody intends to answer."
+      ],
+      "name": "ValidationCommitted",
+      "type": {
+        "fields": [
+          {
+            "name": "claim",
+            "type": "pubkey"
+          },
+          {
+            "name": "validator",
+            "type": "pubkey"
+          },
+          {
+            "name": "commitment",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "name": "ValidationFeeRefunded",
+      "type": {
+        "fields": [
+          {
+            "name": "claim",
+            "type": "pubkey"
+          },
+          {
+            "name": "agent",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "docs": [
+        "What a colony charges for one validation, changed. It cannot reach a claim",
+        "already filed: that claim stores the figure it paid."
+      ],
+      "name": "ValidationFeeSet",
+      "type": {
+        "fields": [
+          {
+            "name": "colony",
+            "type": "pubkey"
+          },
+          {
+            "name": "validation_fee",
+            "type": "u64"
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "docs": [
+        "A validator selecting its share of what the claimant put up. Not a mint:",
+        "this moves tokens that already existed."
+      ],
+      "name": "ValidationPaid",
+      "type": {
+        "fields": [
+          {
+            "name": "claim",
+            "type": "pubkey"
+          },
+          {
+            "name": "recipient",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "docs": [
+              "How far this validator's two numbers were from the settled ones, and",
+              "its running mean over everything it has been paid for. The only measure",
+              "of judgement the program keeps, and it is earned rather than copied",
+              "because the finding was sealed before anybody revealed."
+            ],
+            "name": "error",
+            "type": "u64"
+          },
+          {
+            "name": "mean_error",
+            "type": "u64"
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "name": "ValidatorQualified",
+      "type": {
+        "fields": [
+          {
+            "name": "colony",
+            "type": "pubkey"
+          },
+          {
+            "name": "validator",
+            "type": "pubkey"
+          },
+          {
+            "name": "qualified_at",
+            "type": "i64"
+          },
+          {
+            "name": "eligible",
+            "type": "u32"
+          },
+          {
+            "name": "trusted",
+            "type": "u32"
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "docs": [
+        "An address that let itself in by answering one of an objective's worked",
+        "samples. No authority signed it: the program checked the answer."
+      ],
+      "name": "ValidatorQualifiedByProof",
+      "type": {
+        "fields": [
+          {
+            "name": "colony",
+            "type": "pubkey"
+          },
+          {
+            "name": "objective",
+            "type": "pubkey"
+          },
+          {
+            "name": "validator",
+            "type": "pubkey"
+          },
+          {
+            "name": "entry_proof_index",
+            "type": "u32"
+          },
+          {
+            "name": "qualified_at",
+            "type": "i64"
+          },
+          {
+            "name": "eligible",
+            "type": "u32"
+          },
+          {
+            "name": "trusted",
+            "type": "u32"
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "docs": [
+        "A suspended validator back in the queue."
+      ],
+      "name": "ValidatorRejoined",
+      "type": {
+        "fields": [
+          {
+            "name": "colony",
+            "type": "pubkey"
+          },
+          {
+            "name": "validator",
+            "type": "pubkey"
+          },
+          {
+            "name": "eligible",
+            "type": "u32"
+          },
+          {
+            "name": "trusted",
+            "type": "u32"
+          }
+        ],
+        "kind": "struct"
+      }
+    },
+    {
+      "docs": [
+        "The moment a claim's validators stop being unknown. Carries the slot it was",
+        "taken from, so the selection is reproducible by anybody."
+      ],
+      "name": "ValidatorsSelected",
+      "type": {
+        "fields": [
+          {
+            "name": "claim",
+            "type": "pubkey"
+          },
+          {
+            "name": "seed",
+            "type": "u64"
+          },
+          {
+            "name": "slot",
+            "type": "u64"
+          },
+          {
+            "docs": [
+              "The pool size the selection is drawn from, fixed with the seed."
+            ],
+            "name": "pool",
+            "type": "u32"
+          }
+        ],
+        "kind": "struct"
+      }
+    }
+  ]
+}

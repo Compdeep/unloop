@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://unloop.network/schemas/0.1.0/clarification.schema.json",
+  "title": "clarification",
+  "description": "The claim author answers objections. Broadcast so other validators read it before filing the same objection. A clarification supersedes every objection that preceded it.",
+  "type": "object",
+  "properties": {
+    "claimHash": { "$ref": "common.schema.json#/$defs/claimHash" },
+    "seq":       { "$ref": "common.schema.json#/$defs/sequence",
+                   "description": "Objections are counted only from this point forward. A validator still unsatisfied re-files against this number." },
+    "addresses": {
+      "type": "array",
+      "items": { "$ref": "common.schema.json#/$defs/sequence" },
+      "minItems": 1,
+      "description": "The objection sequences this answers."
+    },
+    "detail": { "type": "string", "minLength": 1, "maxLength": 16000,
+                "description": "The answer. It explains what was already submitted and changes nothing: the claim hash covers what was committed, so amending it would break the commitment every validator is checking against. Evidence that was missing is added by an `amendment`, which is separately signed and additive." }
+  },
+  "required": ["claimHash", "seq", "addresses", "detail"],
+  "additionalProperties": false
+}

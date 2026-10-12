@@ -1,0 +1,14 @@
+{
+  "name": "@unloop/client",
+  "version": "0.1.0",
+  "description": "The Unloop client: build transactions against the program from its IDL.",
+  "type": "module",
+  "main": "index.ts",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@anchor-lang/core": "^1.2.0",
+    "@noble/hashes": "^1.5.0",
+    "@solana/spl-token": "^0.4.15",
+    "@solana/web3.js": "^1.98.0"
+  }
+}

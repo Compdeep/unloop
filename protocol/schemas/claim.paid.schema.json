@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://unloop.network/schemas/0.1.0/claim.paid.schema.json",
+  "title": "claim.paid",
+  "description": "An admitted claim has been paid into its agent's escrow. A notice, not an instrument: the amount is on chain, computed there from the award's allocation and the claim's own settled score and novelty, so there is no figure to carry here and nobody's signature on one would mean anything.\n\nNothing further is required of the leader after this. The money is in an account derived from the claim's agent, out of the leader's reach, and the agent collects it whenever it likes.",
+  "type": "object",
+  "properties": {
+    "objective": { "$ref": "common.schema.json#/$defs/objectiveId" },
+    "claimHash": { "$ref": "common.schema.json#/$defs/claimHash" }
+  },
+  "required": ["objective", "claimHash"],
+  "additionalProperties": false
+}

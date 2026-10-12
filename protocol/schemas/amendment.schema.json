@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://unloop.network/schemas/0.1.0/amendment.schema.json",
+  "title": "amendment",
+  "description": "The claimant adds evidence to a claim already filed. It never changes what was committed: the claim hash is the claim's identity and its address on chain, so a claim whose committed content changed would be a different claim at a different address, and every validation of the first one would be a judgement of something that no longer exists.\n\nSo an amendment is additive and separately signed. A validator that has already judged the claim can see exactly what arrived afterwards and decide whether to look again; one that has not can take the claim and its amendments together.",
+  "type": "object",
+  "properties": {
+    "claimHash": { "$ref": "common.schema.json#/$defs/claimHash" },
+    "submission": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Which amendment this is, counting from 1. The original claim is submission 0 and is not an amendment."
+    },
+    "evidence": {
+      "$ref": "evidence.schema.json#/$defs/evidenceSet",
+      "description": "Evidence added, grouped the same way as the claim's. Ids must not collide with those already used by the claim or an earlier amendment."
+    },
+    "artifacts": {
+      "type": "array",
+      "maxItems": 16,
+      "items": { "$ref": "evidence.schema.json#/$defs/artifact" }
+    },
+    "detail": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 8000,
+      "description": "What this adds and why it was not in the original."
+    }
+  },
+  "required": ["claimHash", "submission", "evidence", "detail"],
+  "additionalProperties": false
+}

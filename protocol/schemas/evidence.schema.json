@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://unloop.network/schemas/0.1.0/evidence.schema.json",
+  "title": "Evidence",
+  "description": "What a claim offers in support of itself, and the procedures behind it. Not a message: a claim carries these, and a validation judges them one at a time.\n\nThe three kinds name modes of validation rather than kinds of claim. Most claims carry all three at once, and the objective's mode says which of them has to be satisfied for the claim to stand — the others strengthen it and cannot carry it alone.",
+
+  "$defs": {
+    "artifact": {
+      "type": "object",
+      "description": "A file held off the bus and fetched point-to-point, referenced by hash so it cannot be swapped afterwards. Never bytes on the wire: a zip is one artifact with one hash.",
+      "properties": {
+        "name": { "type": "string", "minLength": 1, "maxLength": 200 },
+        "hash": { "$ref": "common.schema.json#/$defs/hash" },
+        "size": { "type": "integer", "minimum": 0, "maximum": 8388608 },
+        "mime": { "type": "string", "minLength": 1 }
+      },
+      "required": ["name", "hash", "size", "mime"],
+      "additionalProperties": false
+    },
+
+    "span": {
+      "type": "object",
+      "description": "The part of a claim a verdict rests on. A bare PASS cannot be checked by anybody; a FAIL quoting the sentence it objects to can, which is what makes a finding a finding rather than an opinion.",
+      "properties": {
+        "artifact": {
+          "$ref": "common.schema.json#/$defs/hash",
+          "description": "Which artifact, by content hash. Omitted when the span is in the claim's own text."
+        },
+        "evidenceId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,31}$",
+          "description": "Which evidence item, where the span is inside one."
+        },
+        "locator": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Where inside it, in whatever way the domain locates things: a byte range, a line, a timecode, a cell. The protocol does not interpret it."
+        },
+        "quote": {
+          "type": "string",
+          "maxLength": 4000,
+          "description": "The text itself, so a reader can see what was judged without fetching the artifact."
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "procedure": {
+      "type": "object",
+      "description": "How a measurement is produced, and what makes it pass. One shape, authored by different parties in different modes: the leader writes it into the criteria under `deterministic`, where it is fixed before any claim exists; the claimant supplies it under `procedural`, where the method of demonstration is part of the discovery.\n\n`check` is a declarative expression over the derived measurement — no runtime and no sandbox, because a validator that has to execute a stranger's code to read a claim is a validator with a new attack surface. Heavier work is reproduction, which is optional, separate, and never automatic.",
+      "properties": {
+        "statement": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000,
+          "description": "What this procedure does, in terms somebody could follow."
+        },
+        "inputs": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1, "maxLength": 400 },
+          "description": "What it consumes. Under `deterministic` this is what the claimant supplies."
+        },
+        "check": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000,
+          "description": "The predicate over the derived measurement, e.g. `tm_celsius > 75 and binding_kcal < -9.0`. Declarative, evaluated by the validator, and never executed as code."
+        },
+        "environment": {
+          "type": "array",
+          "items": { "$ref": "common.schema.json#/$defs/capability" },
+          "description": "What a node needs in order to run this at all. An objective's procedure declares it here, and a validator compares it with what it holds before taking the claim on."
+        },
+        "artifacts": {
+          "type": "array",
+          "maxItems": 16,
+          "items": { "$ref": "#/$defs/artifact" }
+        }
+      },
+      "required": ["statement", "check"],
+      "additionalProperties": false
+    },
+
+    "evidence": {
+      "type": "object",
+      "description": "One item of evidence. Judged twice by every validator that looks at it — whether it holds, and whether it bears on the claim — because those come apart whenever the claimant chose the evidence. A status code can be mechanically true and prove nothing if the endpoint was public all along.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,31}$",
+          "description": "Unique within this claim, e.g. 'D1'. A validation's per-item findings are keyed by it, so it is what lets two parties talk about the same item."
+        },
+        "kind": {
+          "$ref": "common.schema.json#/$defs/validationMode",
+          "description": "Which of the three this item is. Carried on the item as well as implied by the array it sits in, so an item quoted in a finding is self-describing."
+        },
+        "statement": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 8000,
+          "description": "What this item asserts or shows."
+        },
+        "procedure": { "$ref": "#/$defs/procedure" },
+        "artifacts": {
+          "type": "array",
+          "maxItems": 16,
+          "items": { "$ref": "#/$defs/artifact" }
+        },
+        "provenance": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000,
+          "description": "Where this came from and how it was obtained — the instrument, the run, the source and its version. A validator judging whether an item bears on the claim is largely judging this."
+        }
+      },
+      "required": ["id", "kind", "statement", "provenance"],
+      "additionalProperties": false
+    },
+
+    "evidenceSet": {
+      "type": "object",
+      "description": "A claim's evidence, grouped by kind. All three arrays are always present and empty where unused, because an omitted key and an empty array hash differently and the hash is the claim's identity.",
+      "properties": {
+        "deterministic": { "type": "array", "maxItems": 64, "items": { "$ref": "#/$defs/evidence" } },
+        "procedural":    { "type": "array", "maxItems": 64, "items": { "$ref": "#/$defs/evidence" } },
+        "semantic":      { "type": "array", "maxItems": 64, "items": { "$ref": "#/$defs/evidence" } }
+      },
+      "required": ["deterministic", "procedural", "semantic"],
+      "additionalProperties": false
+    }
+  }
+}

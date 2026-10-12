@@ -1,0 +1,17 @@
+{
+  "v": "0.1.0",
+  "type": "claim.notice",
+  "colony": "protein-design",
+  "author": "9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM",
+  "peer": "12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL",
+  "ts": "2026-09-20T14:30:02Z",
+  "channel": "claims",
+  "body": {
+    "objective": "4Nd1mYt8mQuW5Uy7vFkZq2Rj9HhcXeL3sPbTgAoC6wDx",
+    "claimHash": "f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e",
+    "title": "TR-9 binder at 81.1 C on an unused backbone topology",
+    "description": "Predicted melting point 81.1 C against the objective's 75 C floor, binding -10.4 kcal/mol, stable across five seeds. Needs ColabFold 1.5.5 and UniRef90 2026_01 to check.",
+    "evidenceComplete": true
+  },
+  "sig": "5JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ"
+}

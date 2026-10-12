@@ -1,0 +1,146 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://unloop.network/schemas/0.1.0/objective.publish.schema.json",
+  "title": "objective.publish",
+  "description": "A funded objective exists. The envelope's chain reference is mandatory here: the vault is the authority on what is actually funded, and this message is a notification of it.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "$ref": "common.schema.json#/$defs/objectiveId"
+    },
+    "payout": {
+      "$ref": "common.schema.json#/$defs/payout"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "statement": {
+      "type": "string",
+      "minLength": 1,
+      "description": "What is being asked for, in full."
+    },
+    "criteriaHash": {
+      "$ref": "common.schema.json#/$defs/hash",
+      "description": "The objective account's criteria_hash: SHA-256 of {title, statement, validationMode, predicates, composition, awards, samples: samples.items} in the canonical encoding (RFC 8785), absent fields left out. The claim-format hash is SHA-256 of claimForm the same way. Every other field here is a copy of a value the account stores, checked against it directly. Reference implementation: chain/client/spec.ts."
+    },
+    "validationMode": {
+      "$ref": "common.schema.json#/$defs/validationMode",
+      "description": "Declared once per objective, before any agent sees it, and part of the criteria the criteriaHash commits to. Carried here as well so an agent can decide whether to participate without fetching the criteria first."
+    },
+    "validatorsPerClaim": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 255,
+      "description": "How many validators a claim here selects from the colony's eligible set. A security parameter with a number attached: an attacker holding a fraction f of that set takes a majority of a selection of k with probability the binomial tail, which at f = 0.2 falls from about 10% at three to 0.1% at twenty-one. So a large award selects more validators \u2014 not because more is at risk, since a bond is a capital requirement rather than an attack cost, but because the chance of capture falls away."
+    },
+    "claimForm": {
+      "$ref": "policy.schema.json#/$defs/claimForm"
+    },
+    "predicates": {
+      "$ref": "policy.schema.json#/$defs/predicateSet",
+      "description": "The propositions every validator answers about a claim here, fixed now rather than chosen later by whoever files one. Part of the criteria the criteriaHash commits to, and carried here as well so an agent can see what it will be judged on before fetching them."
+    },
+    "samples": {
+      "type": "object",
+      "description": "The worked samples a would-be validator answers to let itself in, with no authority attesting anything.\n\nWhat a sample tests is REACH, not judgement: whether this node can get at the thing the work needs \u2014 the dataset behind an agreement, the API behind a key, the instrument, the corpus, the compute. Every validation mode can publish one for that reason. Judgement has no single right answer under `semantic` and no program could check one; reach has exactly one answer in every mode and the answer is a hash. A semantic objective over a private corpus asks for the hash of record 4,182 in canonical form.\n\nIt is the pre-emptive form of `cannot_verify.blocker: out_of_reach`, which is what a validator returns when it was selected and could not get at the work. An objective whose work needs access somebody grants should publish samples as a matter of course, or its validators keep selecting nodes that cannot start.\n\nThe chain holds a Merkle root over the answers and the count; the samples themselves are here, because they are the work and the chain never reads them. Which one an address must answer is `sha256(address || objective) % count`, publicly computable, so a node knows before it starts and anybody can check what it posted.\n\n**A sample leaks the first time it is answered** \u2014 the answering transaction puts the value in the ledger. That is why this is a set: a leak admits only the addresses that get that one. The set is fixed when the objective is created \u2014 no instruction changes the root \u2014 so a larger one is a new objective. It is not Sybil resistance and must not be read as any, because addresses are free to generate and an attacker holding one answer grinds keypairs until one selects that sample. The bond is what costs an attacker per identity.",
+      "properties": {
+        "root": {
+          "$ref": "common.schema.json#/$defs/hash",
+          "description": "Merkle root over the answers, matching the objective account. A sample's answer is the SHA-256 of its result as written (UTF-8); leaves are `sha256(index_le32 || answer)`; each level is paired left to right in sorted order, an odd last node carried up unchanged, so a proof carries no direction bits. Reference implementation: chain/client/samples.ts."
+        },
+        "items": {
+          "type": "array",
+          "minItems": 1,
+          "description": "The samples themselves, in the order the root commits to. The answer is never here \u2014 publishing it would open the door to everybody at once.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "index": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "input": {
+                "type": "string",
+                "minLength": 1,
+                "description": "The task, precisely enough to run."
+              },
+              "artifacts": {
+                "type": "array",
+                "items": {
+                  "$ref": "common.schema.json#/$defs/hash"
+                },
+                "description": "Content hashes of anything the sample needs, fetched over libp2p the way claim bodies are."
+              }
+            },
+            "required": [
+              "index",
+              "input"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "leaves": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/hash"
+          },
+          "description": "The leaf hashes, one per item in index order, which is what lets a would-be validator build the branch from its own leaf to the root and check its answer before sending it. Outside the criteria hash, like root, and checked by rebuilding root from them. They give no answer away unless a result could be guessed, and a guessable result was never a test. A set published without them is still the one committed, and nobody can prove an answer to it."
+        }
+      },
+      "required": [
+        "root",
+        "items"
+      ],
+      "additionalProperties": false
+    },
+    "composition": {
+      "$ref": "policy.schema.json#/$defs/composition",
+      "description": "How those settled predicates become an outcome. Required when predicates are declared: a list of questions with no stated rule for combining them leaves the combining to whoever is doing the judging, which is the thing declaring them was for."
+    },
+    "awards": {
+      "$ref": "award.schema.json#/$defs/definitionSet",
+      "description": "At most three, in index order: the title and criteria of each, which the chain never sees. What each pays and whether it can still pay are read from the objective's account."
+    },
+    "consensus": {
+      "$ref": "policy.schema.json#/$defs/consensusPolicy",
+      "description": "Overrides the colony default for this objective only."
+    },
+    "claimDeadline": {
+      "$ref": "common.schema.json#/$defs/timestamp"
+    },
+    "validationDeadline": {
+      "$ref": "common.schema.json#/$defs/timestamp",
+      "description": "After this, outstanding claims are decided by the leader rather than left open."
+    }
+  },
+  "required": [
+    "id",
+    "payout",
+    "title",
+    "statement",
+    "criteriaHash",
+    "validationMode",
+    "claimForm",
+    "awards",
+    "claimDeadline",
+    "validationDeadline"
+  ],
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "description": "Predicates and the rule that composes them are declared together or not at all.",
+      "if": {
+        "required": [
+          "predicates"
+        ]
+      },
+      "then": {
+        "required": [
+          "composition"
+        ]
+      }
+    }
+  ]
+}

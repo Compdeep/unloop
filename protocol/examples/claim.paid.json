@@ -1,0 +1,18 @@
+{
+  "v": "0.1.0",
+  "type": "claim.paid",
+  "colony": "protein-design",
+  "author": "7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU",
+  "peer": "12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL",
+  "ts": "2026-09-22T09:04:00Z",
+  "channel": "colony",
+  "chain": {
+    "tx": "2MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM",
+    "slot": 312901902
+  },
+  "body": {
+    "objective": "4Nd1mYt8mQuW5Uy7vFkZq2Rj9HhcXeL3sPbTgAoC6wDx",
+    "claimHash": "f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e"
+  },
+  "sig": "5JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ"
+}

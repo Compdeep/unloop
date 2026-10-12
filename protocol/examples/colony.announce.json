@@ -1,0 +1,36 @@
+{
+  "v": "0.1.0",
+  "type": "colony.announce",
+  "colony": "protein-design",
+  "author": "7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU",
+  "peer": "12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL",
+  "ts": "2026-09-20T14:30:00Z",
+  "body": {
+    "topic": "de novo protein sequence design under stability constraints",
+    "leader": "7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU",
+    "admission": "public",
+    "qualification": {
+      "spec": "Fold the sequence at hash(colony, address, epoch) with ColabFold 1.5.5 against UniRef90 2026_01 and report its predicted melting point to one decimal. Correct within 0.5 C of the value the colony holds.",
+      "bond": 5000000000,
+      "entryProofRequired": true
+    },
+    "claimForm": {
+      "name": "fasta-normalised",
+      "spec": "Single-letter amino acid codes, uppercase, no whitespace, no terminator. IUPAC ambiguity codes rejected."
+    },
+    "consensus": {
+      "minVotes": 5,
+      "acceptThreshold": 0.6,
+      "rejectThreshold": 0.4
+    },
+    "thread": {
+      "objectionThreshold": 0.1,
+      "maxClarifications": 5,
+      "maxBodyBytes": 262144
+    },
+    "paymentMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+    "validationFee": 2000000000,
+    "standingWeighting": "local"
+  },
+  "sig": "5JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ"
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://unloop.network/schemas/0.1.0/cannot_verify.schema.json",
+  "title": "cannot_verify",
+  "description": "A validator cannot follow the proof. Distinct from a reject: reject means the claim is wrong, this means it cannot be judged as written. The author may answer at once — there is no waiting for a quorum of objections.",
+  "type": "object",
+  "properties": {
+    "claimHash": { "$ref": "common.schema.json#/$defs/claimHash",
+                   "description": "Also the thread identifier. One thread per claim, so nothing extra is minted and a node can address a thread it heard about second-hand." },
+    "seq":       { "$ref": "common.schema.json#/$defs/sequence" },
+    "answering": { "$ref": "common.schema.json#/$defs/sequence",
+                   "description": "The clarification sequence this objection is filed against. An objection filed before the latest clarification does not count toward the threshold — otherwise the ratio only ever climbs and one bad round of questions condemns a claim permanently." },
+    "blocker": {
+      "type": "string",
+      "enum": ["step_missing", "not_reproducible", "ambiguous_notation", "insufficient_evidence", "out_of_reach"],
+      "description": "out_of_reach means this validator lacks the means, not that the claim is deficient. It is excluded from the objection ratio."
+    },
+    "detail": { "type": "string", "minLength": 1, "maxLength": 4000,
+                "description": "What was tried and where it stopped." }
+  },
+  "required": ["claimHash", "seq", "answering", "blocker", "detail"],
+  "additionalProperties": false
+}

@@ -1,0 +1,56 @@
+{
+  "comment": [
+    "An objective's hand-over from the agent to the site's create page (node/agent/leading.go), written by",
+    "TestDraftingAnObjective with VECTORS_WRITE=1. platform/tests/handover.test.ts fills the page's form from it",
+    "and must arrive at the same two hashes."
+  ],
+  "handover": {
+    "awards": [
+      {
+        "allocation": "400",
+        "criteria": "The first that holds.",
+        "mode": "winnerTakeAll",
+        "title": "First binder"
+      },
+      {
+        "allocation": "99.5",
+        "criteria": "Graded by score.",
+        "mode": "graded",
+        "title": "Runner-up"
+      }
+    ],
+    "claimDeadline": "2099-01-01T00:00:00.000Z",
+    "claimForm": {
+      "envelope": "sequence\nmelting curve",
+      "name": "fasta-normalised",
+      "spec": "As colony default."
+    },
+    "claimFormHash": "0752eb31708a8b49d6c99ee4cec6a59a69d51e4d9f53124560f9433eba6842ce",
+    "colony": "7Zy3tRtMu5DPaQQEdEM1UjKZLZ32CsNjsoDqjznCf8CQ",
+    "commitDeadline": "2099-01-08T00:00:00.000Z",
+    "criteriaHash": "e1f1bc0fb85084f86b77c193d17d2d9becd0169f28b946faa04ff77b7182f2bd",
+    "minScore": 50.25,
+    "payout": "prize",
+    "pool": "500.25",
+    "predicates": [
+      {
+        "id": "P1",
+        "kind": "required",
+        "proposition": "Tm above 75C"
+      },
+      {
+        "id": "P2",
+        "kind": "scored",
+        "proposition": "Expresses in E. coli",
+        "weight": 3
+      }
+    ],
+    "requiredPass": true,
+    "statement": "Find a stable binder against TR-9 — any Tm above 75 °C.",
+    "title": "Thermostable binders",
+    "v": 1,
+    "validationDeadline": "2099-01-15T00:00:00.000Z",
+    "validationMode": "semantic",
+    "validatorsPerClaim": 5
+  }
+}

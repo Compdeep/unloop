@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://unloop.network/schemas/0.1.0/claim.notice.schema.json",
+  "title": "claim.notice",
+  "description": "A claim exists. Broadcast on the colony's claims channel, which is a second topic beside the colony channel: everybody in a colony needs to know a claim was filed, and almost nobody needs the whole of it.\n\nSmall on purpose. A node reads the notice, decides from the title and description whether this is work it wants to look at, and fetches the claim itself point-to-point if it is.",
+  "type": "object",
+  "properties": {
+    "objective": { "$ref": "common.schema.json#/$defs/objectiveId" },
+    "claimHash": { "$ref": "common.schema.json#/$defs/claimHash" },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "description": "What this claims, in one line. Not on chain: the chain holds nothing readable, and the reader this serves is reading the bus."
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2000
+    },
+    "evidenceComplete": {
+      "type": "boolean",
+      "default": true,
+      "description": "False says the claim is filed but its evidence is still arriving, so a validator that starts now will be judging an incomplete submission. Priority was fixed when the claim was recorded, so there is no advantage in filing early and completing late — only a validator's wasted afternoon, which this exists to prevent."
+    }
+  },
+  "required": ["objective", "claimHash", "title", "description"],
+  "additionalProperties": false
+}

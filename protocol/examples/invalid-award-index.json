@@ -1,0 +1,21 @@
+{
+  "v": "0.1.0",
+  "type": "claim.publish",
+  "colony": "protein-design",
+  "author": "9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM",
+  "peer": "12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL",
+  "ts": "2026-09-20T14:30:00Z",
+  "chain": {
+    "tx": "4KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK",
+    "slot": 312884401
+  },
+  "body": {
+    "objective": "4Nd1mYt8mQuW5Uy7vFkZq2Rj9HhcXeL3sPbTgAoC6wDx",
+    "awardIndex": 3,
+    "claimHash": "f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e",
+    "assertion": "MKTAYIQKLKMSSAVLGSFLLALSLVSSQSVFA",
+    "significance": "A fourth award does not exist: an objective declares at most three, and the chain would reject this before anybody read it.",
+    "evidence": { "deterministic": [], "procedural": [], "semantic": [] }
+  },
+  "sig": "5JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ"
+}

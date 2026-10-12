@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://unloop.network/schemas/0.1.0/objective.update.schema.json",
+  "title": "objective.update",
+  "description": "An objective's status changed. A notice, not a record: it says go and look. The pool, the encumbrance and each award's funding state live on the objective account, where they are authoritative and free to read, so they are not repeated here. A leader-signed copy of the money state beside the real one is a second source of truth that can disagree with the first.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "$ref": "common.schema.json#/$defs/objectiveId"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "open",
+        "closed",
+        "cancelled",
+        "exhausted"
+      ],
+      "description": "Why the notice was sent. The objective account carries the status the protocol acts on."
+    },
+    "reason": {
+      "type": "string",
+      "maxLength": 2000,
+      "description": "For people and for logs. Nothing reads it."
+    }
+  },
+  "required": [
+    "id",
+    "status"
+  ],
+  "additionalProperties": false
+}

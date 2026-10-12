@@ -1,0 +1,32 @@
+{
+  "v": "0.1.0",
+  "type": "objective.publish",
+  "colony": "protein-design",
+  "author": "7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU",
+  "peer": "12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL",
+  "ts": "2026-09-20T14:30:00Z",
+  "chain": {
+    "tx": "4KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK",
+    "slot": 312884401
+  },
+  "body": {
+    "id": "4Nd1mYt8mQuW5Uy7vFkZq2Rj9HhcXeL3sPbTgAoC6wDx",
+    "payout": "prize",
+    "title": "A scored predicate with nothing to weigh it by",
+    "statement": "Without weights the composed score is undefined: there is no answer to what two scored propositions are worth relative to each other.",
+    "criteriaHash": "440f46bd3b4240e404ba09cdeb71e5823eb104770df702a894c74456ad090c59",
+    "validationMode": "semantic",
+    "claimForm": { "name": "free-form", "spec": "As colony default." },
+    "predicates": [
+      { "id": "P1", "proposition": "It answers the brief.", "kind": "required" },
+      { "id": "P2", "proposition": "It is well made.", "kind": "scored" }
+    ],
+    "composition": { "requiredPass": true },
+    "awards": [
+      { "index": 0, "title": "The work", "criteria": "As the predicates state." }
+    ],
+    "claimDeadline": "2026-12-01T00:00:00Z",
+    "validationDeadline": "2026-12-15T00:00:00Z"
+  },
+  "sig": "5JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ"
+}

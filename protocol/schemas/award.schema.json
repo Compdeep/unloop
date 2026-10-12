@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://unloop.network/schemas/0.1.0/award.schema.json",
+  "title": "Award",
+  "description": "A named part of an Objective that money is attached to, and the only one of the protocol's objects that is never a message of its own: an award is defined with its objective and reported with it, because the question an agent asks about awards — is this still worth working on — needs the whole set answered at once.\n\nOnly the definition travels. What changes as money is spent — how much has been awarded, what is still reserved, whether the award is closed — lives on the `Objective` account, where it is authoritative and free to read. Broadcasting it too would put a leader-signed copy of the money state beside the real one.",
+
+  "$defs": {
+    "index": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 2,
+      "description": "Which award, by position, matching `award_index` on chain. Three at most per objective: a congestion limit rather than a storage one, since an objective that fans out into many differently-shaped prizes produces submissions that cannot be compared with each other. Positions rather than names, because a colony's main and sub *objectives* already use those words and two structures sharing one set of words is how they get confused."
+    },
+
+    "definition": {
+      "type": "object",
+      "description": "The text of an award, which the chain never sees: its title and what satisfies it. What it pays — its mode and its allocation — and whether it can still pay are on the objective's account and are read from there; a copy here would be a second figure for the same money, and could differ from the first.",
+      "properties": {
+        "index":    { "$ref": "#/$defs/index" },
+        "title":    { "type": "string", "minLength": 1, "maxLength": 200 },
+        "criteria": { "type": "string", "minLength": 1,
+                      "description": "What satisfies this award, in terms an independent party can check." }
+      },
+      "required": ["index", "title", "criteria"],
+      "additionalProperties": false
+    },
+
+    "definitionSet": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/definition" },
+      "minItems": 1,
+      "maxItems": 3,
+      "description": "Every award an objective declares, in index order."
+    }
+  }
+}

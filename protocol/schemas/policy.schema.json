@@ -1,0 +1,149 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://unloop.network/schemas/0.1.0/policy.schema.json",
+  "title": "Policies",
+  "description": "The configurable rules a colony or an objective sets. Not messages and not primitives: each is a decision somebody made, carried by the messages that announce it. Kept apart from common.schema.json, which holds only things with no domain meaning.",
+  "$defs": {
+    "claimForm": {
+      "type": "object",
+      "description": "What shape a claim must take here. Under `deterministic` it is a canonicalisation rule, which makes 'the same discovery' decidable by exact comparison and lets the chain reject duplicates without consulting anybody. Under the other two modes the leader cannot canonicalise a discovery it has not seen, so what it fixes is the envelope: the fields a claim has to carry. The half of the format that decides identity belongs to the claimant there, which is why recognising a duplicate becomes a judgement rather than an address collision.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Named procedure, e.g. 'inchikey', 'fasta-normalised', 'numeric-tuple', 'cwe-endpoint-param'."
+        },
+        "spec": {
+          "type": "string",
+          "description": "Where the procedure is defined, precisely enough to implement."
+        },
+        "envelope": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1, "maxLength": 200 },
+          "description": "Fields a claim must carry here, beyond the protocol's own. Meaningful under `procedural` and `semantic`, where the leader fixes the envelope and the claimant writes what goes in it."
+        }
+      },
+      "required": [
+        "name",
+        "spec"
+      ],
+      "additionalProperties": false
+    },
+    "consensusPolicy": {
+      "type": "object",
+      "description": "The numbers by which a leader says how much of the decision to delegate, held on chain and applied there: where at least `minVotes` validators counted, the share that passed the claim is compared with the two thresholds, and at or above accept it is admitted, at or below reject it is rejected, and between them it is the leader's.",
+      "properties": {
+        "minVotes": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 5,
+          "description": "Votes CAST, not validators eligible. Below this the leader decides. Silence is never a vote."
+        },
+        "acceptThreshold": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "default": 0.6
+        },
+        "rejectThreshold": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "default": 0.4
+        }
+      },
+      "required": [
+        "minVotes",
+        "acceptThreshold",
+        "rejectThreshold"
+      ],
+      "additionalProperties": false
+    },
+    "predicate": {
+      "type": "object",
+      "description": "One proposition a claim has to satisfy here, declared by the leader when the objective is created and therefore before any claim exists.\n\nWithout these, what validators judge is the evidence the claimant supplied — so the claimant chooses which questions get asked about its own work, and a claim is measured against a standard that formed after it was written. A declared list means every validator answers the same questions and the claimant answers none of them.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,31}$",
+          "description": "Unique within the objective, e.g. 'P1'. A validator's verdicts are keyed by it, which is what lets two parties talk about the same question."
+        },
+        "proposition": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000,
+          "description": "What is being asserted, stated so that PASS and FAIL both mean something. 'Communicates what the protocol does' can be answered; 'is good' cannot."
+        },
+        "kind": {
+          "type": "string",
+          "enum": ["required", "scored"],
+          "description": "required: the claim does not stand without it. scored: it feeds what the claim earns and never blocks it. A leader that makes everything required has written a gate; one that makes everything scored has written a rubric."
+        },
+        "weight": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "description": "How much a scored predicate contributes, relative to the other scored ones. Meaningless on a required predicate, and required on a scored one: without weights a composed score is undefined."
+        }
+      },
+      "required": ["id", "proposition", "kind"],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": { "properties": { "kind": { "const": "scored" } }, "required": ["kind"] },
+          "then": { "required": ["weight"] }
+        }
+      ]
+    },
+
+    "predicateSet": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/predicate" },
+      "minItems": 1,
+      "maxItems": 32,
+      "description": "Every proposition the objective declares, fixed at creation along with the criteria they belong to. An objective may declare none — then `claim_support` is a judgement a validator makes for itself, which is what every objective did before this existed."
+    },
+
+    "composition": {
+      "type": "object",
+      "description": "How the settled predicates become an outcome. Declared with them, so that whether a claim stands is arithmetic over results anybody can recompute rather than a second judgement laid on top of the first.",
+      "properties": {
+        "requiredPass": {
+          "type": "boolean",
+          "default": true,
+          "description": "Every `required` predicate must settle PASS. False would let a leader admit a claim that failed one of its own conditions, which is a rubric wearing a gate's clothes."
+        },
+        "minScoreBps": {
+          "$ref": "common.schema.json#/$defs/bps",
+          "default": 0,
+          "description": "The weighted score below which a claim is not admitted at all. Zero admits true-but-worthless work, which is then citable as a root and counts against later claims' novelty — so a colony that wants a tight graph sets this and one that wants a wide one does not."
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "threadPolicy": {
+      "type": "object",
+      "description": "Limits that keep a clarification thread from becoming a flood channel.",
+      "properties": {
+        "objectionThreshold": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "default": 0.1,
+          "description": "Fraction of voting validators objecting, measured SINCE THE LAST CLARIFICATION, above which the author is expected to answer."
+        },
+        "maxClarifications": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 5
+        },
+        "maxBodyBytes": {
+          "type": "integer",
+          "minimum": 1024,
+          "default": 262144
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

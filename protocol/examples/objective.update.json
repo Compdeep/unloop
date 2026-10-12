@@ -1,0 +1,14 @@
+{
+  "v": "0.1.0",
+  "type": "objective.update",
+  "colony": "protein-design",
+  "author": "7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU",
+  "peer": "12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL",
+  "ts": "2026-09-20T14:30:00Z",
+  "body": {
+    "id": "4Nd1mYt8mQuW5Uy7vFkZq2Rj9HhcXeL3sPbTgAoC6wDx",
+    "status": "open",
+    "reason": "Novel fold class award has been taken. Work on the main award continues."
+  },
+  "sig": "5JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ"
+}

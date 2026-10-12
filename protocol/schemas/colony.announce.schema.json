@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://unloop.network/schemas/0.1.0/colony.announce.schema.json",
+  "title": "colony.announce",
+  "description": "A colony states its configuration. Re-announced periodically so a joining node can configure itself from the bus alone.",
+  "type": "object",
+  "properties": {
+    "topic": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "description": "The one subject this colony is about. A colony is deliberately narrow: because it is one topic, a node's standing inside it is already topic standing and no classifier is needed anywhere."
+    },
+    "leader": {
+      "$ref": "common.schema.json#/$defs/address"
+    },
+    "admission": {
+      "type": "string",
+      "enum": [
+        "public",
+        "keyed",
+        "private"
+      ],
+      "description": "Who may validate here, and on the bus, who may read. All three take the same path on chain \u2014 the admission authority records that an address qualified \u2014 and differ only in whom it is willing to record. public: anybody who passes the colony's test. keyed: anybody holding its admission key. private: whoever the authority chooses. Controls nothing about money, which is governed by the objective."
+    },
+    "qualification": {
+      "type": "object",
+      "description": "The test a would-be validator passes to become eligible here.\n\nIt has to be selected per identity \u2014 the sample seeded by the address \u2014 or an attacker solves it once and registers a thousand addresses with the answer. Real work from the colony's domain rather than an arbitrary puzzle, because then it does two jobs: it costs an attacker per identity, and it demonstrates the capability that `validator.announce` could only declare.\n\nDo not read more into it than it carries. Compute can be rented and work outsourced, so what passing proves is that this identity completed this colony's challenge at this time. It is friction, not identity.",
+      "properties": {
+        "spec": {
+          "type": "string",
+          "minLength": 1,
+          "description": "How the sample is derived from an address and what a correct answer looks like, precisely enough to implement and to check."
+        },
+        "bond": {
+          "$ref": "common.schema.json#/$defs/lamports",
+          "description": "What a validator puts at risk, in the protocol's token. A fixed deposit and not a stake: every bonded validator counts once, and the largest holder counts the same as the smallest, so money buys entry and never influence. The only amount a validator puts up. A public colony must ask for one; a keyed or private colony may set zero."
+        },
+        "entryProofRequired": {
+          "type": "boolean",
+          "description": "Whether an attestation admits anybody, or an entry proof is required.\n\nA colony calling itself public while somebody lets every validator in by hand is not public. Setting this refuses the attestation door, leaving the objectives' entry proofs as the only way in \u2014 which nobody administers and anybody may attempt. It cannot be the default, because a colony exists before any of its objectives do and there is nothing to answer yet."
+        }
+      },
+      "required": [
+        "spec"
+      ],
+      "additionalProperties": false
+    },
+    "claimForm": {
+      "$ref": "policy.schema.json#/$defs/claimForm",
+      "description": "Colony default. An objective may narrow this but never contradict it."
+    },
+    "consensus": {
+      "$ref": "policy.schema.json#/$defs/consensusPolicy"
+    },
+    "thread": {
+      "$ref": "policy.schema.json#/$defs/threadPolicy"
+    },
+    "paymentMint": {
+      "$ref": "common.schema.json#/$defs/address",
+      "description": "SPL mint objectives in this colony are funded in."
+    },
+    "validationFee": {
+      "$ref": "common.schema.json#/$defs/lamports",
+      "description": "What one validation of one claim is worth here, in the protocol's token, set by the leader and repriced by the leader, because a colony that cannot move it cannot stay usable as the token's value moves.\n\nA claim pays this times the validators size its objective asked for, at the moment it is filed, and the validators whose validations counted divide it equally when the claim resolves. Paid by the claimant rather than minted, because the claimant is the party consuming the attention and it is standing right there; and not out of the objective's pool, because a leader whose objective is being judged should not be choosing what its judges are paid for judging it.\n\nZero is a real setting, and is what a colony operating before the token has. Announced here because it is a price an agent needs before it files, not after.\n\nA repricing never reaches a claim already filed, which stores what it paid, nor one being filed, which carries the most its author agreed to pay."
+    },
+    "standingWeighting": {
+      "type": "string",
+      "enum": [
+        "local",
+        "global",
+        "blended"
+      ],
+      "default": "local",
+      "description": "Which standing weights a validator's vote here. Off-chain only \u2014 it steers a computation the program never performs, so it is not stored on chain."
+    }
+  },
+  "required": [
+    "topic",
+    "leader",
+    "admission",
+    "claimForm",
+    "consensus",
+    "paymentMint"
+  ],
+  "additionalProperties": false
+}

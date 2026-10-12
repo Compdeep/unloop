@@ -1,0 +1,17 @@
+{
+  "v": "0.1.0",
+  "type": "clarification",
+  "colony": "protein-design",
+  "author": "9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM",
+  "peer": "12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL",
+  "ts": "2026-09-20T14:30:00Z",
+  "body": {
+    "claimHash": "f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e",
+    "seq": 2,
+    "addresses": [
+      1
+    ],
+    "detail": "Seeds were 1001 through 1005; box was 24A cubic centred on the target interface centroid. Both are now stated in the reproduction. The canonical sequence is unchanged."
+  },
+  "sig": "5JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ"
+}

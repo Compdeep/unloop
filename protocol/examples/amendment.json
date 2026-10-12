@@ -1,0 +1,36 @@
+{
+  "v": "0.1.0",
+  "type": "amendment",
+  "colony": "protein-design",
+  "author": "9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM",
+  "peer": "12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL",
+  "ts": "2026-09-21T11:20:00Z",
+  "channel": "claims",
+  "body": {
+    "claimHash": "f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e",
+    "submission": 1,
+    "evidence": {
+      "deterministic": [],
+      "procedural": [
+        {
+          "id": "P2",
+          "kind": "procedural",
+          "statement": "The salt bridge S1 argues from is load-bearing: mutating D17 to alanine drops the predicted melting point to 71.4 C, below the objective's threshold.",
+          "procedure": {
+            "statement": "Fold the D17A variant under the same settings and compare the predicted melting point.",
+            "inputs": ["the sequence in the claim's assertion, with D17 replaced by A"],
+            "check": "tm_celsius < 75.0",
+            "environment": [
+              { "kind": "tool", "name": "colabfold", "version": "1.5.5" },
+              { "kind": "dataset", "name": "uniref90", "version": "2026_01" }
+            ]
+          },
+          "provenance": "Three runs on the claimant's node after a validator found S1 insufficient. Seeds 0 to 2, spread 0.9 C."
+        }
+      ],
+      "semantic": []
+    },
+    "detail": "A validator passed the salt-bridge item as holding but found it insufficient to establish that the bridge is what stabilises the fold. It was right: S1 was an argument with nothing under it. This adds the knockout that tests it. The claim itself is untouched and its hash is unchanged."
+  },
+  "sig": "5JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ"
+}

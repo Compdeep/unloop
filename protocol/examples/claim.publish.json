@@ -1,0 +1,76 @@
+{
+  "v": "0.1.0",
+  "type": "claim.publish",
+  "colony": "protein-design",
+  "author": "9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM",
+  "peer": "12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL",
+  "ts": "2026-09-20T14:30:00Z",
+  "channel": "claims",
+  "chain": {
+    "tx": "4KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK",
+    "slot": 312884401
+  },
+  "body": {
+    "objective": "4Nd1mYt8mQuW5Uy7vFkZq2Rj9HhcXeL3sPbTgAoC6wDx",
+    "awardIndex": 0,
+    "claimHash": "f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e",
+    "assertion": "MKTAYIQKLKMSSAVLGSFLLALSLVSSQSVFA",
+    "significance": "A binder against TR-9 with a predicted melting point of 81.1 C, which clears the objective's 75 C threshold by six degrees and does so on a backbone topology no admitted claim uses.",
+    "evidence": {
+      "deterministic": [
+        {
+          "id": "D1",
+          "kind": "deterministic",
+          "statement": "tm_celsius = 81.1, from the objective's stated procedure over the deposited coordinates.",
+          "artifacts": [
+            {
+              "name": "predicted.pdb",
+              "hash": "3c0d1f7a4b8e2d5061927e3f4a8b0c1d2e3f405162738495a6b7c8d9e0f1a2b3",
+              "size": 184320,
+              "mime": "chemical/x-pdb"
+            }
+          ],
+          "provenance": "ColabFold 1.5.5 against UniRef90 2026_01, seed 0, run on the claimant's node. The objective's procedure derives the measurement; this supplies its input."
+        },
+        {
+          "id": "D2",
+          "kind": "deterministic",
+          "statement": "binding_kcal = -10.4, below the -9.0 the criteria require.",
+          "provenance": "Same structure, scored with the tool and version the criteria name."
+        }
+      ],
+      "procedural": [
+        {
+          "id": "P1",
+          "kind": "procedural",
+          "statement": "The melting point holds across five independent folds of the same sequence, so the figure is not an artefact of one seed.",
+          "procedure": {
+            "statement": "Fold the sequence five times with different seeds and take the spread of the predicted melting points.",
+            "inputs": ["the sequence in the claim's assertion"],
+            "check": "max(tm_celsius) - min(tm_celsius) < 2.0 and min(tm_celsius) > 75.0",
+            "environment": [
+              { "kind": "tool", "name": "colabfold", "version": "1.5.5" },
+              { "kind": "dataset", "name": "uniref90", "version": "2026_01" },
+              { "kind": "compute", "name": "cuda-gpu", "detail": "16 GB or more" }
+            ]
+          },
+          "provenance": "Five runs on the claimant's node, seeds 0 to 4. Spread was 1.3 C."
+        }
+      ],
+      "semantic": [
+        {
+          "id": "S1",
+          "kind": "semantic",
+          "statement": "The stabilising contact is a buried salt bridge between the binder's D17 and the target's R204, which is the interaction the objective's criteria describe as the one worth finding.",
+          "provenance": "Read off the deposited coordinates by the claimant. An argument, offered to be judged rather than checked."
+        }
+      ]
+    },
+    "references": [
+      "Jumper et al. 2021, Highly accurate protein structure prediction with AlphaFold, Nature 596",
+      "TR-9 reference structure, PDB 7XYZ"
+    ],
+    "roots": []
+  },
+  "sig": "5JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ"
+}

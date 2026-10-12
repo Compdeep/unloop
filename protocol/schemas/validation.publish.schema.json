@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://unloop.network/schemas/0.1.0/validation.publish.schema.json",
+  "title": "validation.publish",
+  "description": "One validator's judgement of one claim. Not a verdict: a structured finding, because collapsing it first destroys the part worth keeping. Three validators can agree completely that the evidence holds and still produce one pass against two insufficient, which reads as a contested claim when the uncertainty is somewhere else entirely.\n\nThe fields that admission and money depend on go on chain; the per-item findings and the rationale travel here under `finding`, which is the hash the chain holds. Silence from other validators is never counted as a vote against.\n\nPublished at the reveal, never before it. On chain a validation arrives in two parts — a commitment, then the values it was a commitment to — because a finding published while others are still deciding is one they can copy, and a consensus interval over copies claims a confidence nobody earned. Sending this message before the commit window closes would give away what the chain is holding back.",
+  "type": "object",
+  "properties": {
+    "claimHash": {
+      "$ref": "common.schema.json#/$defs/claimHash"
+    },
+    "reason": {
+      "type": "string",
+      "enum": [
+        "none",
+        "refused",
+        "unavailable",
+        "access_denied",
+        "timed_out",
+        "unsupported",
+        "environment",
+        "resource_limit",
+        "internal"
+      ],
+      "default": "none",
+      "description": "Anything but `none` means the evaluation did not happen. That is a fact about this validator's run and not a judgement of the claim: it carries no findings, enters no tally, and a claim whose validators mostly return one goes to the leader rather than being settled by the few that got through. `unsupported` is reach — this node does not hold what the procedure needs — and is the one a leader should read as being about the objective."
+    },
+    "items": {
+      "type": "array",
+      "maxItems": 192,
+      "description": "One entry per evidence item the validator looked at, keyed by the id the claim gave it. Empty when `reason` is not `none`.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,31}$"
+          },
+          "holds": {
+            "$ref": "common.schema.json#/$defs/finding",
+            "description": "Does the item itself hold? Mechanical wherever the leader wrote the check."
+          },
+          "supportsClaim": {
+            "$ref": "common.schema.json#/$defs/finding",
+            "description": "Does it bear on the assertion? A judgement whenever the claimant chose the evidence, and no question at all under `deterministic`, where the leader settled the relationship when it wrote the procedure."
+          },
+          "note": { "type": "string", "maxLength": 4000 }
+        },
+        "required": ["id", "holds", "supportsClaim"],
+        "additionalProperties": false
+      }
+    },
+    "predicates": {
+      "type": "array",
+      "maxItems": 32,
+      "description": "One verdict per proposition the objective declared, keyed by its id. Every validator answers the same list, because the leader fixed it before any claim existed. Absent where the objective declared none.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,31}$"
+          },
+          "verdict": { "$ref": "common.schema.json#/$defs/finding" },
+          "spans": {
+            "type": "array",
+            "maxItems": 8,
+            "items": { "$ref": "evidence.schema.json#/$defs/span" },
+            "description": "What the verdict rests on. The reason on the record is the validator's, not the claimant's: a claimant made to argue every proposition would turn validation into a test of how well it writes, and a good result with a poor defence of itself would fail."
+          },
+          "reason": { "type": "string", "maxLength": 4000 }
+        },
+        "required": ["id", "verdict"],
+        "additionalProperties": false
+      }
+    },
+    "claimSupport": {
+      "$ref": "common.schema.json#/$defs/finding",
+      "description": "Does the evidence, taken together, establish the claim?\n\nWhere the objective declared predicates this is not a separate judgement: it is what this validator's own verdicts compose to under the objective's stated rule, and anybody holding this message can recompute it. Where it declared none, it is the validator's own reading, which is what it always was."
+    },
+    "objectiveAlignment": {
+      "$ref": "common.schema.json#/$defs/finding",
+      "description": "Does the claim answer the objective it was sent to? Judged apart from the evidence, so that correct work the objective did not ask for does not earn a discovery reward."
+    },
+    "noveltyBps": {
+      "$ref": "common.schema.json#/$defs/bps",
+      "description": "How much this adds to the record, measured with the discovery graph in front of the validator. 10000 means nothing in the record covers it; 0 means the record already contains it. A measure rather than a label, so `novel`, `derived` and `duplicate` are three points on one scale and everything between them has a value too."
+    },
+    "scoreBps": {
+      "$ref": "common.schema.json#/$defs/bps",
+      "description": "Usefulness against the award's criteria."
+    },
+    "reproduction": {
+      "type": "string",
+      "enum": ["not_attempted", "pass", "fail"],
+      "default": "not_attempted",
+      "description": "Recorded separately from review, because ten validators inspecting one artifact produce ten assessments of one observation, while a validator that reproduces the result independently produces a second observation. Under `deterministic`, reproduction means obtaining the input independently — deriving the measurement from a supplied input is what every validator does anyway, and is validation rather than reproduction."
+    },
+    "derivesFrom": {
+      "type": "array",
+      "items": { "$ref": "common.schema.json#/$defs/claimHash" },
+      "maxItems": 8,
+      "description": "Admitted claims this validator believes the claim was built on. Naming one the author did not declare is what drops its novelty."
+    },
+    "finding": {
+      "$ref": "common.schema.json#/$defs/hash",
+      "description": "SHA-256 of `items`, `predicates` and `rationale` canonically encoded (RFC 8785) as one object, an absent one left out. This is the value recorded on chain, so the detail can be held off it and still not be alterable afterwards. It must not be the zero hash when `reason` is `none`; when it is not, the zero hash commits to no detail. Reference implementation: chain/client/finding.ts."
+    },
+    "rationale": {
+      "type": "string",
+      "maxLength": 16000,
+      "description": "Prose, for the claimant, for audit and for a later dispute. The structured fields drive the protocol; no other validator has to validate this."
+    }
+  },
+  "required": [
+    "claimHash",
+    "reason",
+    "items",
+    "claimSupport",
+    "objectiveAlignment",
+    "noveltyBps",
+    "scoreBps",
+    "reproduction",
+    "finding"
+  ],
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "description": "A validation that failed to evaluate measured nothing. Its numbers must be zero and it carries no item findings, so that a reader folding these into a range cannot widen it with values no validator reported.",
+      "if": {
+        "properties": { "reason": { "not": { "const": "none" } } },
+        "required": ["reason"]
+      },
+      "then": {
+        "properties": {
+          "noveltyBps": { "const": 0 },
+          "scoreBps": { "const": 0 },
+          "items": { "maxItems": 0 },
+          "predicates": { "maxItems": 0 }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,1324 @@
+{
+  "comment": [
+    "What node/envelope (Go) and chain/client/envelope.ts (TypeScript) must both reproduce.",
+    "Built by chain/tests/envelope.test.ts from protocol/examples, signed by the test keys below;",
+    "VECTORS_WRITE=1 rebuilds it. `signing` is the UTF-8 text the author signs, `id` the message id.",
+    "`expect` is what a node concludes: ok, or the first check that refuses it — schema, then signature."
+  ],
+  "version": "0.1.0",
+  "keys": [
+    {
+      "seed": "0101010101010101010101010101010101010101010101010101010101010101",
+      "address": "AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9"
+    },
+    {
+      "seed": "0202020202020202020202020202020202020202020202020202020202020202",
+      "address": "9hSR6S7WPtxmTojgo6GG3k4yDPecgJY292j7xrsUGWBu"
+    }
+  ],
+  "canonical": [
+    {
+      "name": "key order",
+      "json": "{\"b\":1,\"a\":{\"d\":[],\"c\":{}},\"\":null}",
+      "canonical": "{\"\":null,\"a\":{\"c\":{},\"d\":[]},\"b\":1}"
+    },
+    {
+      "name": "key order by UTF-16 code unit, not by byte",
+      "json": "{\"\\uff61\":1,\"\\ud83d\\ude00\":2,\"\\u20ac\":3,\"z\":4}",
+      "canonical": "{\"z\":4,\"€\":3,\"😀\":2,\"｡\":1}"
+    },
+    {
+      "name": "literals",
+      "json": "[true,false,null,[],{}]",
+      "canonical": "[true,false,null,[],{}]"
+    },
+    {
+      "name": "escapes",
+      "json": "\"\\u0000\\u001f\\\"\\\\/\\b\\f\\n\\r\\t\\u007f\"",
+      "canonical": "\"\\u0000\\u001f\\\"\\\\/\\b\\f\\n\\r\\t\""
+    },
+    {
+      "name": "not escaped",
+      "json": "\"<>&\\u2028\\u2029é€😀\"",
+      "canonical": "\"<>&  é€😀\""
+    },
+    {
+      "name": "integers",
+      "json": "[0,-0,1,-1,9007199254740991,9007199254740993,1e20,1e21,123456789012345680000]",
+      "canonical": "[0,0,1,-1,9007199254740991,9007199254740992,100000000000000000000,1e+21,123456789012345680000]"
+    },
+    {
+      "name": "fractions",
+      "json": "[0.1,-0.5,123.456,1e-6,1e-7,0.000001234,5e-324,1.7976931348623157e308,4.5e15,2.5e-3]",
+      "canonical": "[0.1,-0.5,123.456,0.000001,1e-7,0.000001234,5e-324,1.7976931348623157e+308,4500000000000000,0.0025]"
+    }
+  ],
+  "envelopes": [
+    {
+      "name": "amendment",
+      "expect": "ok",
+      "envelope": {
+        "v": "0.1.0",
+        "type": "amendment",
+        "colony": "protein-design",
+        "author": "AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9",
+        "peer": "12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL",
+        "ts": "2026-09-21T11:20:00Z",
+        "channel": "claims",
+        "body": {
+          "claimHash": "f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e",
+          "submission": 1,
+          "evidence": {
+            "deterministic": [],
+            "procedural": [
+              {
+                "id": "P2",
+                "kind": "procedural",
+                "statement": "The salt bridge S1 argues from is load-bearing: mutating D17 to alanine drops the predicted melting point to 71.4 C, below the objective's threshold.",
+                "procedure": {
+                  "statement": "Fold the D17A variant under the same settings and compare the predicted melting point.",
+                  "inputs": [
+                    "the sequence in the claim's assertion, with D17 replaced by A"
+                  ],
+                  "check": "tm_celsius < 75.0",
+                  "environment": [
+                    {
+                      "kind": "tool",
+                      "name": "colabfold",
+                      "version": "1.5.5"
+                    },
+                    {
+                      "kind": "dataset",
+                      "name": "uniref90",
+                      "version": "2026_01"
+                    }
+                  ]
+                },
+                "provenance": "Three runs on the claimant's node after a validator found S1 insufficient. Seeds 0 to 2, spread 0.9 C."
+              }
+            ],
+            "semantic": []
+          },
+          "detail": "A validator passed the salt-bridge item as holding but found it insufficient to establish that the bridge is what stabilises the fold. It was right: S1 was an argument with nothing under it. This adds the knockout that tests it. The claim itself is untouched and its hash is unchanged."
+        },
+        "sig": "ETTU6RJrb8L5higZgTNcpBc5ZsWLgFaESjpQN6hcjAnmLfV7YUBqcsNqfwhL6SpJwFRsaeJcC9DQBqe85tYaTXP"
+      },
+      "signing": "{\"author\":\"AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9\",\"body\":{\"claimHash\":\"f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e\",\"detail\":\"A validator passed the salt-bridge item as holding but found it insufficient to establish that the bridge is what stabilises the fold. It was right: S1 was an argument with nothing under it. This adds the knockout that tests it. The claim itself is untouched and its hash is unchanged.\",\"evidence\":{\"deterministic\":[],\"procedural\":[{\"id\":\"P2\",\"kind\":\"procedural\",\"procedure\":{\"check\":\"tm_celsius < 75.0\",\"environment\":[{\"kind\":\"tool\",\"name\":\"colabfold\",\"version\":\"1.5.5\"},{\"kind\":\"dataset\",\"name\":\"uniref90\",\"version\":\"2026_01\"}],\"inputs\":[\"the sequence in the claim's assertion, with D17 replaced by A\"],\"statement\":\"Fold the D17A variant under the same settings and compare the predicted melting point.\"},\"provenance\":\"Three runs on the claimant's node after a validator found S1 insufficient. Seeds 0 to 2, spread 0.9 C.\",\"statement\":\"The salt bridge S1 argues from is load-bearing: mutating D17 to alanine drops the predicted melting point to 71.4 C, below the objective's threshold.\"}],\"semantic\":[]},\"submission\":1},\"channel\":\"claims\",\"colony\":\"protein-design\",\"peer\":\"12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL\",\"ts\":\"2026-09-21T11:20:00Z\",\"type\":\"amendment\",\"v\":\"0.1.0\"}",
+      "id": "b7218313aa26b24beb84062b670c60f347ea39a0b8d51a0da6be6f66051960da"
+    },
+    {
+      "name": "cannot_verify",
+      "expect": "ok",
+      "envelope": {
+        "v": "0.1.0",
+        "type": "cannot_verify",
+        "colony": "protein-design",
+        "author": "AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9",
+        "peer": "12D3KooWRfYvMBcLKh9JnFEkGpPsNaMxLVmYqQbWtCdEfGhJkLmN",
+        "ts": "2026-09-20T14:30:00Z",
+        "body": {
+          "claimHash": "f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e",
+          "seq": 1,
+          "answering": 0,
+          "blocker": "step_missing",
+          "detail": "The docking protocol does not state the random seed or the box dimensions, so the five runs cannot be reproduced. Reached step 3 and stopped."
+        },
+        "sig": "3zbQ4XJiaUhGpzxEGNTSJdjEZjTH3FWx8u9JijWYZy1twHC7fbhvkdrgseEhwLiLc3esyeYA4pjqQSfdpcFcuXLp"
+      },
+      "signing": "{\"author\":\"AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9\",\"body\":{\"answering\":0,\"blocker\":\"step_missing\",\"claimHash\":\"f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e\",\"detail\":\"The docking protocol does not state the random seed or the box dimensions, so the five runs cannot be reproduced. Reached step 3 and stopped.\",\"seq\":1},\"colony\":\"protein-design\",\"peer\":\"12D3KooWRfYvMBcLKh9JnFEkGpPsNaMxLVmYqQbWtCdEfGhJkLmN\",\"ts\":\"2026-09-20T14:30:00Z\",\"type\":\"cannot_verify\",\"v\":\"0.1.0\"}",
+      "id": "9d23c8fef8a41ef017552d8fc476a4d44c296f0473e54953df8b549491db23ac"
+    },
+    {
+      "name": "claim.notice",
+      "expect": "ok",
+      "envelope": {
+        "v": "0.1.0",
+        "type": "claim.notice",
+        "colony": "protein-design",
+        "author": "AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9",
+        "peer": "12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL",
+        "ts": "2026-09-20T14:30:02Z",
+        "channel": "claims",
+        "body": {
+          "objective": "4Nd1mYt8mQuW5Uy7vFkZq2Rj9HhcXeL3sPbTgAoC6wDx",
+          "claimHash": "f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e",
+          "title": "TR-9 binder at 81.1 C on an unused backbone topology",
+          "description": "Predicted melting point 81.1 C against the objective's 75 C floor, binding -10.4 kcal/mol, stable across five seeds. Needs ColabFold 1.5.5 and UniRef90 2026_01 to check.",
+          "evidenceComplete": true
+        },
+        "sig": "2Y9vMYC7L9YSjZehiqQDedobVr6Ho5BA4Gd8bPahc79fsLkYhCGRtYDiiWZ9QNgn7dEr4HFveC4aYppER6ys5R3u"
+      },
+      "signing": "{\"author\":\"AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9\",\"body\":{\"claimHash\":\"f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e\",\"description\":\"Predicted melting point 81.1 C against the objective's 75 C floor, binding -10.4 kcal/mol, stable across five seeds. Needs ColabFold 1.5.5 and UniRef90 2026_01 to check.\",\"evidenceComplete\":true,\"objective\":\"4Nd1mYt8mQuW5Uy7vFkZq2Rj9HhcXeL3sPbTgAoC6wDx\",\"title\":\"TR-9 binder at 81.1 C on an unused backbone topology\"},\"channel\":\"claims\",\"colony\":\"protein-design\",\"peer\":\"12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL\",\"ts\":\"2026-09-20T14:30:02Z\",\"type\":\"claim.notice\",\"v\":\"0.1.0\"}",
+      "id": "efd29bb5293ed46e7d24dc2ffe054cb1935027c0d8bd436733a0240b95add859"
+    },
+    {
+      "name": "claim.paid",
+      "expect": "ok",
+      "envelope": {
+        "v": "0.1.0",
+        "type": "claim.paid",
+        "colony": "protein-design",
+        "author": "AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9",
+        "peer": "12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL",
+        "ts": "2026-09-22T09:04:00Z",
+        "channel": "colony",
+        "chain": {
+          "tx": "2MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM",
+          "slot": 312901902
+        },
+        "body": {
+          "objective": "4Nd1mYt8mQuW5Uy7vFkZq2Rj9HhcXeL3sPbTgAoC6wDx",
+          "claimHash": "f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e"
+        },
+        "sig": "4QvJgeU3oeKtjiS74GzPVkTh2H49LwDWD3EAD8VXwAsYtDJG2nmVUf2vDryT7zBfTzgLVi2dhtiA3RFPibiD2TA"
+      },
+      "signing": "{\"author\":\"AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9\",\"body\":{\"claimHash\":\"f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e\",\"objective\":\"4Nd1mYt8mQuW5Uy7vFkZq2Rj9HhcXeL3sPbTgAoC6wDx\"},\"chain\":{\"slot\":312901902,\"tx\":\"2MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM\"},\"channel\":\"colony\",\"colony\":\"protein-design\",\"peer\":\"12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL\",\"ts\":\"2026-09-22T09:04:00Z\",\"type\":\"claim.paid\",\"v\":\"0.1.0\"}",
+      "id": "9ca14cfb88815d3b94d76701b595980d012678c2b4d915264402f53ead273313"
+    },
+    {
+      "name": "claim.publish",
+      "expect": "ok",
+      "envelope": {
+        "v": "0.1.0",
+        "type": "claim.publish",
+        "colony": "protein-design",
+        "author": "AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9",
+        "peer": "12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL",
+        "ts": "2026-09-20T14:30:00Z",
+        "channel": "claims",
+        "chain": {
+          "tx": "4KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK",
+          "slot": 312884401
+        },
+        "body": {
+          "objective": "4Nd1mYt8mQuW5Uy7vFkZq2Rj9HhcXeL3sPbTgAoC6wDx",
+          "awardIndex": 0,
+          "claimHash": "f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e",
+          "assertion": "MKTAYIQKLKMSSAVLGSFLLALSLVSSQSVFA",
+          "significance": "A binder against TR-9 with a predicted melting point of 81.1 C, which clears the objective's 75 C threshold by six degrees and does so on a backbone topology no admitted claim uses.",
+          "evidence": {
+            "deterministic": [
+              {
+                "id": "D1",
+                "kind": "deterministic",
+                "statement": "tm_celsius = 81.1, from the objective's stated procedure over the deposited coordinates.",
+                "artifacts": [
+                  {
+                    "name": "predicted.pdb",
+                    "hash": "3c0d1f7a4b8e2d5061927e3f4a8b0c1d2e3f405162738495a6b7c8d9e0f1a2b3",
+                    "size": 184320,
+                    "mime": "chemical/x-pdb"
+                  }
+                ],
+                "provenance": "ColabFold 1.5.5 against UniRef90 2026_01, seed 0, run on the claimant's node. The objective's procedure derives the measurement; this supplies its input."
+              },
+              {
+                "id": "D2",
+                "kind": "deterministic",
+                "statement": "binding_kcal = -10.4, below the -9.0 the criteria require.",
+                "provenance": "Same structure, scored with the tool and version the criteria name."
+              }
+            ],
+            "procedural": [
+              {
+                "id": "P1",
+                "kind": "procedural",
+                "statement": "The melting point holds across five independent folds of the same sequence, so the figure is not an artefact of one seed.",
+                "procedure": {
+                  "statement": "Fold the sequence five times with different seeds and take the spread of the predicted melting points.",
+                  "inputs": [
+                    "the sequence in the claim's assertion"
+                  ],
+                  "check": "max(tm_celsius) - min(tm_celsius) < 2.0 and min(tm_celsius) > 75.0",
+                  "environment": [
+                    {
+                      "kind": "tool",
+                      "name": "colabfold",
+                      "version": "1.5.5"
+                    },
+                    {
+                      "kind": "dataset",
+                      "name": "uniref90",
+                      "version": "2026_01"
+                    },
+                    {
+                      "kind": "compute",
+                      "name": "cuda-gpu",
+                      "detail": "16 GB or more"
+                    }
+                  ]
+                },
+                "provenance": "Five runs on the claimant's node, seeds 0 to 4. Spread was 1.3 C."
+              }
+            ],
+            "semantic": [
+              {
+                "id": "S1",
+                "kind": "semantic",
+                "statement": "The stabilising contact is a buried salt bridge between the binder's D17 and the target's R204, which is the interaction the objective's criteria describe as the one worth finding.",
+                "provenance": "Read off the deposited coordinates by the claimant. An argument, offered to be judged rather than checked."
+              }
+            ]
+          },
+          "references": [
+            "Jumper et al. 2021, Highly accurate protein structure prediction with AlphaFold, Nature 596",
+            "TR-9 reference structure, PDB 7XYZ"
+          ],
+          "roots": []
+        },
+        "sig": "PNDt7dDJJ4KzCLotmQG4xmHAS2sVtQavsBgNPyvVJxBpw177k2grtod7aN1aE9KBj3cbz7Mma5WaMP6mvymS6id"
+      },
+      "signing": "{\"author\":\"AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9\",\"body\":{\"assertion\":\"MKTAYIQKLKMSSAVLGSFLLALSLVSSQSVFA\",\"awardIndex\":0,\"claimHash\":\"f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e\",\"evidence\":{\"deterministic\":[{\"artifacts\":[{\"hash\":\"3c0d1f7a4b8e2d5061927e3f4a8b0c1d2e3f405162738495a6b7c8d9e0f1a2b3\",\"mime\":\"chemical/x-pdb\",\"name\":\"predicted.pdb\",\"size\":184320}],\"id\":\"D1\",\"kind\":\"deterministic\",\"provenance\":\"ColabFold 1.5.5 against UniRef90 2026_01, seed 0, run on the claimant's node. The objective's procedure derives the measurement; this supplies its input.\",\"statement\":\"tm_celsius = 81.1, from the objective's stated procedure over the deposited coordinates.\"},{\"id\":\"D2\",\"kind\":\"deterministic\",\"provenance\":\"Same structure, scored with the tool and version the criteria name.\",\"statement\":\"binding_kcal = -10.4, below the -9.0 the criteria require.\"}],\"procedural\":[{\"id\":\"P1\",\"kind\":\"procedural\",\"procedure\":{\"check\":\"max(tm_celsius) - min(tm_celsius) < 2.0 and min(tm_celsius) > 75.0\",\"environment\":[{\"kind\":\"tool\",\"name\":\"colabfold\",\"version\":\"1.5.5\"},{\"kind\":\"dataset\",\"name\":\"uniref90\",\"version\":\"2026_01\"},{\"detail\":\"16 GB or more\",\"kind\":\"compute\",\"name\":\"cuda-gpu\"}],\"inputs\":[\"the sequence in the claim's assertion\"],\"statement\":\"Fold the sequence five times with different seeds and take the spread of the predicted melting points.\"},\"provenance\":\"Five runs on the claimant's node, seeds 0 to 4. Spread was 1.3 C.\",\"statement\":\"The melting point holds across five independent folds of the same sequence, so the figure is not an artefact of one seed.\"}],\"semantic\":[{\"id\":\"S1\",\"kind\":\"semantic\",\"provenance\":\"Read off the deposited coordinates by the claimant. An argument, offered to be judged rather than checked.\",\"statement\":\"The stabilising contact is a buried salt bridge between the binder's D17 and the target's R204, which is the interaction the objective's criteria describe as the one worth finding.\"}]},\"objective\":\"4Nd1mYt8mQuW5Uy7vFkZq2Rj9HhcXeL3sPbTgAoC6wDx\",\"references\":[\"Jumper et al. 2021, Highly accurate protein structure prediction with AlphaFold, Nature 596\",\"TR-9 reference structure, PDB 7XYZ\"],\"roots\":[],\"significance\":\"A binder against TR-9 with a predicted melting point of 81.1 C, which clears the objective's 75 C threshold by six degrees and does so on a backbone topology no admitted claim uses.\"},\"chain\":{\"slot\":312884401,\"tx\":\"4KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK\"},\"channel\":\"claims\",\"colony\":\"protein-design\",\"peer\":\"12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL\",\"ts\":\"2026-09-20T14:30:00Z\",\"type\":\"claim.publish\",\"v\":\"0.1.0\"}",
+      "id": "df323d29a3f0a5df5959dddca47b181e96956092b6c2865fdd90e10497990156"
+    },
+    {
+      "name": "claim.resolved",
+      "expect": "ok",
+      "envelope": {
+        "v": "0.1.0",
+        "type": "claim.resolved",
+        "colony": "protein-design",
+        "author": "AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9",
+        "peer": "12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL",
+        "ts": "2026-09-22T09:00:00Z",
+        "channel": "colony",
+        "chain": {
+          "tx": "3LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL",
+          "slot": 312901884
+        },
+        "body": {
+          "objective": "4Nd1mYt8mQuW5Uy7vFkZq2Rj9HhcXeL3sPbTgAoC6wDx",
+          "claimHash": "f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e",
+          "admitted": true,
+          "decidedBy": "consensus"
+        },
+        "sig": "2qkjYgqVMekzKbW7H61yY17XA46KCghyDudF93gfb6RYbNEuMwK9WofG7yvyQ3h9sad4oHAbT6AdtnDDBMxS1443"
+      },
+      "signing": "{\"author\":\"AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9\",\"body\":{\"admitted\":true,\"claimHash\":\"f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e\",\"decidedBy\":\"consensus\",\"objective\":\"4Nd1mYt8mQuW5Uy7vFkZq2Rj9HhcXeL3sPbTgAoC6wDx\"},\"chain\":{\"slot\":312901884,\"tx\":\"3LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL\"},\"channel\":\"colony\",\"colony\":\"protein-design\",\"peer\":\"12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL\",\"ts\":\"2026-09-22T09:00:00Z\",\"type\":\"claim.resolved\",\"v\":\"0.1.0\"}",
+      "id": "dd38f4a80b2ba122cafa2ce707f72731315ef11a46a1690093ca2f563fca0a6b"
+    },
+    {
+      "name": "clarification",
+      "expect": "ok",
+      "envelope": {
+        "v": "0.1.0",
+        "type": "clarification",
+        "colony": "protein-design",
+        "author": "AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9",
+        "peer": "12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL",
+        "ts": "2026-09-20T14:30:00Z",
+        "body": {
+          "claimHash": "f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e",
+          "seq": 2,
+          "addresses": [
+            1
+          ],
+          "detail": "Seeds were 1001 through 1005; box was 24A cubic centred on the target interface centroid. Both are now stated in the reproduction. The canonical sequence is unchanged."
+        },
+        "sig": "ABdQ5rGpj8fxSeGCGfBrVpcNigMFJKYuYHNkhTdhyU71abRJp8eYYnAJdygFpjNRUYPzZrPrVdzUsUzgeDpuJZM"
+      },
+      "signing": "{\"author\":\"AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9\",\"body\":{\"addresses\":[1],\"claimHash\":\"f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e\",\"detail\":\"Seeds were 1001 through 1005; box was 24A cubic centred on the target interface centroid. Both are now stated in the reproduction. The canonical sequence is unchanged.\",\"seq\":2},\"colony\":\"protein-design\",\"peer\":\"12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL\",\"ts\":\"2026-09-20T14:30:00Z\",\"type\":\"clarification\",\"v\":\"0.1.0\"}",
+      "id": "2e42e3f31445938d00afec5d2f20d14f7c785d29d1a6ea4975407d8e2843f31c"
+    },
+    {
+      "name": "colony.announce",
+      "expect": "ok",
+      "envelope": {
+        "v": "0.1.0",
+        "type": "colony.announce",
+        "colony": "protein-design",
+        "author": "AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9",
+        "peer": "12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL",
+        "ts": "2026-09-20T14:30:00Z",
+        "body": {
+          "topic": "de novo protein sequence design under stability constraints",
+          "leader": "7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU",
+          "admission": "public",
+          "qualification": {
+            "spec": "Fold the sequence at hash(colony, address, epoch) with ColabFold 1.5.5 against UniRef90 2026_01 and report its predicted melting point to one decimal. Correct within 0.5 C of the value the colony holds.",
+            "bond": 5000000000,
+            "entryProofRequired": true
+          },
+          "claimForm": {
+            "name": "fasta-normalised",
+            "spec": "Single-letter amino acid codes, uppercase, no whitespace, no terminator. IUPAC ambiguity codes rejected."
+          },
+          "consensus": {
+            "minVotes": 5,
+            "acceptThreshold": 0.6,
+            "rejectThreshold": 0.4
+          },
+          "thread": {
+            "objectionThreshold": 0.1,
+            "maxClarifications": 5,
+            "maxBodyBytes": 262144
+          },
+          "paymentMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "validationFee": 2000000000,
+          "standingWeighting": "local"
+        },
+        "sig": "2jrXSiUVeJeEwXG4qtj6B5HP9Eb9zBkgDnCwRawXpVmgtMKULqDuTYhYgCVW2TEWk2471zaGhCpWgM7ZHBNntsM9"
+      },
+      "signing": "{\"author\":\"AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9\",\"body\":{\"admission\":\"public\",\"claimForm\":{\"name\":\"fasta-normalised\",\"spec\":\"Single-letter amino acid codes, uppercase, no whitespace, no terminator. IUPAC ambiguity codes rejected.\"},\"consensus\":{\"acceptThreshold\":0.6,\"minVotes\":5,\"rejectThreshold\":0.4},\"leader\":\"7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU\",\"paymentMint\":\"EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v\",\"qualification\":{\"bond\":5000000000,\"entryProofRequired\":true,\"spec\":\"Fold the sequence at hash(colony, address, epoch) with ColabFold 1.5.5 against UniRef90 2026_01 and report its predicted melting point to one decimal. Correct within 0.5 C of the value the colony holds.\"},\"standingWeighting\":\"local\",\"thread\":{\"maxBodyBytes\":262144,\"maxClarifications\":5,\"objectionThreshold\":0.1},\"topic\":\"de novo protein sequence design under stability constraints\",\"validationFee\":2000000000},\"colony\":\"protein-design\",\"peer\":\"12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL\",\"ts\":\"2026-09-20T14:30:00Z\",\"type\":\"colony.announce\",\"v\":\"0.1.0\"}",
+      "id": "520bd4fedd75f800ca9e16260724626e1b7d0985cf1bc9c161c20f6e8cc07d5b"
+    },
+    {
+      "name": "objective.publish",
+      "expect": "ok",
+      "envelope": {
+        "v": "0.1.0",
+        "type": "objective.publish",
+        "colony": "protein-design",
+        "author": "AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9",
+        "peer": "12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL",
+        "ts": "2026-09-20T14:30:00Z",
+        "chain": {
+          "tx": "4KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK",
+          "slot": 312884401
+        },
+        "body": {
+          "id": "4Nd1mYt8mQuW5Uy7vFkZq2Rj9HhcXeL3sPbTgAoC6wDx",
+          "payout": "rate",
+          "title": "Thermostable binders for target TR-9",
+          "statement": "Find sequences that fold to a stable binder against target TR-9 with predicted melting point above 75C.",
+          "criteriaHash": "0951c58a1ec331e561ac848a563f82430b33128caa5eb0c04cf160a2f484d9af",
+          "validationMode": "deterministic",
+          "validatorsPerClaim": 11,
+          "claimForm": {
+            "name": "fasta-normalised",
+            "spec": "As colony default."
+          },
+          "predicates": [
+            {
+              "id": "P1",
+              "proposition": "The sequence folds to a binder against TR-9 rather than to an unrelated structure.",
+              "kind": "required"
+            },
+            {
+              "id": "P2",
+              "proposition": "The measurement was derived by the objective's stated procedure, not asserted by the claimant.",
+              "kind": "required"
+            },
+            {
+              "id": "P3",
+              "proposition": "The stabilising interaction the claim identifies is the one doing the work.",
+              "kind": "scored",
+              "weight": 3
+            },
+            {
+              "id": "P4",
+              "proposition": "The backbone topology is not one an admitted claim already uses.",
+              "kind": "scored",
+              "weight": 2
+            }
+          ],
+          "composition": {
+            "requiredPass": true,
+            "minScoreBps": 2000
+          },
+          "awards": [
+            {
+              "index": 0,
+              "title": "Qualifying binder",
+              "criteria": "Predicted Tm above 75C and binding score under -9.0 kcal/mol, reproducible from the stated method."
+            },
+            {
+              "index": 1,
+              "title": "Novel fold class",
+              "criteria": "Backbone topology not present in any admitted claim."
+            }
+          ],
+          "claimDeadline": "2026-12-01T00:00:00Z",
+          "validationDeadline": "2026-12-15T00:00:00Z"
+        },
+        "channel": "colony",
+        "sig": "37HMK8z31Gk5qzCFnoS8dkfCZaaaZHi8oNgVcnYfpS6R1yRopA2ug23Y1q2KXRvW8JMx8siTgfbJY1qXs99cjoWy"
+      },
+      "signing": "{\"author\":\"AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9\",\"body\":{\"awards\":[{\"criteria\":\"Predicted Tm above 75C and binding score under -9.0 kcal/mol, reproducible from the stated method.\",\"index\":0,\"title\":\"Qualifying binder\"},{\"criteria\":\"Backbone topology not present in any admitted claim.\",\"index\":1,\"title\":\"Novel fold class\"}],\"claimDeadline\":\"2026-12-01T00:00:00Z\",\"claimForm\":{\"name\":\"fasta-normalised\",\"spec\":\"As colony default.\"},\"composition\":{\"minScoreBps\":2000,\"requiredPass\":true},\"criteriaHash\":\"0951c58a1ec331e561ac848a563f82430b33128caa5eb0c04cf160a2f484d9af\",\"id\":\"4Nd1mYt8mQuW5Uy7vFkZq2Rj9HhcXeL3sPbTgAoC6wDx\",\"payout\":\"rate\",\"predicates\":[{\"id\":\"P1\",\"kind\":\"required\",\"proposition\":\"The sequence folds to a binder against TR-9 rather than to an unrelated structure.\"},{\"id\":\"P2\",\"kind\":\"required\",\"proposition\":\"The measurement was derived by the objective's stated procedure, not asserted by the claimant.\"},{\"id\":\"P3\",\"kind\":\"scored\",\"proposition\":\"The stabilising interaction the claim identifies is the one doing the work.\",\"weight\":3},{\"id\":\"P4\",\"kind\":\"scored\",\"proposition\":\"The backbone topology is not one an admitted claim already uses.\",\"weight\":2}],\"statement\":\"Find sequences that fold to a stable binder against target TR-9 with predicted melting point above 75C.\",\"title\":\"Thermostable binders for target TR-9\",\"validationDeadline\":\"2026-12-15T00:00:00Z\",\"validationMode\":\"deterministic\",\"validatorsPerClaim\":11},\"chain\":{\"slot\":312884401,\"tx\":\"4KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK\"},\"channel\":\"colony\",\"colony\":\"protein-design\",\"peer\":\"12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL\",\"ts\":\"2026-09-20T14:30:00Z\",\"type\":\"objective.publish\",\"v\":\"0.1.0\"}",
+      "id": "30bd883930e71fb062b113bb8c5287744fa271f406124398e1a377f5b898abfe"
+    },
+    {
+      "name": "objective.update",
+      "expect": "ok",
+      "envelope": {
+        "v": "0.1.0",
+        "type": "objective.update",
+        "colony": "protein-design",
+        "author": "AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9",
+        "peer": "12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL",
+        "ts": "2026-09-20T14:30:00Z",
+        "body": {
+          "id": "4Nd1mYt8mQuW5Uy7vFkZq2Rj9HhcXeL3sPbTgAoC6wDx",
+          "status": "open",
+          "reason": "Novel fold class award has been taken. Work on the main award continues."
+        },
+        "sig": "3SD3PVQZBdRMkNu4CbTdoaxbbsnsGCTeFZRBshUkQ82J2FKWkiig4wQgQSpy4aKPRwSXaojgW6ijLiyXVV6yhMBS"
+      },
+      "signing": "{\"author\":\"AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9\",\"body\":{\"id\":\"4Nd1mYt8mQuW5Uy7vFkZq2Rj9HhcXeL3sPbTgAoC6wDx\",\"reason\":\"Novel fold class award has been taken. Work on the main award continues.\",\"status\":\"open\"},\"colony\":\"protein-design\",\"peer\":\"12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL\",\"ts\":\"2026-09-20T14:30:00Z\",\"type\":\"objective.update\",\"v\":\"0.1.0\"}",
+      "id": "50b2ab28944b76f27e9be1d88195fb2e940521db91db4ef1246e4266d8310b08"
+    },
+    {
+      "name": "validation.publish",
+      "expect": "ok",
+      "envelope": {
+        "v": "0.1.0",
+        "type": "validation.publish",
+        "colony": "protein-design",
+        "author": "AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9",
+        "peer": "12D3KooWRfYvMBcLKh9JnFEkGpPsNaMxLVmYqQbWtCdEfGhJkLmN",
+        "ts": "2026-09-20T16:05:00Z",
+        "channel": "claims",
+        "body": {
+          "claimHash": "f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e",
+          "reason": "none",
+          "items": [
+            {
+              "id": "D1",
+              "holds": "pass",
+              "supportsClaim": "pass",
+              "note": "Derived the melting point myself from the deposited coordinates and reached 81.1 C. Under this mode the leader settled relevance when it wrote the procedure, so the second question is not mine to weigh."
+            },
+            {
+              "id": "D2",
+              "holds": "pass",
+              "supportsClaim": "pass"
+            },
+            {
+              "id": "P1",
+              "holds": "pass",
+              "supportsClaim": "pass",
+              "note": "Ran the five folds. Spread 1.4 C against the claimant's 1.3, and the minimum stays above the threshold."
+            },
+            {
+              "id": "S1",
+              "holds": "pass",
+              "supportsClaim": "insufficient",
+              "note": "The salt bridge is there. Whether it is the interaction doing the stabilising is an argument the claim does not carry evidence for, and I cannot settle it by reading."
+            }
+          ],
+          "predicates": [
+            {
+              "id": "P1",
+              "verdict": "pass",
+              "spans": [
+                {
+                  "evidenceId": "D1",
+                  "quote": "tm_celsius = 81.1, from the objective's stated procedure over the deposited coordinates."
+                }
+              ],
+              "reason": "Folded it myself and reached the same structure; it is a binder against the named target."
+            },
+            {
+              "id": "P2",
+              "verdict": "pass",
+              "spans": [
+                {
+                  "evidenceId": "D1",
+                  "locator": "provenance"
+                }
+              ],
+              "reason": "The claim supplies the input and the procedure derived the measurement, which is what this mode requires. I derived it independently and matched."
+            },
+            {
+              "id": "P3",
+              "verdict": "insufficient",
+              "spans": [
+                {
+                  "evidenceId": "S1",
+                  "quote": "the stabilising contact is a buried salt bridge between the binder's D17 and the target's R204"
+                }
+              ],
+              "reason": "The bridge is there. That it is what stabilises the fold is asserted rather than shown, and nothing in the claim tests it — a knockout would."
+            },
+            {
+              "id": "P4",
+              "verdict": "pass",
+              "spans": [
+                {
+                  "artifact": "3c0d1f7a4b8e2d5061927e3f4a8b0c1d2e3f405162738495a6b7c8d9e0f1a2b3"
+                }
+              ],
+              "reason": "Compared against every admitted claim in this objective; no shared topology."
+            }
+          ],
+          "claimSupport": "pass",
+          "objectiveAlignment": "pass",
+          "noveltyBps": 9100,
+          "scoreBps": 8200,
+          "reproduction": "pass",
+          "derivesFrom": [],
+          "finding": "b31d9e5a0c7f2648135a9b0c1d2e3f4051627384950a1b2c3d4e5f60718293a4",
+          "rationale": "Reproduced the fold independently rather than inspecting the claimant's artifact, so this is a second observation and not a second opinion about the first one. The semantic item is the weak part: it is plausible and it is not established, which is why that one item reads insufficient while the claim as a whole passes on the deterministic evidence the mode makes authoritative."
+        },
+        "sig": "3bUdjHGpR4fymgW4DrPQ6iqqfNKQ6EXGT7YwyoQ8VhomGmHeaEE1g3tLgHCMnoqT3AYKUs7ZqUsefMV7dME7BgVg"
+      },
+      "signing": "{\"author\":\"AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9\",\"body\":{\"claimHash\":\"f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e\",\"claimSupport\":\"pass\",\"derivesFrom\":[],\"finding\":\"b31d9e5a0c7f2648135a9b0c1d2e3f4051627384950a1b2c3d4e5f60718293a4\",\"items\":[{\"holds\":\"pass\",\"id\":\"D1\",\"note\":\"Derived the melting point myself from the deposited coordinates and reached 81.1 C. Under this mode the leader settled relevance when it wrote the procedure, so the second question is not mine to weigh.\",\"supportsClaim\":\"pass\"},{\"holds\":\"pass\",\"id\":\"D2\",\"supportsClaim\":\"pass\"},{\"holds\":\"pass\",\"id\":\"P1\",\"note\":\"Ran the five folds. Spread 1.4 C against the claimant's 1.3, and the minimum stays above the threshold.\",\"supportsClaim\":\"pass\"},{\"holds\":\"pass\",\"id\":\"S1\",\"note\":\"The salt bridge is there. Whether it is the interaction doing the stabilising is an argument the claim does not carry evidence for, and I cannot settle it by reading.\",\"supportsClaim\":\"insufficient\"}],\"noveltyBps\":9100,\"objectiveAlignment\":\"pass\",\"predicates\":[{\"id\":\"P1\",\"reason\":\"Folded it myself and reached the same structure; it is a binder against the named target.\",\"spans\":[{\"evidenceId\":\"D1\",\"quote\":\"tm_celsius = 81.1, from the objective's stated procedure over the deposited coordinates.\"}],\"verdict\":\"pass\"},{\"id\":\"P2\",\"reason\":\"The claim supplies the input and the procedure derived the measurement, which is what this mode requires. I derived it independently and matched.\",\"spans\":[{\"evidenceId\":\"D1\",\"locator\":\"provenance\"}],\"verdict\":\"pass\"},{\"id\":\"P3\",\"reason\":\"The bridge is there. That it is what stabilises the fold is asserted rather than shown, and nothing in the claim tests it — a knockout would.\",\"spans\":[{\"evidenceId\":\"S1\",\"quote\":\"the stabilising contact is a buried salt bridge between the binder's D17 and the target's R204\"}],\"verdict\":\"insufficient\"},{\"id\":\"P4\",\"reason\":\"Compared against every admitted claim in this objective; no shared topology.\",\"spans\":[{\"artifact\":\"3c0d1f7a4b8e2d5061927e3f4a8b0c1d2e3f405162738495a6b7c8d9e0f1a2b3\"}],\"verdict\":\"pass\"}],\"rationale\":\"Reproduced the fold independently rather than inspecting the claimant's artifact, so this is a second observation and not a second opinion about the first one. The semantic item is the weak part: it is plausible and it is not established, which is why that one item reads insufficient while the claim as a whole passes on the deterministic evidence the mode makes authoritative.\",\"reason\":\"none\",\"reproduction\":\"pass\",\"scoreBps\":8200},\"channel\":\"claims\",\"colony\":\"protein-design\",\"peer\":\"12D3KooWRfYvMBcLKh9JnFEkGpPsNaMxLVmYqQbWtCdEfGhJkLmN\",\"ts\":\"2026-09-20T16:05:00Z\",\"type\":\"validation.publish\",\"v\":\"0.1.0\"}",
+      "id": "d6c75cfbb46bf155148b588a3cf44eaf459d814f4c0e6afb25f2a16317759cbf"
+    },
+    {
+      "name": "validator.announce",
+      "expect": "ok",
+      "envelope": {
+        "v": "0.1.0",
+        "type": "validator.announce",
+        "colony": "protein-design",
+        "author": "AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9",
+        "peer": "12D3KooWRfYvMBcLKh9JnFEkGpPsNaMxLVmYqQbWtCdEfGhJkLmN",
+        "ts": "2026-09-20T14:30:00Z",
+        "channel": "colony",
+        "body": {
+          "capacity": 4,
+          "holds": [
+            {
+              "kind": "tool",
+              "name": "colabfold",
+              "version": "1.5.5"
+            },
+            {
+              "kind": "dataset",
+              "name": "uniref90",
+              "version": "2026_01"
+            },
+            {
+              "kind": "compute",
+              "name": "cuda-gpu",
+              "detail": "24 GB"
+            }
+          ]
+        },
+        "sig": "59TqTbYMuyEhf5dBYrxvsxxuDvfzg26PPX67yLnrEVbm5tQCVWwtahXSMc8SV19KqfLLhV7gf7AUeEVwGzYoPrS7"
+      },
+      "signing": "{\"author\":\"AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9\",\"body\":{\"capacity\":4,\"holds\":[{\"kind\":\"tool\",\"name\":\"colabfold\",\"version\":\"1.5.5\"},{\"kind\":\"dataset\",\"name\":\"uniref90\",\"version\":\"2026_01\"},{\"detail\":\"24 GB\",\"kind\":\"compute\",\"name\":\"cuda-gpu\"}]},\"channel\":\"colony\",\"colony\":\"protein-design\",\"peer\":\"12D3KooWRfYvMBcLKh9JnFEkGpPsNaMxLVmYqQbWtCdEfGhJkLmN\",\"ts\":\"2026-09-20T14:30:00Z\",\"type\":\"validator.announce\",\"v\":\"0.1.0\"}",
+      "id": "d985d01c36a873eb01a79c82d53515fe178384c1df27acedb1506045de692095"
+    },
+    {
+      "name": "validators.selected",
+      "expect": "ok",
+      "envelope": {
+        "v": "0.1.0",
+        "type": "validators.selected",
+        "colony": "protein-design",
+        "author": "AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9",
+        "peer": "12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL",
+        "ts": "2026-09-20T14:30:02Z",
+        "channel": "claims",
+        "body": {
+          "claim": "f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e",
+          "selectionSeed": "7431902265513371649",
+          "validators": [
+            "9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM",
+            "2mVhGnBcRa3tHtLYcHhLqkPyMCVL7cZHKMxZvGkHkYqE",
+            "6bWqJ4mKSRk4EZ8oYZFcYy5Dc4dGEcCmVWmeWQdRZoHL"
+          ]
+        },
+        "sig": "4XPeTzeBvYQRQnYbaYfYgdnoxKjqsLBswNxHA4FRfDhDj3s7HDpjvJoNCPGnBUFEA9DT2Pxhf78EuFcpdAfyYw1S"
+      },
+      "signing": "{\"author\":\"AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9\",\"body\":{\"claim\":\"f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e\",\"selectionSeed\":\"7431902265513371649\",\"validators\":[\"9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM\",\"2mVhGnBcRa3tHtLYcHhLqkPyMCVL7cZHKMxZvGkHkYqE\",\"6bWqJ4mKSRk4EZ8oYZFcYy5Dc4dGEcCmVWmeWQdRZoHL\"]},\"channel\":\"claims\",\"colony\":\"protein-design\",\"peer\":\"12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL\",\"ts\":\"2026-09-20T14:30:02Z\",\"type\":\"validators.selected\",\"v\":\"0.1.0\"}",
+      "id": "065b62d1eba74788b47c40f74b4d118e4711401bf22d485ec6c81f1dc9b7ec33"
+    },
+    {
+      "name": "invalid-award-index",
+      "expect": "schema",
+      "envelope": {
+        "v": "0.1.0",
+        "type": "claim.publish",
+        "colony": "protein-design",
+        "author": "AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9",
+        "peer": "12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL",
+        "ts": "2026-09-20T14:30:00Z",
+        "chain": {
+          "tx": "4KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK",
+          "slot": 312884401
+        },
+        "body": {
+          "objective": "4Nd1mYt8mQuW5Uy7vFkZq2Rj9HhcXeL3sPbTgAoC6wDx",
+          "awardIndex": 3,
+          "claimHash": "f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e",
+          "assertion": "MKTAYIQKLKMSSAVLGSFLLALSLVSSQSVFA",
+          "significance": "A fourth award does not exist: an objective declares at most three, and the chain would reject this before anybody read it.",
+          "evidence": {
+            "deterministic": [],
+            "procedural": [],
+            "semantic": []
+          }
+        },
+        "sig": "qsVUSDr2zknpqLyadoDQPE3eEepNbVVksxY1G8pgTyHwvJ7Z2YiBtgGR7dBRKgsciwsxLzpeeBEdH2FucrBDMwW"
+      },
+      "signing": "{\"author\":\"AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9\",\"body\":{\"assertion\":\"MKTAYIQKLKMSSAVLGSFLLALSLVSSQSVFA\",\"awardIndex\":3,\"claimHash\":\"f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e\",\"evidence\":{\"deterministic\":[],\"procedural\":[],\"semantic\":[]},\"objective\":\"4Nd1mYt8mQuW5Uy7vFkZq2Rj9HhcXeL3sPbTgAoC6wDx\",\"significance\":\"A fourth award does not exist: an objective declares at most three, and the chain would reject this before anybody read it.\"},\"chain\":{\"slot\":312884401,\"tx\":\"4KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK\"},\"colony\":\"protein-design\",\"peer\":\"12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL\",\"ts\":\"2026-09-20T14:30:00Z\",\"type\":\"claim.publish\",\"v\":\"0.1.0\"}",
+      "id": "ea27936ecac4e2a120b8020f28235b516c06bf4afa6afa93cdc246a8d21d276b"
+    },
+    {
+      "name": "invalid-award-state-in-update",
+      "expect": "schema",
+      "envelope": {
+        "v": "0.1.0",
+        "type": "objective.update",
+        "colony": "protein-design",
+        "author": "AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9",
+        "peer": "12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL",
+        "ts": "2026-09-20T14:30:00Z",
+        "body": {
+          "id": "4Nd1mYt8mQuW5Uy7vFkZq2Rj9HhcXeL3sPbTgAoC6wDx",
+          "status": "open",
+          "awards": [
+            {
+              "key": "main",
+              "funded": true,
+              "remaining": 6250000000
+            }
+          ],
+          "reason": "Award funding state does not travel on the bus; the objective account holds it."
+        },
+        "sig": "4FKB2u9y5fE4nhjNPFd58Pxxasjs4GnFmRFpD6qpyAKr6SLnr9fhpEyPv2Y35Gzr9xPc1idkNsFns7tVRQiKZFGj"
+      },
+      "signing": "{\"author\":\"AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9\",\"body\":{\"awards\":[{\"funded\":true,\"key\":\"main\",\"remaining\":6250000000}],\"id\":\"4Nd1mYt8mQuW5Uy7vFkZq2Rj9HhcXeL3sPbTgAoC6wDx\",\"reason\":\"Award funding state does not travel on the bus; the objective account holds it.\",\"status\":\"open\"},\"colony\":\"protein-design\",\"peer\":\"12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL\",\"ts\":\"2026-09-20T14:30:00Z\",\"type\":\"objective.update\",\"v\":\"0.1.0\"}",
+      "id": "98eacc241a5e8b7e066ac189ff029232a256aa61e46469a64dc23a0f9a2ff9ce"
+    },
+    {
+      "name": "invalid-body-and-bodyref",
+      "expect": "schema",
+      "envelope": {
+        "v": "0.1.0",
+        "type": "validator.announce",
+        "colony": "protein-design",
+        "author": "AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9",
+        "peer": "12D3KooWRfYvMBcLKh9JnFEkGpPsNaMxLVmYqQbWtCdEfGhJkLmN",
+        "ts": "2026-09-20T14:30:00Z",
+        "body": {
+          "methods": [
+            "proof"
+          ]
+        },
+        "body_ref": {
+          "hash": "f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e",
+          "size": 10
+        },
+        "sig": "3HRVp1pEc8RDd1qCJ1m2bNuZ9bHhvjn33rjhM451ooQp7QyPHLE4KUsjJahZHY6sS11tKqvEDNeDYsC18BRRzh15"
+      },
+      "signing": "{\"author\":\"AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9\",\"body\":{\"methods\":[\"proof\"]},\"body_ref\":{\"hash\":\"f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e\",\"size\":10},\"colony\":\"protein-design\",\"peer\":\"12D3KooWRfYvMBcLKh9JnFEkGpPsNaMxLVmYqQbWtCdEfGhJkLmN\",\"ts\":\"2026-09-20T14:30:00Z\",\"type\":\"validator.announce\",\"v\":\"0.1.0\"}",
+      "id": "a5ef0968d7469f4e907745ad9ee9d04e71b7dc8cf6bd9ee19c481abb55a66b63"
+    },
+    {
+      "name": "invalid-claim-without-chain",
+      "expect": "schema",
+      "envelope": {
+        "v": "0.1.0",
+        "type": "claim.publish",
+        "colony": "protein-design",
+        "author": "AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9",
+        "peer": "12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL",
+        "ts": "2026-09-20T14:30:00Z",
+        "body": {
+          "objective": "4Nd1mYt8mQuW5Uy7vFkZq2Rj9HhcXeL3sPbTgAoC6wDx",
+          "award": "main",
+          "claimHash": "f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e",
+          "canonical": "MKTAYIQKLKMSSAVLGSFLLALSLVSSQSVFA",
+          "usefulness": "x",
+          "reproduction": "y",
+          "proof": "z"
+        },
+        "sig": "mEKhJJkSDPqWAaH9SdVjqqhNNjoSySUg15JkcJoxZvnBFGp1ByqjVAjnutDNeotwXg9wUegUZi8G3Vb2m4yhycR"
+      },
+      "signing": "{\"author\":\"AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9\",\"body\":{\"award\":\"main\",\"canonical\":\"MKTAYIQKLKMSSAVLGSFLLALSLVSSQSVFA\",\"claimHash\":\"f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e\",\"objective\":\"4Nd1mYt8mQuW5Uy7vFkZq2Rj9HhcXeL3sPbTgAoC6wDx\",\"proof\":\"z\",\"reproduction\":\"y\",\"usefulness\":\"x\"},\"colony\":\"protein-design\",\"peer\":\"12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL\",\"ts\":\"2026-09-20T14:30:00Z\",\"type\":\"claim.publish\",\"v\":\"0.1.0\"}",
+      "id": "17db97e431b47b826cee2347e622eb7e734d66d10f04ce0639b92543371b2ee5"
+    },
+    {
+      "name": "invalid-errored-validation-with-numbers",
+      "expect": "schema",
+      "envelope": {
+        "v": "0.1.0",
+        "type": "validation.publish",
+        "colony": "protein-design",
+        "author": "AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9",
+        "peer": "12D3KooWRfYvMBcLKh9JnFEkGpPsNaMxLVmYqQbWtCdEfGhJkLmN",
+        "ts": "2026-09-20T16:05:00Z",
+        "body": {
+          "claimHash": "f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e",
+          "reason": "timed_out",
+          "items": [],
+          "claimSupport": "insufficient",
+          "objectiveAlignment": "insufficient",
+          "noveltyBps": 4000,
+          "scoreBps": 5000,
+          "reproduction": "not_attempted",
+          "finding": "b31d9e5a0c7f2648135a9b0c1d2e3f4051627384950a1b2c3d4e5f60718293a4",
+          "rationale": "A validation that timed out measured nothing, so it may not report numbers. Folding these into the range a claim settles within would let a resolver pick a figure no validator ever returned."
+        },
+        "sig": "2CFVp9F6FQt5pmH4v7XiEnMXxiMkVpoLVTzEXnwY5hfcjpsDzPRfzUFSgSE729oSf6EyxzoTd1SpQCSFPmAwS6sR"
+      },
+      "signing": "{\"author\":\"AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9\",\"body\":{\"claimHash\":\"f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e\",\"claimSupport\":\"insufficient\",\"finding\":\"b31d9e5a0c7f2648135a9b0c1d2e3f4051627384950a1b2c3d4e5f60718293a4\",\"items\":[],\"noveltyBps\":4000,\"objectiveAlignment\":\"insufficient\",\"rationale\":\"A validation that timed out measured nothing, so it may not report numbers. Folding these into the range a claim settles within would let a resolver pick a figure no validator ever returned.\",\"reason\":\"timed_out\",\"reproduction\":\"not_attempted\",\"scoreBps\":5000},\"colony\":\"protein-design\",\"peer\":\"12D3KooWRfYvMBcLKh9JnFEkGpPsNaMxLVmYqQbWtCdEfGhJkLmN\",\"ts\":\"2026-09-20T16:05:00Z\",\"type\":\"validation.publish\",\"v\":\"0.1.0\"}",
+      "id": "1a3448019568847e6674a8fd053ec0b408c26039dc0168a4f17435ba712797ce"
+    },
+    {
+      "name": "invalid-evidence-missing-kind",
+      "expect": "schema",
+      "envelope": {
+        "v": "0.1.0",
+        "type": "claim.publish",
+        "colony": "protein-design",
+        "author": "AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9",
+        "peer": "12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL",
+        "ts": "2026-09-20T14:30:00Z",
+        "chain": {
+          "tx": "4KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK",
+          "slot": 312884401
+        },
+        "body": {
+          "objective": "4Nd1mYt8mQuW5Uy7vFkZq2Rj9HhcXeL3sPbTgAoC6wDx",
+          "awardIndex": 0,
+          "claimHash": "f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e",
+          "assertion": "MKTAYIQKLKMSSAVLGSFLLALSLVSSQSVFA",
+          "significance": "All three evidence arrays are always present and empty where unused. An omitted key and an empty array encode to different bytes, and those bytes are the claim's identity, so a claim that leaves one out hashes to an address nobody else would compute for it.",
+          "evidence": {
+            "deterministic": [],
+            "procedural": []
+          }
+        },
+        "sig": "32Rx5p5qUuMRKX8Nx4HMr2KDmCasvgiAJJRpiSPcwSRvpJzoiS4hCPMC3WybuFHL7uWk7XqX5B4rZ1Ucmeinp2be"
+      },
+      "signing": "{\"author\":\"AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9\",\"body\":{\"assertion\":\"MKTAYIQKLKMSSAVLGSFLLALSLVSSQSVFA\",\"awardIndex\":0,\"claimHash\":\"f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e\",\"evidence\":{\"deterministic\":[],\"procedural\":[]},\"objective\":\"4Nd1mYt8mQuW5Uy7vFkZq2Rj9HhcXeL3sPbTgAoC6wDx\",\"significance\":\"All three evidence arrays are always present and empty where unused. An omitted key and an empty array encode to different bytes, and those bytes are the claim's identity, so a claim that leaves one out hashes to an address nobody else would compute for it.\"},\"chain\":{\"slot\":312884401,\"tx\":\"4KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK\"},\"colony\":\"protein-design\",\"peer\":\"12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL\",\"ts\":\"2026-09-20T14:30:00Z\",\"type\":\"claim.publish\",\"v\":\"0.1.0\"}",
+      "id": "8d4ab1befaaa62ee7ad0f8940622a4e09871593f6e41e51d7ccf59604aff7d8b"
+    },
+    {
+      "name": "invalid-four-awards",
+      "expect": "schema",
+      "envelope": {
+        "v": "0.1.0",
+        "type": "objective.publish",
+        "colony": "protein-design",
+        "author": "AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9",
+        "peer": "12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL",
+        "ts": "2026-09-20T14:30:00Z",
+        "chain": {
+          "tx": "4KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK",
+          "slot": 312884401
+        },
+        "body": {
+          "id": "4Nd1mYt8mQuW5Uy7vFkZq2Rj9HhcXeL3sPbTgAoC6wDx",
+          "payout": "prize",
+          "title": "t",
+          "statement": "s",
+          "criteriaHash": "2e7d2c03a9507ae265ecf5b5356885a53393a2029d241394997265a1a25aefc6",
+          "claimForm": {
+            "name": "n",
+            "spec": "s"
+          },
+          "awards": [
+            {
+              "index": 0,
+              "title": "a",
+              "criteria": "c"
+            },
+            {
+              "index": 1,
+              "title": "b",
+              "criteria": "c"
+            },
+            {
+              "index": 2,
+              "title": "c",
+              "criteria": "c"
+            },
+            {
+              "index": 2,
+              "title": "d",
+              "criteria": "c"
+            }
+          ],
+          "claimDeadline": "2026-12-01T00:00:00Z",
+          "validationDeadline": "2026-12-15T00:00:00Z",
+          "validationMode": "semantic"
+        },
+        "sig": "4URN1VkRVFqWiceMeufRgzNj7r24h2NjuwZmBUzH67pjdUNmKbVTrwtMfzrTgYTQXTLuve1T7xbLha5DumzkDaFC"
+      },
+      "signing": "{\"author\":\"AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9\",\"body\":{\"awards\":[{\"criteria\":\"c\",\"index\":0,\"title\":\"a\"},{\"criteria\":\"c\",\"index\":1,\"title\":\"b\"},{\"criteria\":\"c\",\"index\":2,\"title\":\"c\"},{\"criteria\":\"c\",\"index\":2,\"title\":\"d\"}],\"claimDeadline\":\"2026-12-01T00:00:00Z\",\"claimForm\":{\"name\":\"n\",\"spec\":\"s\"},\"criteriaHash\":\"2e7d2c03a9507ae265ecf5b5356885a53393a2029d241394997265a1a25aefc6\",\"id\":\"4Nd1mYt8mQuW5Uy7vFkZq2Rj9HhcXeL3sPbTgAoC6wDx\",\"payout\":\"prize\",\"statement\":\"s\",\"title\":\"t\",\"validationDeadline\":\"2026-12-15T00:00:00Z\",\"validationMode\":\"semantic\"},\"chain\":{\"slot\":312884401,\"tx\":\"4KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK\"},\"colony\":\"protein-design\",\"peer\":\"12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL\",\"ts\":\"2026-09-20T14:30:00Z\",\"type\":\"objective.publish\",\"v\":\"0.1.0\"}",
+      "id": "7b109e68a752618888efe524f1b936315f41a4712ce7fa2fe790c865d4fe75f2"
+    },
+    {
+      "name": "invalid-predicates-without-composition",
+      "expect": "schema",
+      "envelope": {
+        "v": "0.1.0",
+        "type": "objective.publish",
+        "colony": "protein-design",
+        "author": "AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9",
+        "peer": "12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL",
+        "ts": "2026-09-20T14:30:00Z",
+        "chain": {
+          "tx": "4KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK",
+          "slot": 312884401
+        },
+        "body": {
+          "id": "4Nd1mYt8mQuW5Uy7vFkZq2Rj9HhcXeL3sPbTgAoC6wDx",
+          "payout": "prize",
+          "title": "Questions with no stated rule for combining them",
+          "statement": "A list of propositions and no composition leaves the combining to whoever is doing the judging, which is the thing declaring them was for.",
+          "criteriaHash": "440f46bd3b4240e404ba09cdeb71e5823eb104770df702a894c74456ad090c59",
+          "validationMode": "semantic",
+          "claimForm": {
+            "name": "free-form",
+            "spec": "As colony default."
+          },
+          "predicates": [
+            {
+              "id": "P1",
+              "proposition": "It answers the brief.",
+              "kind": "required"
+            }
+          ],
+          "awards": [
+            {
+              "index": 0,
+              "title": "The work",
+              "criteria": "As the predicates state."
+            }
+          ],
+          "claimDeadline": "2026-12-01T00:00:00Z",
+          "validationDeadline": "2026-12-15T00:00:00Z"
+        },
+        "sig": "5ArEQMB63Udw4DvokUutnx9m5n7Ccf3kshPeb7SxWHxwWZRosT2PbpzteNMXroDEjybpXMaF8h81Rcf4L1DhrgBY"
+      },
+      "signing": "{\"author\":\"AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9\",\"body\":{\"awards\":[{\"criteria\":\"As the predicates state.\",\"index\":0,\"title\":\"The work\"}],\"claimDeadline\":\"2026-12-01T00:00:00Z\",\"claimForm\":{\"name\":\"free-form\",\"spec\":\"As colony default.\"},\"criteriaHash\":\"440f46bd3b4240e404ba09cdeb71e5823eb104770df702a894c74456ad090c59\",\"id\":\"4Nd1mYt8mQuW5Uy7vFkZq2Rj9HhcXeL3sPbTgAoC6wDx\",\"payout\":\"prize\",\"predicates\":[{\"id\":\"P1\",\"kind\":\"required\",\"proposition\":\"It answers the brief.\"}],\"statement\":\"A list of propositions and no composition leaves the combining to whoever is doing the judging, which is the thing declaring them was for.\",\"title\":\"Questions with no stated rule for combining them\",\"validationDeadline\":\"2026-12-15T00:00:00Z\",\"validationMode\":\"semantic\"},\"chain\":{\"slot\":312884401,\"tx\":\"4KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK\"},\"colony\":\"protein-design\",\"peer\":\"12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL\",\"ts\":\"2026-09-20T14:30:00Z\",\"type\":\"objective.publish\",\"v\":\"0.1.0\"}",
+      "id": "73ff403f0b45245dfd95970346653cf1730449e7fe3291a221a70aac4610ced6"
+    },
+    {
+      "name": "invalid-scored-predicate-without-weight",
+      "expect": "schema",
+      "envelope": {
+        "v": "0.1.0",
+        "type": "objective.publish",
+        "colony": "protein-design",
+        "author": "AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9",
+        "peer": "12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL",
+        "ts": "2026-09-20T14:30:00Z",
+        "chain": {
+          "tx": "4KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK",
+          "slot": 312884401
+        },
+        "body": {
+          "id": "4Nd1mYt8mQuW5Uy7vFkZq2Rj9HhcXeL3sPbTgAoC6wDx",
+          "payout": "prize",
+          "title": "A scored predicate with nothing to weigh it by",
+          "statement": "Without weights the composed score is undefined: there is no answer to what two scored propositions are worth relative to each other.",
+          "criteriaHash": "440f46bd3b4240e404ba09cdeb71e5823eb104770df702a894c74456ad090c59",
+          "validationMode": "semantic",
+          "claimForm": {
+            "name": "free-form",
+            "spec": "As colony default."
+          },
+          "predicates": [
+            {
+              "id": "P1",
+              "proposition": "It answers the brief.",
+              "kind": "required"
+            },
+            {
+              "id": "P2",
+              "proposition": "It is well made.",
+              "kind": "scored"
+            }
+          ],
+          "composition": {
+            "requiredPass": true
+          },
+          "awards": [
+            {
+              "index": 0,
+              "title": "The work",
+              "criteria": "As the predicates state."
+            }
+          ],
+          "claimDeadline": "2026-12-01T00:00:00Z",
+          "validationDeadline": "2026-12-15T00:00:00Z"
+        },
+        "sig": "5rJ4oY61AT3ZG9TYMXU5CtDQQSGLGYrvu4g4k6kDS7hbASwcrdVEj36g5ehm4MBdpzQF5dB7MsQokUWNJ8m4WWE"
+      },
+      "signing": "{\"author\":\"AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9\",\"body\":{\"awards\":[{\"criteria\":\"As the predicates state.\",\"index\":0,\"title\":\"The work\"}],\"claimDeadline\":\"2026-12-01T00:00:00Z\",\"claimForm\":{\"name\":\"free-form\",\"spec\":\"As colony default.\"},\"composition\":{\"requiredPass\":true},\"criteriaHash\":\"440f46bd3b4240e404ba09cdeb71e5823eb104770df702a894c74456ad090c59\",\"id\":\"4Nd1mYt8mQuW5Uy7vFkZq2Rj9HhcXeL3sPbTgAoC6wDx\",\"payout\":\"prize\",\"predicates\":[{\"id\":\"P1\",\"kind\":\"required\",\"proposition\":\"It answers the brief.\"},{\"id\":\"P2\",\"kind\":\"scored\",\"proposition\":\"It is well made.\"}],\"statement\":\"Without weights the composed score is undefined: there is no answer to what two scored propositions are worth relative to each other.\",\"title\":\"A scored predicate with nothing to weigh it by\",\"validationDeadline\":\"2026-12-15T00:00:00Z\",\"validationMode\":\"semantic\"},\"chain\":{\"slot\":312884401,\"tx\":\"4KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK\"},\"colony\":\"protein-design\",\"peer\":\"12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL\",\"ts\":\"2026-09-20T14:30:00Z\",\"type\":\"objective.publish\",\"v\":\"0.1.0\"}",
+      "id": "2b9e494e05f917ba2a9b2a5487d472c55bb769ab88e75aac4a6b3a28c764f1b1"
+    },
+    {
+      "name": "signed by another key",
+      "expect": "signature",
+      "envelope": {
+        "v": "0.1.0",
+        "type": "claim.publish",
+        "colony": "protein-design",
+        "author": "AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9",
+        "peer": "12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL",
+        "ts": "2026-09-20T14:30:00Z",
+        "channel": "claims",
+        "chain": {
+          "tx": "4KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK",
+          "slot": 312884401
+        },
+        "body": {
+          "objective": "4Nd1mYt8mQuW5Uy7vFkZq2Rj9HhcXeL3sPbTgAoC6wDx",
+          "awardIndex": 0,
+          "claimHash": "f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e",
+          "assertion": "MKTAYIQKLKMSSAVLGSFLLALSLVSSQSVFA",
+          "significance": "A binder against TR-9 with a predicted melting point of 81.1 C, which clears the objective's 75 C threshold by six degrees and does so on a backbone topology no admitted claim uses.",
+          "evidence": {
+            "deterministic": [
+              {
+                "id": "D1",
+                "kind": "deterministic",
+                "statement": "tm_celsius = 81.1, from the objective's stated procedure over the deposited coordinates.",
+                "artifacts": [
+                  {
+                    "name": "predicted.pdb",
+                    "hash": "3c0d1f7a4b8e2d5061927e3f4a8b0c1d2e3f405162738495a6b7c8d9e0f1a2b3",
+                    "size": 184320,
+                    "mime": "chemical/x-pdb"
+                  }
+                ],
+                "provenance": "ColabFold 1.5.5 against UniRef90 2026_01, seed 0, run on the claimant's node. The objective's procedure derives the measurement; this supplies its input."
+              },
+              {
+                "id": "D2",
+                "kind": "deterministic",
+                "statement": "binding_kcal = -10.4, below the -9.0 the criteria require.",
+                "provenance": "Same structure, scored with the tool and version the criteria name."
+              }
+            ],
+            "procedural": [
+              {
+                "id": "P1",
+                "kind": "procedural",
+                "statement": "The melting point holds across five independent folds of the same sequence, so the figure is not an artefact of one seed.",
+                "procedure": {
+                  "statement": "Fold the sequence five times with different seeds and take the spread of the predicted melting points.",
+                  "inputs": [
+                    "the sequence in the claim's assertion"
+                  ],
+                  "check": "max(tm_celsius) - min(tm_celsius) < 2.0 and min(tm_celsius) > 75.0",
+                  "environment": [
+                    {
+                      "kind": "tool",
+                      "name": "colabfold",
+                      "version": "1.5.5"
+                    },
+                    {
+                      "kind": "dataset",
+                      "name": "uniref90",
+                      "version": "2026_01"
+                    },
+                    {
+                      "kind": "compute",
+                      "name": "cuda-gpu",
+                      "detail": "16 GB or more"
+                    }
+                  ]
+                },
+                "provenance": "Five runs on the claimant's node, seeds 0 to 4. Spread was 1.3 C."
+              }
+            ],
+            "semantic": [
+              {
+                "id": "S1",
+                "kind": "semantic",
+                "statement": "The stabilising contact is a buried salt bridge between the binder's D17 and the target's R204, which is the interaction the objective's criteria describe as the one worth finding.",
+                "provenance": "Read off the deposited coordinates by the claimant. An argument, offered to be judged rather than checked."
+              }
+            ]
+          },
+          "references": [
+            "Jumper et al. 2021, Highly accurate protein structure prediction with AlphaFold, Nature 596",
+            "TR-9 reference structure, PDB 7XYZ"
+          ],
+          "roots": []
+        },
+        "sig": "4cCFmZCu3Rmx8GMCv9G1LogLuMDeBCN7gLC7LEfP1om8LXkGCGXJBnCJz6dKgs7V238DqqMm4bgU2izwU2zhnFvg"
+      },
+      "signing": "{\"author\":\"AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9\",\"body\":{\"assertion\":\"MKTAYIQKLKMSSAVLGSFLLALSLVSSQSVFA\",\"awardIndex\":0,\"claimHash\":\"f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e\",\"evidence\":{\"deterministic\":[{\"artifacts\":[{\"hash\":\"3c0d1f7a4b8e2d5061927e3f4a8b0c1d2e3f405162738495a6b7c8d9e0f1a2b3\",\"mime\":\"chemical/x-pdb\",\"name\":\"predicted.pdb\",\"size\":184320}],\"id\":\"D1\",\"kind\":\"deterministic\",\"provenance\":\"ColabFold 1.5.5 against UniRef90 2026_01, seed 0, run on the claimant's node. The objective's procedure derives the measurement; this supplies its input.\",\"statement\":\"tm_celsius = 81.1, from the objective's stated procedure over the deposited coordinates.\"},{\"id\":\"D2\",\"kind\":\"deterministic\",\"provenance\":\"Same structure, scored with the tool and version the criteria name.\",\"statement\":\"binding_kcal = -10.4, below the -9.0 the criteria require.\"}],\"procedural\":[{\"id\":\"P1\",\"kind\":\"procedural\",\"procedure\":{\"check\":\"max(tm_celsius) - min(tm_celsius) < 2.0 and min(tm_celsius) > 75.0\",\"environment\":[{\"kind\":\"tool\",\"name\":\"colabfold\",\"version\":\"1.5.5\"},{\"kind\":\"dataset\",\"name\":\"uniref90\",\"version\":\"2026_01\"},{\"detail\":\"16 GB or more\",\"kind\":\"compute\",\"name\":\"cuda-gpu\"}],\"inputs\":[\"the sequence in the claim's assertion\"],\"statement\":\"Fold the sequence five times with different seeds and take the spread of the predicted melting points.\"},\"provenance\":\"Five runs on the claimant's node, seeds 0 to 4. Spread was 1.3 C.\",\"statement\":\"The melting point holds across five independent folds of the same sequence, so the figure is not an artefact of one seed.\"}],\"semantic\":[{\"id\":\"S1\",\"kind\":\"semantic\",\"provenance\":\"Read off the deposited coordinates by the claimant. An argument, offered to be judged rather than checked.\",\"statement\":\"The stabilising contact is a buried salt bridge between the binder's D17 and the target's R204, which is the interaction the objective's criteria describe as the one worth finding.\"}]},\"objective\":\"4Nd1mYt8mQuW5Uy7vFkZq2Rj9HhcXeL3sPbTgAoC6wDx\",\"references\":[\"Jumper et al. 2021, Highly accurate protein structure prediction with AlphaFold, Nature 596\",\"TR-9 reference structure, PDB 7XYZ\"],\"roots\":[],\"significance\":\"A binder against TR-9 with a predicted melting point of 81.1 C, which clears the objective's 75 C threshold by six degrees and does so on a backbone topology no admitted claim uses.\"},\"chain\":{\"slot\":312884401,\"tx\":\"4KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK\"},\"channel\":\"claims\",\"colony\":\"protein-design\",\"peer\":\"12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL\",\"ts\":\"2026-09-20T14:30:00Z\",\"type\":\"claim.publish\",\"v\":\"0.1.0\"}",
+      "id": "903b1989fd2f735e132cc3cdddac6c1a2a34fcfb9ef95920ab5a6530febef79b"
+    },
+    {
+      "name": "body changed after signing",
+      "expect": "signature",
+      "envelope": {
+        "v": "0.1.0",
+        "type": "claim.publish",
+        "colony": "protein-design",
+        "author": "AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9",
+        "peer": "12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL",
+        "ts": "2026-09-20T14:30:00Z",
+        "channel": "claims",
+        "chain": {
+          "tx": "4KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK",
+          "slot": 312884401
+        },
+        "body": {
+          "objective": "4Nd1mYt8mQuW5Uy7vFkZq2Rj9HhcXeL3sPbTgAoC6wDx",
+          "awardIndex": 0,
+          "claimHash": "f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e",
+          "assertion": "MKTAYIQKLKMSSAVLGSFLLALSLVSSQSVFA",
+          "significance": "Something else.",
+          "evidence": {
+            "deterministic": [
+              {
+                "id": "D1",
+                "kind": "deterministic",
+                "statement": "tm_celsius = 81.1, from the objective's stated procedure over the deposited coordinates.",
+                "artifacts": [
+                  {
+                    "name": "predicted.pdb",
+                    "hash": "3c0d1f7a4b8e2d5061927e3f4a8b0c1d2e3f405162738495a6b7c8d9e0f1a2b3",
+                    "size": 184320,
+                    "mime": "chemical/x-pdb"
+                  }
+                ],
+                "provenance": "ColabFold 1.5.5 against UniRef90 2026_01, seed 0, run on the claimant's node. The objective's procedure derives the measurement; this supplies its input."
+              },
+              {
+                "id": "D2",
+                "kind": "deterministic",
+                "statement": "binding_kcal = -10.4, below the -9.0 the criteria require.",
+                "provenance": "Same structure, scored with the tool and version the criteria name."
+              }
+            ],
+            "procedural": [
+              {
+                "id": "P1",
+                "kind": "procedural",
+                "statement": "The melting point holds across five independent folds of the same sequence, so the figure is not an artefact of one seed.",
+                "procedure": {
+                  "statement": "Fold the sequence five times with different seeds and take the spread of the predicted melting points.",
+                  "inputs": [
+                    "the sequence in the claim's assertion"
+                  ],
+                  "check": "max(tm_celsius) - min(tm_celsius) < 2.0 and min(tm_celsius) > 75.0",
+                  "environment": [
+                    {
+                      "kind": "tool",
+                      "name": "colabfold",
+                      "version": "1.5.5"
+                    },
+                    {
+                      "kind": "dataset",
+                      "name": "uniref90",
+                      "version": "2026_01"
+                    },
+                    {
+                      "kind": "compute",
+                      "name": "cuda-gpu",
+                      "detail": "16 GB or more"
+                    }
+                  ]
+                },
+                "provenance": "Five runs on the claimant's node, seeds 0 to 4. Spread was 1.3 C."
+              }
+            ],
+            "semantic": [
+              {
+                "id": "S1",
+                "kind": "semantic",
+                "statement": "The stabilising contact is a buried salt bridge between the binder's D17 and the target's R204, which is the interaction the objective's criteria describe as the one worth finding.",
+                "provenance": "Read off the deposited coordinates by the claimant. An argument, offered to be judged rather than checked."
+              }
+            ]
+          },
+          "references": [
+            "Jumper et al. 2021, Highly accurate protein structure prediction with AlphaFold, Nature 596",
+            "TR-9 reference structure, PDB 7XYZ"
+          ],
+          "roots": []
+        },
+        "sig": "PNDt7dDJJ4KzCLotmQG4xmHAS2sVtQavsBgNPyvVJxBpw177k2grtod7aN1aE9KBj3cbz7Mma5WaMP6mvymS6id"
+      },
+      "signing": "{\"author\":\"AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9\",\"body\":{\"assertion\":\"MKTAYIQKLKMSSAVLGSFLLALSLVSSQSVFA\",\"awardIndex\":0,\"claimHash\":\"f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e\",\"evidence\":{\"deterministic\":[{\"artifacts\":[{\"hash\":\"3c0d1f7a4b8e2d5061927e3f4a8b0c1d2e3f405162738495a6b7c8d9e0f1a2b3\",\"mime\":\"chemical/x-pdb\",\"name\":\"predicted.pdb\",\"size\":184320}],\"id\":\"D1\",\"kind\":\"deterministic\",\"provenance\":\"ColabFold 1.5.5 against UniRef90 2026_01, seed 0, run on the claimant's node. The objective's procedure derives the measurement; this supplies its input.\",\"statement\":\"tm_celsius = 81.1, from the objective's stated procedure over the deposited coordinates.\"},{\"id\":\"D2\",\"kind\":\"deterministic\",\"provenance\":\"Same structure, scored with the tool and version the criteria name.\",\"statement\":\"binding_kcal = -10.4, below the -9.0 the criteria require.\"}],\"procedural\":[{\"id\":\"P1\",\"kind\":\"procedural\",\"procedure\":{\"check\":\"max(tm_celsius) - min(tm_celsius) < 2.0 and min(tm_celsius) > 75.0\",\"environment\":[{\"kind\":\"tool\",\"name\":\"colabfold\",\"version\":\"1.5.5\"},{\"kind\":\"dataset\",\"name\":\"uniref90\",\"version\":\"2026_01\"},{\"detail\":\"16 GB or more\",\"kind\":\"compute\",\"name\":\"cuda-gpu\"}],\"inputs\":[\"the sequence in the claim's assertion\"],\"statement\":\"Fold the sequence five times with different seeds and take the spread of the predicted melting points.\"},\"provenance\":\"Five runs on the claimant's node, seeds 0 to 4. Spread was 1.3 C.\",\"statement\":\"The melting point holds across five independent folds of the same sequence, so the figure is not an artefact of one seed.\"}],\"semantic\":[{\"id\":\"S1\",\"kind\":\"semantic\",\"provenance\":\"Read off the deposited coordinates by the claimant. An argument, offered to be judged rather than checked.\",\"statement\":\"The stabilising contact is a buried salt bridge between the binder's D17 and the target's R204, which is the interaction the objective's criteria describe as the one worth finding.\"}]},\"objective\":\"4Nd1mYt8mQuW5Uy7vFkZq2Rj9HhcXeL3sPbTgAoC6wDx\",\"references\":[\"Jumper et al. 2021, Highly accurate protein structure prediction with AlphaFold, Nature 596\",\"TR-9 reference structure, PDB 7XYZ\"],\"roots\":[],\"significance\":\"Something else.\"},\"chain\":{\"slot\":312884401,\"tx\":\"4KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK\"},\"channel\":\"claims\",\"colony\":\"protein-design\",\"peer\":\"12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL\",\"ts\":\"2026-09-20T14:30:00Z\",\"type\":\"claim.publish\",\"v\":\"0.1.0\"}",
+      "id": "7a307e981f0a5123ed4d6ae944d6c0f04578ea9828d78b0232c90246753e7515"
+    },
+    {
+      "name": "peer changed after signing",
+      "expect": "signature",
+      "envelope": {
+        "v": "0.1.0",
+        "type": "claim.publish",
+        "colony": "protein-design",
+        "author": "AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9",
+        "peer": "12D3KooWAJjbRkp8FPF5MKgMU53aUTxWkqvDrs4zc1VMbwRwfsbE",
+        "ts": "2026-09-20T14:30:00Z",
+        "channel": "claims",
+        "chain": {
+          "tx": "4KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK",
+          "slot": 312884401
+        },
+        "body": {
+          "objective": "4Nd1mYt8mQuW5Uy7vFkZq2Rj9HhcXeL3sPbTgAoC6wDx",
+          "awardIndex": 0,
+          "claimHash": "f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e",
+          "assertion": "MKTAYIQKLKMSSAVLGSFLLALSLVSSQSVFA",
+          "significance": "A binder against TR-9 with a predicted melting point of 81.1 C, which clears the objective's 75 C threshold by six degrees and does so on a backbone topology no admitted claim uses.",
+          "evidence": {
+            "deterministic": [
+              {
+                "id": "D1",
+                "kind": "deterministic",
+                "statement": "tm_celsius = 81.1, from the objective's stated procedure over the deposited coordinates.",
+                "artifacts": [
+                  {
+                    "name": "predicted.pdb",
+                    "hash": "3c0d1f7a4b8e2d5061927e3f4a8b0c1d2e3f405162738495a6b7c8d9e0f1a2b3",
+                    "size": 184320,
+                    "mime": "chemical/x-pdb"
+                  }
+                ],
+                "provenance": "ColabFold 1.5.5 against UniRef90 2026_01, seed 0, run on the claimant's node. The objective's procedure derives the measurement; this supplies its input."
+              },
+              {
+                "id": "D2",
+                "kind": "deterministic",
+                "statement": "binding_kcal = -10.4, below the -9.0 the criteria require.",
+                "provenance": "Same structure, scored with the tool and version the criteria name."
+              }
+            ],
+            "procedural": [
+              {
+                "id": "P1",
+                "kind": "procedural",
+                "statement": "The melting point holds across five independent folds of the same sequence, so the figure is not an artefact of one seed.",
+                "procedure": {
+                  "statement": "Fold the sequence five times with different seeds and take the spread of the predicted melting points.",
+                  "inputs": [
+                    "the sequence in the claim's assertion"
+                  ],
+                  "check": "max(tm_celsius) - min(tm_celsius) < 2.0 and min(tm_celsius) > 75.0",
+                  "environment": [
+                    {
+                      "kind": "tool",
+                      "name": "colabfold",
+                      "version": "1.5.5"
+                    },
+                    {
+                      "kind": "dataset",
+                      "name": "uniref90",
+                      "version": "2026_01"
+                    },
+                    {
+                      "kind": "compute",
+                      "name": "cuda-gpu",
+                      "detail": "16 GB or more"
+                    }
+                  ]
+                },
+                "provenance": "Five runs on the claimant's node, seeds 0 to 4. Spread was 1.3 C."
+              }
+            ],
+            "semantic": [
+              {
+                "id": "S1",
+                "kind": "semantic",
+                "statement": "The stabilising contact is a buried salt bridge between the binder's D17 and the target's R204, which is the interaction the objective's criteria describe as the one worth finding.",
+                "provenance": "Read off the deposited coordinates by the claimant. An argument, offered to be judged rather than checked."
+              }
+            ]
+          },
+          "references": [
+            "Jumper et al. 2021, Highly accurate protein structure prediction with AlphaFold, Nature 596",
+            "TR-9 reference structure, PDB 7XYZ"
+          ],
+          "roots": []
+        },
+        "sig": "PNDt7dDJJ4KzCLotmQG4xmHAS2sVtQavsBgNPyvVJxBpw177k2grtod7aN1aE9KBj3cbz7Mma5WaMP6mvymS6id"
+      },
+      "signing": "{\"author\":\"AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9\",\"body\":{\"assertion\":\"MKTAYIQKLKMSSAVLGSFLLALSLVSSQSVFA\",\"awardIndex\":0,\"claimHash\":\"f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e\",\"evidence\":{\"deterministic\":[{\"artifacts\":[{\"hash\":\"3c0d1f7a4b8e2d5061927e3f4a8b0c1d2e3f405162738495a6b7c8d9e0f1a2b3\",\"mime\":\"chemical/x-pdb\",\"name\":\"predicted.pdb\",\"size\":184320}],\"id\":\"D1\",\"kind\":\"deterministic\",\"provenance\":\"ColabFold 1.5.5 against UniRef90 2026_01, seed 0, run on the claimant's node. The objective's procedure derives the measurement; this supplies its input.\",\"statement\":\"tm_celsius = 81.1, from the objective's stated procedure over the deposited coordinates.\"},{\"id\":\"D2\",\"kind\":\"deterministic\",\"provenance\":\"Same structure, scored with the tool and version the criteria name.\",\"statement\":\"binding_kcal = -10.4, below the -9.0 the criteria require.\"}],\"procedural\":[{\"id\":\"P1\",\"kind\":\"procedural\",\"procedure\":{\"check\":\"max(tm_celsius) - min(tm_celsius) < 2.0 and min(tm_celsius) > 75.0\",\"environment\":[{\"kind\":\"tool\",\"name\":\"colabfold\",\"version\":\"1.5.5\"},{\"kind\":\"dataset\",\"name\":\"uniref90\",\"version\":\"2026_01\"},{\"detail\":\"16 GB or more\",\"kind\":\"compute\",\"name\":\"cuda-gpu\"}],\"inputs\":[\"the sequence in the claim's assertion\"],\"statement\":\"Fold the sequence five times with different seeds and take the spread of the predicted melting points.\"},\"provenance\":\"Five runs on the claimant's node, seeds 0 to 4. Spread was 1.3 C.\",\"statement\":\"The melting point holds across five independent folds of the same sequence, so the figure is not an artefact of one seed.\"}],\"semantic\":[{\"id\":\"S1\",\"kind\":\"semantic\",\"provenance\":\"Read off the deposited coordinates by the claimant. An argument, offered to be judged rather than checked.\",\"statement\":\"The stabilising contact is a buried salt bridge between the binder's D17 and the target's R204, which is the interaction the objective's criteria describe as the one worth finding.\"}]},\"objective\":\"4Nd1mYt8mQuW5Uy7vFkZq2Rj9HhcXeL3sPbTgAoC6wDx\",\"references\":[\"Jumper et al. 2021, Highly accurate protein structure prediction with AlphaFold, Nature 596\",\"TR-9 reference structure, PDB 7XYZ\"],\"roots\":[],\"significance\":\"A binder against TR-9 with a predicted melting point of 81.1 C, which clears the objective's 75 C threshold by six degrees and does so on a backbone topology no admitted claim uses.\"},\"chain\":{\"slot\":312884401,\"tx\":\"4KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK\"},\"channel\":\"claims\",\"colony\":\"protein-design\",\"peer\":\"12D3KooWAJjbRkp8FPF5MKgMU53aUTxWkqvDrs4zc1VMbwRwfsbE\",\"ts\":\"2026-09-20T14:30:00Z\",\"type\":\"claim.publish\",\"v\":\"0.1.0\"}",
+      "id": "b025a03532d223972734879208bc266c6cb7bc021931ef390333f497417ef8b8"
+    },
+    {
+      "name": "signature truncated",
+      "expect": "signature",
+      "envelope": {
+        "v": "0.1.0",
+        "type": "claim.publish",
+        "colony": "protein-design",
+        "author": "AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9",
+        "peer": "12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL",
+        "ts": "2026-09-20T14:30:00Z",
+        "channel": "claims",
+        "chain": {
+          "tx": "4KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK",
+          "slot": 312884401
+        },
+        "body": {
+          "objective": "4Nd1mYt8mQuW5Uy7vFkZq2Rj9HhcXeL3sPbTgAoC6wDx",
+          "awardIndex": 0,
+          "claimHash": "f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e",
+          "assertion": "MKTAYIQKLKMSSAVLGSFLLALSLVSSQSVFA",
+          "significance": "A binder against TR-9 with a predicted melting point of 81.1 C, which clears the objective's 75 C threshold by six degrees and does so on a backbone topology no admitted claim uses.",
+          "evidence": {
+            "deterministic": [
+              {
+                "id": "D1",
+                "kind": "deterministic",
+                "statement": "tm_celsius = 81.1, from the objective's stated procedure over the deposited coordinates.",
+                "artifacts": [
+                  {
+                    "name": "predicted.pdb",
+                    "hash": "3c0d1f7a4b8e2d5061927e3f4a8b0c1d2e3f405162738495a6b7c8d9e0f1a2b3",
+                    "size": 184320,
+                    "mime": "chemical/x-pdb"
+                  }
+                ],
+                "provenance": "ColabFold 1.5.5 against UniRef90 2026_01, seed 0, run on the claimant's node. The objective's procedure derives the measurement; this supplies its input."
+              },
+              {
+                "id": "D2",
+                "kind": "deterministic",
+                "statement": "binding_kcal = -10.4, below the -9.0 the criteria require.",
+                "provenance": "Same structure, scored with the tool and version the criteria name."
+              }
+            ],
+            "procedural": [
+              {
+                "id": "P1",
+                "kind": "procedural",
+                "statement": "The melting point holds across five independent folds of the same sequence, so the figure is not an artefact of one seed.",
+                "procedure": {
+                  "statement": "Fold the sequence five times with different seeds and take the spread of the predicted melting points.",
+                  "inputs": [
+                    "the sequence in the claim's assertion"
+                  ],
+                  "check": "max(tm_celsius) - min(tm_celsius) < 2.0 and min(tm_celsius) > 75.0",
+                  "environment": [
+                    {
+                      "kind": "tool",
+                      "name": "colabfold",
+                      "version": "1.5.5"
+                    },
+                    {
+                      "kind": "dataset",
+                      "name": "uniref90",
+                      "version": "2026_01"
+                    },
+                    {
+                      "kind": "compute",
+                      "name": "cuda-gpu",
+                      "detail": "16 GB or more"
+                    }
+                  ]
+                },
+                "provenance": "Five runs on the claimant's node, seeds 0 to 4. Spread was 1.3 C."
+              }
+            ],
+            "semantic": [
+              {
+                "id": "S1",
+                "kind": "semantic",
+                "statement": "The stabilising contact is a buried salt bridge between the binder's D17 and the target's R204, which is the interaction the objective's criteria describe as the one worth finding.",
+                "provenance": "Read off the deposited coordinates by the claimant. An argument, offered to be judged rather than checked."
+              }
+            ]
+          },
+          "references": [
+            "Jumper et al. 2021, Highly accurate protein structure prediction with AlphaFold, Nature 596",
+            "TR-9 reference structure, PDB 7XYZ"
+          ],
+          "roots": []
+        },
+        "sig": "PNDt7dDJJ4KzCLotmQG4xmHAS2sVtQavsBgNPyvVJxBpw177k2grtod7aN1aE9KBj3cbz7Mma5WaMP6mvymS6i"
+      },
+      "signing": "{\"author\":\"AKnL4NNf3DGWZJS6cPknBuEGnVsV4A4m5tgebLHaRSZ9\",\"body\":{\"assertion\":\"MKTAYIQKLKMSSAVLGSFLLALSLVSSQSVFA\",\"awardIndex\":0,\"claimHash\":\"f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e\",\"evidence\":{\"deterministic\":[{\"artifacts\":[{\"hash\":\"3c0d1f7a4b8e2d5061927e3f4a8b0c1d2e3f405162738495a6b7c8d9e0f1a2b3\",\"mime\":\"chemical/x-pdb\",\"name\":\"predicted.pdb\",\"size\":184320}],\"id\":\"D1\",\"kind\":\"deterministic\",\"provenance\":\"ColabFold 1.5.5 against UniRef90 2026_01, seed 0, run on the claimant's node. The objective's procedure derives the measurement; this supplies its input.\",\"statement\":\"tm_celsius = 81.1, from the objective's stated procedure over the deposited coordinates.\"},{\"id\":\"D2\",\"kind\":\"deterministic\",\"provenance\":\"Same structure, scored with the tool and version the criteria name.\",\"statement\":\"binding_kcal = -10.4, below the -9.0 the criteria require.\"}],\"procedural\":[{\"id\":\"P1\",\"kind\":\"procedural\",\"procedure\":{\"check\":\"max(tm_celsius) - min(tm_celsius) < 2.0 and min(tm_celsius) > 75.0\",\"environment\":[{\"kind\":\"tool\",\"name\":\"colabfold\",\"version\":\"1.5.5\"},{\"kind\":\"dataset\",\"name\":\"uniref90\",\"version\":\"2026_01\"},{\"detail\":\"16 GB or more\",\"kind\":\"compute\",\"name\":\"cuda-gpu\"}],\"inputs\":[\"the sequence in the claim's assertion\"],\"statement\":\"Fold the sequence five times with different seeds and take the spread of the predicted melting points.\"},\"provenance\":\"Five runs on the claimant's node, seeds 0 to 4. Spread was 1.3 C.\",\"statement\":\"The melting point holds across five independent folds of the same sequence, so the figure is not an artefact of one seed.\"}],\"semantic\":[{\"id\":\"S1\",\"kind\":\"semantic\",\"provenance\":\"Read off the deposited coordinates by the claimant. An argument, offered to be judged rather than checked.\",\"statement\":\"The stabilising contact is a buried salt bridge between the binder's D17 and the target's R204, which is the interaction the objective's criteria describe as the one worth finding.\"}]},\"objective\":\"4Nd1mYt8mQuW5Uy7vFkZq2Rj9HhcXeL3sPbTgAoC6wDx\",\"references\":[\"Jumper et al. 2021, Highly accurate protein structure prediction with AlphaFold, Nature 596\",\"TR-9 reference structure, PDB 7XYZ\"],\"roots\":[],\"significance\":\"A binder against TR-9 with a predicted melting point of 81.1 C, which clears the objective's 75 C threshold by six degrees and does so on a backbone topology no admitted claim uses.\"},\"chain\":{\"slot\":312884401,\"tx\":\"4KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK\"},\"channel\":\"claims\",\"colony\":\"protein-design\",\"peer\":\"12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL\",\"ts\":\"2026-09-20T14:30:00Z\",\"type\":\"claim.publish\",\"v\":\"0.1.0\"}",
+      "id": "b294bb9c0825cb1331aea5a9b428234bb19027c22f0a8cdc8ce01fa6d4d3c423"
+    }
+  ]
+}

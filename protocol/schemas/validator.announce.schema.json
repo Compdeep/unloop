@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://unloop.network/schemas/0.1.0/validator.announce.schema.json",
+  "title": "validator.announce",
+  "description": "A node offers to validate in this colony. A validator is not a separate class of participant — it is an ordinary working node that has said it will also check other people's claims on spare capacity.\n\nWhat it declares is what it holds, not what it is willing to do. Nothing selects validators and nothing equips them, so an objective states what its procedure needs and a node states what it has, and the validator population for that objective is the overlap. A leader requiring something nobody holds gets no validations and learns it immediately, rather than after agents have worked.",
+  "type": "object",
+  "properties": {
+    "capacity": {
+      "type": "integer", "minimum": 1, "default": 1,
+      "description": "Claims this node is willing to hold open at once. Advisory; nothing enforces it."
+    },
+    "holds": {
+      "type": "array",
+      "items": { "$ref": "common.schema.json#/$defs/capability" },
+      "maxItems": 64,
+      "description": "Tools at their versions, pinned datasets, accesses. Compared against a procedure's `environment` to decide eligibility. An empty list is honest and says this node can take on claims that need nothing in particular."
+    },
+    "withdraw": {
+      "type": "boolean", "default": false,
+      "description": "True retracts a previous announcement. Outstanding validations still stand."
+    }
+  },
+  "required": ["holds"],
+  "additionalProperties": false
+}

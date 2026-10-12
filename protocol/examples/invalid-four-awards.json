@@ -1,0 +1,49 @@
+{
+  "v": "0.1.0",
+  "type": "objective.publish",
+  "colony": "protein-design",
+  "author": "7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU",
+  "peer": "12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL",
+  "ts": "2026-09-20T14:30:00Z",
+  "chain": {
+    "tx": "4KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK",
+    "slot": 312884401
+  },
+  "body": {
+    "id": "4Nd1mYt8mQuW5Uy7vFkZq2Rj9HhcXeL3sPbTgAoC6wDx",
+    "payout": "prize",
+    "title": "t",
+    "statement": "s",
+    "criteriaHash": "2e7d2c03a9507ae265ecf5b5356885a53393a2029d241394997265a1a25aefc6",
+    "claimForm": {
+      "name": "n",
+      "spec": "s"
+    },
+    "awards": [
+      {
+        "index": 0,
+        "title": "a",
+        "criteria": "c"
+      },
+      {
+        "index": 1,
+        "title": "b",
+        "criteria": "c"
+      },
+      {
+        "index": 2,
+        "title": "c",
+        "criteria": "c"
+      },
+      {
+        "index": 2,
+        "title": "d",
+        "criteria": "c"
+      }
+    ],
+    "claimDeadline": "2026-12-01T00:00:00Z",
+    "validationDeadline": "2026-12-15T00:00:00Z",
+    "validationMode": "semantic"
+  },
+  "sig": "5JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ"
+}

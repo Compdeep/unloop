@@ -1,0 +1,16 @@
+{
+  "v": "0.1.0",
+  "type": "cannot_verify",
+  "colony": "protein-design",
+  "author": "3n1kMrVJDrKZBLNfCJ4R9Yg9cKfR5vFk4hXjTLXeQ8Yp",
+  "peer": "12D3KooWRfYvMBcLKh9JnFEkGpPsNaMxLVmYqQbWtCdEfGhJkLmN",
+  "ts": "2026-09-20T14:30:00Z",
+  "body": {
+    "claimHash": "f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e",
+    "seq": 1,
+    "answering": 0,
+    "blocker": "step_missing",
+    "detail": "The docking protocol does not state the random seed or the box dimensions, so the five runs cannot be reproduced. Reached step 3 and stopped."
+  },
+  "sig": "5JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ"
+}

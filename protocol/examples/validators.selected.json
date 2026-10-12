@@ -1,0 +1,19 @@
+{
+  "v": "0.1.0",
+  "type": "validators.selected",
+  "colony": "protein-design",
+  "author": "9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM",
+  "peer": "12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL",
+  "ts": "2026-09-20T14:30:02Z",
+  "channel": "claims",
+  "body": {
+    "claim": "f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e",
+    "selectionSeed": "7431902265513371649",
+    "validators": [
+      "9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM",
+      "2mVhGnBcRa3tHtLYcHhLqkPyMCVL7cZHKMxZvGkHkYqE",
+      "6bWqJ4mKSRk4EZ8oYZFcYy5Dc4dGEcCmVWmeWQdRZoHL"
+    ]
+  },
+  "sig": "5JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ"
+}

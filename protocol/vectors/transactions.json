@@ -1,0 +1,1434 @@
+{
+  "comment": [
+    "What node/chain (Go) must build exactly as chain/client (TypeScript) does: the agent's instructions,",
+    "from the accounts below. Built by chain/tests/transactions.test.ts in a world of fixed keys; VECTORS_WRITE=1",
+    "rebuilds it. `message` is the legacy message web3.js compiles for the signer as fee payer and the fixed blockhash."
+  ],
+  "program": "3bPsoRTKT1J9U6V6Zua42VKHVBZ9XAuBPJq3RFFF3Qdz",
+  "blockhash": "US517G5965aydkZ46HS38QLi7UQiSojurfbQfKCELFx",
+  "accounts": {
+    "Do1aoCTuTpE41oSzbKgfCaktPKyjJwXDRD2n1Fxd3MEL": {
+      "owner": "3bPsoRTKT1J9U6V6Zua42VKHVBZ9XAuBPJq3RFFF3Qdz",
+      "data": "pylaA8s3IhVhmBVHxiRFRcGmxTHS4Q/RHshA9f6UmsGG9tgufqzKkaxvEsXUP5emrRjeoiZM8WEHlUpvr5YjKXOvoiTU6J3u4B4URnLfUnGTet9D1+x+VcwlnFVKjIY0e3VRmOu1t9wBAHAXoA8AAAAAAAAAAAAAJi1Re//QZITiNBtKN5x/T6S+koSpqCYxwDQglT1gvWeRudAI6F549tMYevmiaqKRqIiMJp37Ys+E2sNau8QRTwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAhNcXAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAAD//////////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf//////////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB//////////8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAypo7AAAAAAEAAAAAAAAAAoBRAQAAAAAAAKMCAAAAAACA9AMAAAAAAP//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "6FvgwEfy9NnKEFktLA4kTdbx5MQV93EkAQWyYnZLmVNx": {
+      "owner": "3bPsoRTKT1J9U6V6Zua42VKHVBZ9XAuBPJq3RFFF3Qdz",
+      "data": "pylaA8s3IhUIulf995ftkIv/QrRW/9urn1cYLueGShQzN1VYfFVkw6xvEsXUP5emrRjeoiZM8WEHlUpvr5YjKXOvoiTU6J3u4B4URnLfUnGTet9D1+x+VcwlnFVKjIY0e3VRmOu1t9wBAHAXoA8AAAAAAAAAAAAAJi1Re//QZITiNBtKN5x/T6S+koSpqCYxwDQglT1gvWeRudAI6F549tMYevmiaqKRqIiMJp37Ys+E2sNau8QRTwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhNcXAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//////////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf//////////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB//////////8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAypo7AAAAAAAAAAAAAAAAAoBRAQAAAAAAAKMCAAAAAACA9AMAAAAAAP/9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "7Zy3tRtMu5DPaQQEdEM1UjKZLZ32CsNjsoDqjznCf8CQ": {
+      "owner": "3bPsoRTKT1J9U6V6Zua42VKHVBZ9XAuBPJq3RFFF3Qdz",
+      "data": "LMLZP/Yq2PKsbxLF1D+Xpq0Y3qImTPFhB5VKb6+WIylzr6Ik1Oid7g4AAABwcm90ZWluLWRlc2lnbuAeFEZy31Jxk3rfQ9fsflXMJZxVSoyGNHt1UZjrtbfcAQBwF6APAaxvEsXUP5emrRjeoiZM8WEHlUpvr5YjKXOvoiTU6J3uAAAAAAAAAAAAAAAAAAIAAAAAAAAAAJQ1dwAAAAABAAAAAAAAAP4AAAAAAAAAAAAAAAAAAAAAAAA="
+    },
+    "b54mN5B1LWnewPYqwS6JcgMVG3kiUz9NDvBCwLQ1CJE": {
+      "owner": "3bPsoRTKT1J9U6V6Zua42VKHVBZ9XAuBPJq3RFFF3Qdz",
+      "data": "LMLZP/Yq2PKsbxLF1D+Xpq0Y3qImTPFhB5VKb6+WIylzr6Ik1Oid7gsAAABmcmVlLWNvbG9ueeAeFEZy31Jxk3rfQ9fsflXMJZxVSoyGNHt1UZjrtbfcAQBwF6APAaxvEsXUP5emrRjeoiZM8WEHlUpvr5YjKXOvoiTU6J3uAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAABAAAAAAAAAP4AAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+    },
+    "3s62GbKX3CqyNwA8nNjyrxFvmPgs4YTMeYSSv4TY147R": {
+      "owner": "3bPsoRTKT1J9U6V6Zua42VKHVBZ9XAuBPJq3RFFF3Qdz",
+      "data": "m0YWsHvX9ma+FZ6DbbbmuWW8oaHjieVzgzdGHEpMQC3YEsaNq+eoRfjMs3adpHEI/JX7cnaTEIwQsqiTx1we+lWWRFBqA0ZBMhmw3e0VayC0H6gWAv1hpPqm81m1LR11mgVJj4IL6GAAgAo9GgAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoa+4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP8BAQAAAAAAAAAAAA=="
+    },
+    "ATbDvMsMv16XMJpE7PL4D8xrtXvwdGENpPmT3iB7gQAt": {
+      "owner": "3bPsoRTKT1J9U6V6Zua42VKHVBZ9XAuBPJq3RFFF3Qdz",
+      "data": "m0YWsHvX9ma+FZ6DbbbmuWW8oaHjieVzgzdGHEpMQC3YEsaNq+eoRR6pMPknNbBH2qSThyBpm5nBv0UJQDe7fpIFWP9KT9slrP+HKjVi7TwGLRdb/Kyd22QU7r5X9Ta0MMil3EUZYfUAgQo9GgAAAAAAKowXsgO92SnSCultTIWKtpwSDmmmCjHnIh0PDo2iVlAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAoa+4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP8AAAAAAAAAAAAAAA=="
+    },
+    "HzdwsAPQhDPYtVebD6kBx89aRN5PySp32wFSnXVAatFh": {
+      "owner": "3bPsoRTKT1J9U6V6Zua42VKHVBZ9XAuBPJq3RFFF3Qdz",
+      "data": "mwyq4B76zIJt8gNI9uQXxCOoWQxv5Pea9R0n4EamRL1ytA7ss5WaS6AcMzQM47OxeE6Edd1Pc8bfWA9IzwFdZpdtwB2V1ajzlgCWAP8="
+    },
+    "EP7LKDo818mhsqaT1mTUQ3TZWgUg7RgV2raHUdvj8ytF": {
+      "owner": "3bPsoRTKT1J9U6V6Zua42VKHVBZ9XAuBPJq3RFFF3Qdz",
+      "data": "XEn/K2szdWVt8gNI9uQXxCOoWQxv5Pea9R0n4EamRL1ytA7ss5WaSxKiPqNkyQSEI5ylge+gBN7ksbv/YfNFtqdWxu9uc85rAABkp7O24A0AAAAAAAAAAADyBSoBAAAAAMqaOwAAAAD/"
+    },
+    "2Fjq4LUBgjqdy3gjfbVo2b326BZHG6UgDGZePWLT8nw4": {
+      "owner": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+      "data": "AQAAAMbR3lv7uENq8wXhEyBkGCl26y7umKp6BuaWYMg0WBPUAAAAAAAAAAAJAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=="
+    },
+    "G5rvjjP3VXX5f52w2ZTc2665iMNZ5hiFomEXC17XnzMh": {
+      "owner": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+      "data": "AQAAAG3yA0j25BfEI6hZDG/k95r1HSfgRqZEvXK0DuyzlZpLAIAopUYHAAAGAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=="
+    }
+  },
+  "cases": [
+    {
+      "name": "file, in a colony that charges a fee",
+      "action": "file",
+      "params": {
+        "agent": "HkD9ZmdbAbdXTob57HTtVgZZBSPm19Dqj7WVfskitsdi",
+        "objective": "Do1aoCTuTpE41oSzbKgfCaktPKyjJwXDRD2n1Fxd3MEL",
+        "hash": "3219b0dded156b20b41fa81602fd61a4faa6f359b52d1d759a05498f820be860",
+        "awardIndex": 0,
+        "roots": [],
+        "maxFee": "4000000000"
+      },
+      "instructions": [
+        {
+          "program": "3bPsoRTKT1J9U6V6Zua42VKHVBZ9XAuBPJq3RFFF3Qdz",
+          "accounts": [
+            {
+              "key": "HkD9ZmdbAbdXTob57HTtVgZZBSPm19Dqj7WVfskitsdi",
+              "signer": true,
+              "writable": true
+            },
+            {
+              "key": "Do1aoCTuTpE41oSzbKgfCaktPKyjJwXDRD2n1Fxd3MEL",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "3s62GbKX3CqyNwA8nNjyrxFvmPgs4YTMeYSSv4TY147R",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "7Zy3tRtMu5DPaQQEdEM1UjKZLZ32CsNjsoDqjznCf8CQ",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "EP7LKDo818mhsqaT1mTUQ3TZWgUg7RgV2raHUdvj8ytF",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "2Fjq4LUBgjqdy3gjfbVo2b326BZHG6UgDGZePWLT8nw4",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "6LjqwqdRyGpWpvLsMdpmziScHfARzLtQXZaVkrfsyfuL",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "6NMTszyAFasauoqx8rQfhTF38NUVq8w1nbY5xhZM7Y8e",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "11111111111111111111111111111111",
+              "signer": false,
+              "writable": false
+            }
+          ],
+          "data": "6f7b45c0c3e4891e3219b0dded156b20b41fa81602fd61a4faa6f359b52d1d759a05498f820be860000000000000286bee00000000"
+        }
+      ],
+      "message": "AQAFC/jMs3adpHEI/JX7cnaTEIwQsqiTx1we+lWWRFBqA0ZBEqI+o2TJBIQjnKWB76AE3uSxu/9h80W2p1bG725zzmsqjBeyA73ZKdIK6W1MhYq2nBIOaaYKMeciHQ8OjaJWUE9Y6esHj3JoffMAiY/Q0cBuUKnnaFDTDZlPnq48B4aTT8LFC0jesPsI9X0T23Z5spKwQf8oIfOj2ej6lJhy5Me+FZ6DbbbmuWW8oaHjieVzgzdGHEpMQC3YEsaNq+eoRQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJob8uF4Uqhe0KhOzStG3v2CGt2iKJfAMM/VSOlNxeg1hmBVHxiRFRcGmxTHS4Q/RHshA9f6UmsGG9tgufqzKkcbR3lv7uENq8wXhEyBkGCl26y7umKp6BuaWYMg0WBPUBt324ddloZPZy+FGzut5rBy0he1fWzeROoz1hX7/AKkHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwEHCgAFAggJAQMECgY1b3tFwMPkiR4yGbDd7RVrILQfqBYC/WGk+qbzWbUtHXWaBUmPggvoYAAAAAAAAChr7gAAAAA="
+    },
+    {
+      "name": "file, citing a root",
+      "action": "file",
+      "params": {
+        "agent": "34gs9SWUQuXhNZ3hhL6ZSi5Jyfz49SLr99MpJKTqKuk8",
+        "objective": "Do1aoCTuTpE41oSzbKgfCaktPKyjJwXDRD2n1Fxd3MEL",
+        "hash": "acff872a3562ed3c062d175bfcac9ddb6414eebe57f536b430c8a5dc451961f5",
+        "awardIndex": 0,
+        "roots": [
+          "3s62GbKX3CqyNwA8nNjyrxFvmPgs4YTMeYSSv4TY147R"
+        ],
+        "maxFee": "18446744073709551615"
+      },
+      "instructions": [
+        {
+          "program": "3bPsoRTKT1J9U6V6Zua42VKHVBZ9XAuBPJq3RFFF3Qdz",
+          "accounts": [
+            {
+              "key": "34gs9SWUQuXhNZ3hhL6ZSi5Jyfz49SLr99MpJKTqKuk8",
+              "signer": true,
+              "writable": true
+            },
+            {
+              "key": "Do1aoCTuTpE41oSzbKgfCaktPKyjJwXDRD2n1Fxd3MEL",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "ATbDvMsMv16XMJpE7PL4D8xrtXvwdGENpPmT3iB7gQAt",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "7Zy3tRtMu5DPaQQEdEM1UjKZLZ32CsNjsoDqjznCf8CQ",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "EP7LKDo818mhsqaT1mTUQ3TZWgUg7RgV2raHUdvj8ytF",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "2Fjq4LUBgjqdy3gjfbVo2b326BZHG6UgDGZePWLT8nw4",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "3XdfMk6KmmTbPGNfxGUQw2F9WXoFVwZyeGDNsk4aaMUh",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "6NMTszyAFasauoqx8rQfhTF38NUVq8w1nbY5xhZM7Y8e",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "11111111111111111111111111111111",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "3s62GbKX3CqyNwA8nNjyrxFvmPgs4YTMeYSSv4TY147R",
+              "signer": false,
+              "writable": false
+            }
+          ],
+          "data": "6f7b45c0c3e4891eacff872a3562ed3c062d175bfcac9ddb6414eebe57f536b430c8a5dc451961f500010000002a8c17b203bdd929d20ae96d4c858ab69c120e69a60a31e7221d0f0e8da25650ffffffffffffffff"
+        }
+      ],
+      "message": "AQAGDB6pMPknNbBH2qSThyBpm5nBv0UJQDe7fpIFWP9KT9slEqI+o2TJBIQjnKWB76AE3uSxu/9h80W2p1bG725zzmslkEBQyDLoEH1khH5EkFRXlPbZlpHkhKJ+Su+6kmZG7k/CxQtI3rD7CPV9E9t2ebKSsEH/KCHzo9no+pSYcuTHjIj6qtu7bFTe+2y26Cso8C/+uy7mzJ6Kz7L+edKZ2nG+FZ6DbbbmuWW8oaHjieVzgzdGHEpMQC3YEsaNq+eoRQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJob8uF4Uqhe0KhOzStG3v2CGt2iKJfAMM/VSOlNxeg0qjBeyA73ZKdIK6W1MhYq2nBIOaaYKMeciHQ8OjaJWUGGYFUfGJEVFwabFMdLhD9EeyED1/pSawYb22C5+rMqRxtHeW/u4Q2rzBeETIGQYKXbrLu6YqnoG5pZgyDRYE9QG3fbh12Whk9nL4UbO63msHLSF7V9bN5E6jPWFfv8AqQcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHAQcLAAUECQoBAgMLBghVb3tFwMPkiR6s/4cqNWLtPAYtF1v8rJ3bZBTuvlf1NrQwyKXcRRlh9QABAAAAKowXsgO92SnSCultTIWKtpwSDmmmCjHnIh0PDo2iVlD//////////w=="
+    },
+    {
+      "name": "file, in a free colony",
+      "action": "file",
+      "params": {
+        "agent": "HkD9ZmdbAbdXTob57HTtVgZZBSPm19Dqj7WVfskitsdi",
+        "objective": "6FvgwEfy9NnKEFktLA4kTdbx5MQV93EkAQWyYnZLmVNx",
+        "hash": "f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e",
+        "awardIndex": 0,
+        "roots": [],
+        "maxFee": "0"
+      },
+      "instructions": [
+        {
+          "program": "3bPsoRTKT1J9U6V6Zua42VKHVBZ9XAuBPJq3RFFF3Qdz",
+          "accounts": [
+            {
+              "key": "HkD9ZmdbAbdXTob57HTtVgZZBSPm19Dqj7WVfskitsdi",
+              "signer": true,
+              "writable": true
+            },
+            {
+              "key": "6FvgwEfy9NnKEFktLA4kTdbx5MQV93EkAQWyYnZLmVNx",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "CUREWHyaNFHmqHqmZsYPdeNsqyftBSs4iS96fzZR1HjG",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "b54mN5B1LWnewPYqwS6JcgMVG3kiUz9NDvBCwLQ1CJE",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "3bPsoRTKT1J9U6V6Zua42VKHVBZ9XAuBPJq3RFFF3Qdz",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "3bPsoRTKT1J9U6V6Zua42VKHVBZ9XAuBPJq3RFFF3Qdz",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "3bPsoRTKT1J9U6V6Zua42VKHVBZ9XAuBPJq3RFFF3Qdz",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "3bPsoRTKT1J9U6V6Zua42VKHVBZ9XAuBPJq3RFFF3Qdz",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "3bPsoRTKT1J9U6V6Zua42VKHVBZ9XAuBPJq3RFFF3Qdz",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "11111111111111111111111111111111",
+              "signer": false,
+              "writable": false
+            }
+          ],
+          "data": "6f7b45c0c3e4891ef6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e00000000000000000000000000"
+        }
+      ],
+      "message": "AQADBvjMs3adpHEI/JX7cnaTEIwQsqiTx1we+lWWRFBqA0ZBTh1Fk2NDuNnnvcOs/VnRq2uZnWWQvJ9HB2BqtEYd3LmqdqNhILf6Gs6F21ON0mNYeTvhU4pPJy+437pFWPetkwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJob8uF4Uqhe0KhOzStG3v2CGt2iKJfAMM/VSOlNxeg0Iulf995ftkIv/QrRW/9urn1cYLueGShQzN1VYfFVkwwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHAQQKAAECBQQEBAQEAzVve0XAw+SJHvb/fIH1TJdK4TUI17MXKhgBJI8SWZsHcJD40aW+uPM+AAAAAAAAAAAAAAAAAA=="
+    },
+    {
+      "name": "seed",
+      "action": "seed",
+      "params": {
+        "caller": "HehVCbPYb3HYBnXkH3DmpuqLZnsMgwDdvqtqW2jJWDUt",
+        "claim": "3s62GbKX3CqyNwA8nNjyrxFvmPgs4YTMeYSSv4TY147R"
+      },
+      "instructions": [
+        {
+          "program": "3bPsoRTKT1J9U6V6Zua42VKHVBZ9XAuBPJq3RFFF3Qdz",
+          "accounts": [
+            {
+              "key": "HehVCbPYb3HYBnXkH3DmpuqLZnsMgwDdvqtqW2jJWDUt",
+              "signer": true,
+              "writable": false
+            },
+            {
+              "key": "3s62GbKX3CqyNwA8nNjyrxFvmPgs4YTMeYSSv4TY147R",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "Do1aoCTuTpE41oSzbKgfCaktPKyjJwXDRD2n1Fxd3MEL",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "7Zy3tRtMu5DPaQQEdEM1UjKZLZ32CsNjsoDqjznCf8CQ",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "SysvarS1otHashes111111111111111111111111111",
+              "signer": false,
+              "writable": false
+            }
+          ],
+          "data": "c1c753e311f5e78b"
+        }
+      ],
+      "message": "AQAEBvdjQjc4q8L4rlS2OmRLCRzp8RaLEvp8Iqg8jUEMxAGZKowXsgO92SnSCultTIWKtpwSDmmmCjHnIh0PDo2iVlAmhvy4XhSqF7QqE7NK0be/YIa3aIol8Awz9VI6U3F6DWGYFUfGJEVFwabFMdLhD9EeyED1/pSawYb22C5+rMqRvhWeg2225rllvKGh44nlc4M3RhxKTEAt2BLGjavnqEUGp9UXGS8Kr8byZeP7d8x62oLFKdC+OxNuLQBVIAAAAAcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHAQIFAAEEAwUIwcdT4xH154s="
+    },
+    {
+      "name": "commit",
+      "action": "commit",
+      "params": {
+        "validator": "6kZW63o8BVzsEjZXuyuGXNEcM97KtiZ26nNE1a7EyCH4",
+        "claim": "3s62GbKX3CqyNwA8nNjyrxFvmPgs4YTMeYSSv4TY147R",
+        "commitment": "08bc9f1548a57babad2c9191e04bf9311960d4f4b0900b1c8d561cbb1a0667a7"
+      },
+      "instructions": [
+        {
+          "program": "3bPsoRTKT1J9U6V6Zua42VKHVBZ9XAuBPJq3RFFF3Qdz",
+          "accounts": [
+            {
+              "key": "6kZW63o8BVzsEjZXuyuGXNEcM97KtiZ26nNE1a7EyCH4",
+              "signer": true,
+              "writable": true
+            },
+            {
+              "key": "7Zy3tRtMu5DPaQQEdEM1UjKZLZ32CsNjsoDqjznCf8CQ",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "9hfxWMWAaXR5FK1SX8pC4NPLiLn9sojto7LnhoR4Y4gE",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "Do1aoCTuTpE41oSzbKgfCaktPKyjJwXDRD2n1Fxd3MEL",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "3s62GbKX3CqyNwA8nNjyrxFvmPgs4YTMeYSSv4TY147R",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "8uTGB2gSbGKLYN3z5GToM5qEkD2K5Cm89yWascqzC3vr",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "SysvarS1otHashes111111111111111111111111111",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "11111111111111111111111111111111",
+              "signer": false,
+              "writable": false
+            }
+          ],
+          "data": "055096f22e48fef208bc9f1548a57babad2c9191e04bf9311960d4f4b0900b1c8d561cbb1a0667a7"
+        }
+      ],
+      "message": "AQAFCVVzKLNNYaBU+QsWzVbEjBxcB7VDND8SxzFdo9CyyuG/KowXsgO92SnSCultTIWKtpwSDmmmCjHnIh0PDo2iVlB1cbRjkqn7FChflvf3zuASqSLMpy1CXAWL0WPri2tng4FIxs7+zx+m7u/+wbtR1421+DSPMozrnNeDSKUbxl/XAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAmhvy4XhSqF7QqE7NK0be/YIa3aIol8Awz9VI6U3F6DWGYFUfGJEVFwabFMdLhD9EeyED1/pSawYb22C5+rMqRvhWeg2225rllvKGh44nlc4M3RhxKTEAt2BLGjavnqEUGp9UXGS8Kr8byZeP7d8x62oLFKdC+OxNuLQBVIAAAAAcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHAQUIAAYDBwECCAQoBVCW8i5I/vIIvJ8VSKV7q60skZHgS/kxGWDU9LCQCxyNVhy7GgZnpw=="
+    },
+    {
+      "name": "reveal",
+      "action": "reveal",
+      "params": {
+        "validator": "6kZW63o8BVzsEjZXuyuGXNEcM97KtiZ26nNE1a7EyCH4",
+        "claim": "3s62GbKX3CqyNwA8nNjyrxFvmPgs4YTMeYSSv4TY147R",
+        "message": {
+          "claimHash": "3219b0dded156b20b41fa81602fd61a4faa6f359b52d1d759a05498f820be860",
+          "reason": "none",
+          "claimSupport": "pass",
+          "objectiveAlignment": "insufficient",
+          "noveltyBps": 7000,
+          "scoreBps": 8150,
+          "reproduction": "pass",
+          "items": [
+            {
+              "id": "S1",
+              "holds": true
+            }
+          ],
+          "rationale": "Reproduced.",
+          "finding": "1f698c4528ce0c89c478dfd132b5034bcc813c7075795a3ee8e8e9fec0259123"
+        },
+        "nonce": "abababababababababababababababababababababababababababababababab"
+      },
+      "instructions": [
+        {
+          "program": "3bPsoRTKT1J9U6V6Zua42VKHVBZ9XAuBPJq3RFFF3Qdz",
+          "accounts": [
+            {
+              "key": "6kZW63o8BVzsEjZXuyuGXNEcM97KtiZ26nNE1a7EyCH4",
+              "signer": true,
+              "writable": false
+            },
+            {
+              "key": "9hfxWMWAaXR5FK1SX8pC4NPLiLn9sojto7LnhoR4Y4gE",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "7Zy3tRtMu5DPaQQEdEM1UjKZLZ32CsNjsoDqjznCf8CQ",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "Do1aoCTuTpE41oSzbKgfCaktPKyjJwXDRD2n1Fxd3MEL",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "3s62GbKX3CqyNwA8nNjyrxFvmPgs4YTMeYSSv4TY147R",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "8uTGB2gSbGKLYN3z5GToM5qEkD2K5Cm89yWascqzC3vr",
+              "signer": false,
+              "writable": true
+            }
+          ],
+          "data": "ffb00b80f152a713000002581bd61f011f698c4528ce0c89c478dfd132b5034bcc813c7075795a3ee8e8e9fec0259123abababababababababababababababababababababababababababababababab"
+        }
+      ],
+      "message": "AQADB1VzKLNNYaBU+QsWzVbEjBxcB7VDND8SxzFdo9CyyuG/KowXsgO92SnSCultTIWKtpwSDmmmCjHnIh0PDo2iVlB1cbRjkqn7FChflvf3zuASqSLMpy1CXAWL0WPri2tng4FIxs7+zx+m7u/+wbtR1421+DSPMozrnNeDSKUbxl/XJob8uF4Uqhe0KhOzStG3v2CGt2iKJfAMM/VSOlNxeg1hmBVHxiRFRcGmxTHS4Q/RHshA9f6UmsGG9tgufqzKkb4VnoNttua5ZbyhoeOJ5XODN0YcSkxALdgSxo2r56hFBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcBBAYAAwUGAQJQ/7ALgPFSpxMAAAJYG9YfAR9pjEUozgyJxHjf0TK1A0vMgTxwdXlaPujo6f7AJZEjq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6s="
+    },
+    {
+      "name": "collect",
+      "action": "collect",
+      "params": {
+        "agent": "HkD9ZmdbAbdXTob57HTtVgZZBSPm19Dqj7WVfskitsdi",
+        "objective": "Do1aoCTuTpE41oSzbKgfCaktPKyjJwXDRD2n1Fxd3MEL"
+      },
+      "instructions": [
+        {
+          "program": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+          "accounts": [
+            {
+              "key": "HkD9ZmdbAbdXTob57HTtVgZZBSPm19Dqj7WVfskitsdi",
+              "signer": true,
+              "writable": true
+            },
+            {
+              "key": "49UfgucpEBcdTiD5nWcKtDLmHogwkh1ovJtG6rydxNQM",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "HkD9ZmdbAbdXTob57HTtVgZZBSPm19Dqj7WVfskitsdi",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "G5rvjjP3VXX5f52w2ZTc2665iMNZ5hiFomEXC17XnzMh",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "11111111111111111111111111111111",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "signer": false,
+              "writable": false
+            }
+          ],
+          "data": "01"
+        },
+        {
+          "program": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+          "accounts": [
+            {
+              "key": "HkD9ZmdbAbdXTob57HTtVgZZBSPm19Dqj7WVfskitsdi",
+              "signer": true,
+              "writable": true
+            },
+            {
+              "key": "EJ2g6jpqv6nGJanR5NqUQkxqFgYQBsw9z3UGbueTUw8x",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "Bn1AyC7guSeeYbkcLKjMhvnYkmBSPapSFsnGHWJWHCQ2",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "G5rvjjP3VXX5f52w2ZTc2665iMNZ5hiFomEXC17XnzMh",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "11111111111111111111111111111111",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "signer": false,
+              "writable": false
+            }
+          ],
+          "data": "01"
+        },
+        {
+          "program": "3bPsoRTKT1J9U6V6Zua42VKHVBZ9XAuBPJq3RFFF3Qdz",
+          "accounts": [
+            {
+              "key": "HkD9ZmdbAbdXTob57HTtVgZZBSPm19Dqj7WVfskitsdi",
+              "signer": true,
+              "writable": true
+            },
+            {
+              "key": "HzdwsAPQhDPYtVebD6kBx89aRN5PySp32wFSnXVAatFh",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "Do1aoCTuTpE41oSzbKgfCaktPKyjJwXDRD2n1Fxd3MEL",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "45tJiJhfcHTB6tUuUuUUjHNsjtwJ23SurG5x2aoYcQRR",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "G5rvjjP3VXX5f52w2ZTc2665iMNZ5hiFomEXC17XnzMh",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "49UfgucpEBcdTiD5nWcKtDLmHogwkh1ovJtG6rydxNQM",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "EJ2g6jpqv6nGJanR5NqUQkxqFgYQBsw9z3UGbueTUw8x",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "62PUku24eevxGhfH2qvnFhd7EXHdcaUfHEErenxLcWem",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "11111111111111111111111111111111",
+              "signer": false,
+              "writable": false
+            }
+          ],
+          "data": "d02fc29b116252ec"
+        }
+      ],
+      "message": "AQAIDfjMs3adpHEI/JX7cnaTEIwQsqiTx1we+lWWRFBqA0ZBLdNlK4zkUd9IzIoo2qt7488WOD1iM1VCAoyVIyqhOqwuvv2PVYaQVKgKMs557scB0CLsvCF2XnK/460ektDY1kqlbpn1eWsO4B29TVq+uLA8SrV6lJv30QqK8J6Kq0tqxYSyXOSO1297ZM+i3xkT525yPRw/2GMQ6RpI5FisJF0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACaG/LheFKoXtCoTs0rRt79ghrdoiiXwDDP1UjpTcXoNjJclj04kifG7PRApFI4NgwtaE5na/xCEBI572Nvp+FmgHDM0DOOzsXhOhHXdT3PG31gPSM8BXWaXbcAdldWo874VnoNttua5ZbyhoeOJ5XODN0YcSkxALdgSxo2r56hF4B4URnLfUnGTet9D1+x+VcwlnFVKjIY0e3VRmOu1t9z8ft8xwzgWnlGgQ2NjQL7ui8Y8a/rmx9PNzI1F3hwsuAbd9uHXZaGT2cvhRs7reawctIXtX1s3kTqM9YV+/wCpBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcDBwYAAgAKBQwBAQcGAAQICgUMAQEGCgALCQEKAgQDDAUI0C/CmxFiUuw="
+    },
+    {
+      "name": "collect a validator's fee share",
+      "action": "collectFee",
+      "params": {
+        "validator": "6kZW63o8BVzsEjZXuyuGXNEcM97KtiZ26nNE1a7EyCH4",
+        "claim": "3s62GbKX3CqyNwA8nNjyrxFvmPgs4YTMeYSSv4TY147R"
+      },
+      "instructions": [
+        {
+          "program": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+          "accounts": [
+            {
+              "key": "6kZW63o8BVzsEjZXuyuGXNEcM97KtiZ26nNE1a7EyCH4",
+              "signer": true,
+              "writable": true
+            },
+            {
+              "key": "EseCWztGQxzkpwQF8CH3og3wi5fHCZ9yvQ57rw54RWnM",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "6kZW63o8BVzsEjZXuyuGXNEcM97KtiZ26nNE1a7EyCH4",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "2Fjq4LUBgjqdy3gjfbVo2b326BZHG6UgDGZePWLT8nw4",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "11111111111111111111111111111111",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "signer": false,
+              "writable": false
+            }
+          ],
+          "data": "01"
+        },
+        {
+          "program": "3bPsoRTKT1J9U6V6Zua42VKHVBZ9XAuBPJq3RFFF3Qdz",
+          "accounts": [
+            {
+              "key": "6kZW63o8BVzsEjZXuyuGXNEcM97KtiZ26nNE1a7EyCH4",
+              "signer": true,
+              "writable": true
+            },
+            {
+              "key": "Do1aoCTuTpE41oSzbKgfCaktPKyjJwXDRD2n1Fxd3MEL",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "3s62GbKX3CqyNwA8nNjyrxFvmPgs4YTMeYSSv4TY147R",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "8uTGB2gSbGKLYN3z5GToM5qEkD2K5Cm89yWascqzC3vr",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "9hfxWMWAaXR5FK1SX8pC4NPLiLn9sojto7LnhoR4Y4gE",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "EP7LKDo818mhsqaT1mTUQ3TZWgUg7RgV2raHUdvj8ytF",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "2Fjq4LUBgjqdy3gjfbVo2b326BZHG6UgDGZePWLT8nw4",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "6NMTszyAFasauoqx8rQfhTF38NUVq8w1nbY5xhZM7Y8e",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "EseCWztGQxzkpwQF8CH3og3wi5fHCZ9yvQ57rw54RWnM",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "signer": false,
+              "writable": false
+            }
+          ],
+          "data": "44498ec190f855a1"
+        }
+      ],
+      "message": "AQAIDVVzKLNNYaBU+QsWzVbEjBxcB7VDND8SxzFdo9CyyuG/T8LFC0jesPsI9X0T23Z5spKwQf8oIfOj2ej6lJhy5Md1cbRjkqn7FChflvf3zuASqSLMpy1CXAWL0WPri2tng4FIxs7+zx+m7u/+wbtR1421+DSPMozrnNeDSKUbxl/XziEH80+zdijf6e1DspRIcewfiX4f83Y/AmWiRxtBPsoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABKiPqNkyQSEI5ylge+gBN7ksbv/YfNFtqdWxu9uc85rJob8uF4Uqhe0KhOzStG3v2CGt2iKJfAMM/VSOlNxeg0qjBeyA73ZKdIK6W1MhYq2nBIOaaYKMeciHQ8OjaJWUIyXJY9OJInxuz0QKRSODYMLWhOZ2v8QhASOe9jb6fhZvhWeg2225rllvKGh44nlc4M3RhxKTEAt2BLGjavnqEXG0d5b+7hDavMF4RMgZBgpdusu7piqegbmlmDINFgT1Abd9uHXZaGT2cvhRs7reawctIXtX1s3kTqM9YV+/wCpBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcCCQYABAAGBQwBAQcKAAoIAgMLBgEEDAhESY7BkPhVoQ=="
+    },
+    {
+      "name": "fund",
+      "action": "fund",
+      "params": {
+        "payer": "HehVCbPYb3HYBnXkH3DmpuqLZnsMgwDdvqtqW2jJWDUt",
+        "objective": "Do1aoCTuTpE41oSzbKgfCaktPKyjJwXDRD2n1Fxd3MEL",
+        "amount": "25000000"
+      },
+      "instructions": [
+        {
+          "program": "3bPsoRTKT1J9U6V6Zua42VKHVBZ9XAuBPJq3RFFF3Qdz",
+          "accounts": [
+            {
+              "key": "HehVCbPYb3HYBnXkH3DmpuqLZnsMgwDdvqtqW2jJWDUt",
+              "signer": true,
+              "writable": true
+            },
+            {
+              "key": "Do1aoCTuTpE41oSzbKgfCaktPKyjJwXDRD2n1Fxd3MEL",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "686fHenQ4vUNyuGNBUg21wUVE3PaSv7T5TLxCpB2ZCu",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "G5rvjjP3VXX5f52w2ZTc2665iMNZ5hiFomEXC17XnzMh",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "89dmMSBmT5TJAoPNLggqmvH33uRaFKcHXVto1PCQauz",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "signer": false,
+              "writable": false
+            }
+          ],
+          "data": "d23bb540f6a873bf40787d0100000000"
+        }
+      ],
+      "message": "AQADB/djQjc4q8L4rlS2OmRLCRzp8RaLEvp8Iqg8jUEMxAGZAU/t54bcS+LusBseidMw9KaM6OY0wVszWjnM9SUWuZoB1NP42/QYuArz3S9GBgPAkYX9hxZEjZL0vYR0FDx4rb4VnoNttua5ZbyhoeOJ5XODN0YcSkxALdgSxo2r56hFJob8uF4Uqhe0KhOzStG3v2CGt2iKJfAMM/VSOlNxeg3gHhRGct9ScZN630PX7H5VzCWcVUqMhjR7dVGY67W33Abd9uHXZaGT2cvhRs7reawctIXtX1s3kTqM9YV+/wCpBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcBBAYAAwEFAgYQ0ju1QPaoc79AeH0BAAAAAA=="
+    },
+    {
+      "name": "withdraw",
+      "action": "withdraw",
+      "params": {
+        "leader": "Cc7MkkL68dqUknwRqtdnPQFAhuZu7gvJhRzWPw84qBNu",
+        "objective": "Do1aoCTuTpE41oSzbKgfCaktPKyjJwXDRD2n1Fxd3MEL",
+        "amount": "5000000"
+      },
+      "instructions": [
+        {
+          "program": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+          "accounts": [
+            {
+              "key": "Cc7MkkL68dqUknwRqtdnPQFAhuZu7gvJhRzWPw84qBNu",
+              "signer": true,
+              "writable": true
+            },
+            {
+              "key": "GPBrSaMkiCiqqLK2Nu3hNJFEkov6mfRDfDdKLXp4Gy86",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "Cc7MkkL68dqUknwRqtdnPQFAhuZu7gvJhRzWPw84qBNu",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "G5rvjjP3VXX5f52w2ZTc2665iMNZ5hiFomEXC17XnzMh",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "11111111111111111111111111111111",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "signer": false,
+              "writable": false
+            }
+          ],
+          "data": "01"
+        },
+        {
+          "program": "3bPsoRTKT1J9U6V6Zua42VKHVBZ9XAuBPJq3RFFF3Qdz",
+          "accounts": [
+            {
+              "key": "Cc7MkkL68dqUknwRqtdnPQFAhuZu7gvJhRzWPw84qBNu",
+              "signer": true,
+              "writable": false
+            },
+            {
+              "key": "7Zy3tRtMu5DPaQQEdEM1UjKZLZ32CsNjsoDqjznCf8CQ",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "Do1aoCTuTpE41oSzbKgfCaktPKyjJwXDRD2n1Fxd3MEL",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "686fHenQ4vUNyuGNBUg21wUVE3PaSv7T5TLxCpB2ZCu",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "G5rvjjP3VXX5f52w2ZTc2665iMNZ5hiFomEXC17XnzMh",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "GPBrSaMkiCiqqLK2Nu3hNJFEkov6mfRDfDdKLXp4Gy86",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "signer": false,
+              "writable": false
+            }
+          ],
+          "data": "8a1c26c4cdf3ff00404b4c0000000000"
+        }
+      ],
+      "message": "AQAGCqxvEsXUP5emrRjeoiZM8WEHlUpvr5YjKXOvoiTU6J3uAU/t54bcS+LusBseidMw9KaM6OY0wVszWjnM9SUWuZq+FZ6DbbbmuWW8oaHjieVzgzdGHEpMQC3YEsaNq+eoReSOWkJ6NfsoH7Lfsd13IUjWqh6y5oMe6YmZPyGvm+ZjAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAmhvy4XhSqF7QqE7NK0be/YIa3aIol8Awz9VI6U3F6DWGYFUfGJEVFwabFMdLhD9EeyED1/pSawYb22C5+rMqRjJclj04kifG7PRApFI4NgwtaE5na/xCEBI572Nvp+FngHhRGct9ScZN630PX7H5VzCWcVUqMhjR7dVGY67W33Abd9uHXZaGT2cvhRs7reawctIXtX1s3kTqM9YV+/wCpBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcCBwYAAwAIBAkBAQUHAAYCAQgDCRCKHCbEzfP/AEBLTAAAAAAA"
+    },
+    {
+      "name": "resolve, as the settlement authority",
+      "action": "resolve",
+      "params": {
+        "caller": "Cc7MkkL68dqUknwRqtdnPQFAhuZu7gvJhRzWPw84qBNu",
+        "claim": "ATbDvMsMv16XMJpE7PL4D8xrtXvwdGENpPmT3iB7gQAt",
+        "admit": true,
+        "noveltyBps": 7000,
+        "scoreBps": 8150,
+        "rootsConfirmed": 1
+      },
+      "instructions": [
+        {
+          "program": "3bPsoRTKT1J9U6V6Zua42VKHVBZ9XAuBPJq3RFFF3Qdz",
+          "accounts": [
+            {
+              "key": "Cc7MkkL68dqUknwRqtdnPQFAhuZu7gvJhRzWPw84qBNu",
+              "signer": true,
+              "writable": false
+            },
+            {
+              "key": "Do1aoCTuTpE41oSzbKgfCaktPKyjJwXDRD2n1Fxd3MEL",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "ATbDvMsMv16XMJpE7PL4D8xrtXvwdGENpPmT3iB7gQAt",
+              "signer": false,
+              "writable": true
+            }
+          ],
+          "data": "3f63d82cb734be8c01581bd61f01"
+        }
+      ],
+      "message": "AQABBKxvEsXUP5emrRjeoiZM8WEHlUpvr5YjKXOvoiTU6J3ujIj6qtu7bFTe+2y26Cso8C/+uy7mzJ6Kz7L+edKZ2nG+FZ6DbbbmuWW8oaHjieVzgzdGHEpMQC3YEsaNq+eoRSaG/LheFKoXtCoTs0rRt79ghrdoiiXwDDP1UjpTcXoNBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcBAwMAAgEOP2PYLLc0vowBWBvWHwE="
+    },
+    {
+      "name": "resolve, by anybody",
+      "action": "resolve",
+      "params": {
+        "caller": "HehVCbPYb3HYBnXkH3DmpuqLZnsMgwDdvqtqW2jJWDUt",
+        "claim": "ATbDvMsMv16XMJpE7PL4D8xrtXvwdGENpPmT3iB7gQAt",
+        "admit": false,
+        "noveltyBps": 0,
+        "scoreBps": 0,
+        "rootsConfirmed": 0
+      },
+      "instructions": [
+        {
+          "program": "3bPsoRTKT1J9U6V6Zua42VKHVBZ9XAuBPJq3RFFF3Qdz",
+          "accounts": [
+            {
+              "key": "HehVCbPYb3HYBnXkH3DmpuqLZnsMgwDdvqtqW2jJWDUt",
+              "signer": true,
+              "writable": false
+            },
+            {
+              "key": "Do1aoCTuTpE41oSzbKgfCaktPKyjJwXDRD2n1Fxd3MEL",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "ATbDvMsMv16XMJpE7PL4D8xrtXvwdGENpPmT3iB7gQAt",
+              "signer": false,
+              "writable": true
+            }
+          ],
+          "data": "3f63d82cb734be8c000000000000"
+        }
+      ],
+      "message": "AQABBPdjQjc4q8L4rlS2OmRLCRzp8RaLEvp8Iqg8jUEMxAGZjIj6qtu7bFTe+2y26Cso8C/+uy7mzJ6Kz7L+edKZ2nG+FZ6DbbbmuWW8oaHjieVzgzdGHEpMQC3YEsaNq+eoRSaG/LheFKoXtCoTs0rRt79ghrdoiiXwDDP1UjpTcXoNBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcBAwMAAgEOP2PYLLc0vowAAAAAAAA="
+    },
+    {
+      "name": "award",
+      "action": "award",
+      "params": {
+        "caller": "HehVCbPYb3HYBnXkH3DmpuqLZnsMgwDdvqtqW2jJWDUt",
+        "claim": "3s62GbKX3CqyNwA8nNjyrxFvmPgs4YTMeYSSv4TY147R"
+      },
+      "instructions": [
+        {
+          "program": "3bPsoRTKT1J9U6V6Zua42VKHVBZ9XAuBPJq3RFFF3Qdz",
+          "accounts": [
+            {
+              "key": "HehVCbPYb3HYBnXkH3DmpuqLZnsMgwDdvqtqW2jJWDUt",
+              "signer": true,
+              "writable": true
+            },
+            {
+              "key": "Do1aoCTuTpE41oSzbKgfCaktPKyjJwXDRD2n1Fxd3MEL",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "3s62GbKX3CqyNwA8nNjyrxFvmPgs4YTMeYSSv4TY147R",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "45tJiJhfcHTB6tUuUuUUjHNsjtwJ23SurG5x2aoYcQRR",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "686fHenQ4vUNyuGNBUg21wUVE3PaSv7T5TLxCpB2ZCu",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "G5rvjjP3VXX5f52w2ZTc2665iMNZ5hiFomEXC17XnzMh",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "11111111111111111111111111111111",
+              "signer": false,
+              "writable": false
+            }
+          ],
+          "data": "0e3fc8ad482bf9a1"
+        }
+      ],
+      "message": "AQAECfdjQjc4q8L4rlS2OmRLCRzp8RaLEvp8Iqg8jUEMxAGZKowXsgO92SnSCultTIWKtpwSDmmmCjHnIh0PDo2iVlAt02UrjORR30jMiijaq3vjzxY4PWIzVUICjJUjKqE6rAFP7eeG3Evi7rAbHonTMPSmjOjmNMFbM1o5zPUlFrmavhWeg2225rllvKGh44nlc4M3RhxKTEAt2BLGjavnqEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACaG/LheFKoXtCoTs0rRt79ghrdoiiXwDDP1UjpTcXoN4B4URnLfUnGTet9D1+x+VcwlnFVKjIY0e3VRmOu1t9wG3fbh12Whk9nL4UbO63msHLSF7V9bN5E6jPWFfv8AqQcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHAQYIAAQBAgMHCAUIDj/IrUgr+aE="
+    },
+    {
+      "name": "an edge's reward",
+      "action": "edge",
+      "params": {
+        "caller": "HehVCbPYb3HYBnXkH3DmpuqLZnsMgwDdvqtqW2jJWDUt",
+        "claim": "ATbDvMsMv16XMJpE7PL4D8xrtXvwdGENpPmT3iB7gQAt",
+        "rootIndex": 0
+      },
+      "instructions": [
+        {
+          "program": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+          "accounts": [
+            {
+              "key": "HehVCbPYb3HYBnXkH3DmpuqLZnsMgwDdvqtqW2jJWDUt",
+              "signer": true,
+              "writable": true
+            },
+            {
+              "key": "6LjqwqdRyGpWpvLsMdpmziScHfARzLtQXZaVkrfsyfuL",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "HkD9ZmdbAbdXTob57HTtVgZZBSPm19Dqj7WVfskitsdi",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "2Fjq4LUBgjqdy3gjfbVo2b326BZHG6UgDGZePWLT8nw4",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "11111111111111111111111111111111",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "signer": false,
+              "writable": false
+            }
+          ],
+          "data": "01"
+        },
+        {
+          "program": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL",
+          "accounts": [
+            {
+              "key": "HehVCbPYb3HYBnXkH3DmpuqLZnsMgwDdvqtqW2jJWDUt",
+              "signer": true,
+              "writable": true
+            },
+            {
+              "key": "3XdfMk6KmmTbPGNfxGUQw2F9WXoFVwZyeGDNsk4aaMUh",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "34gs9SWUQuXhNZ3hhL6ZSi5Jyfz49SLr99MpJKTqKuk8",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "2Fjq4LUBgjqdy3gjfbVo2b326BZHG6UgDGZePWLT8nw4",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "11111111111111111111111111111111",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "signer": false,
+              "writable": false
+            }
+          ],
+          "data": "01"
+        },
+        {
+          "program": "3bPsoRTKT1J9U6V6Zua42VKHVBZ9XAuBPJq3RFFF3Qdz",
+          "accounts": [
+            {
+              "key": "HehVCbPYb3HYBnXkH3DmpuqLZnsMgwDdvqtqW2jJWDUt",
+              "signer": true,
+              "writable": true
+            },
+            {
+              "key": "EP7LKDo818mhsqaT1mTUQ3TZWgUg7RgV2raHUdvj8ytF",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "2Fjq4LUBgjqdy3gjfbVo2b326BZHG6UgDGZePWLT8nw4",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "Do1aoCTuTpE41oSzbKgfCaktPKyjJwXDRD2n1Fxd3MEL",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "E4PXfi1pXrNDHVcAAHdgQ4QtFPowuDrFUy9CsaJxCoyE",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "ATbDvMsMv16XMJpE7PL4D8xrtXvwdGENpPmT3iB7gQAt",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "3s62GbKX3CqyNwA8nNjyrxFvmPgs4YTMeYSSv4TY147R",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "6LjqwqdRyGpWpvLsMdpmziScHfARzLtQXZaVkrfsyfuL",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "3XdfMk6KmmTbPGNfxGUQw2F9WXoFVwZyeGDNsk4aaMUh",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "signer": false,
+              "writable": false
+            }
+          ],
+          "data": "c7ea6e93fdfd4af800"
+        }
+      ],
+      "message": "AQAJD/djQjc4q8L4rlS2OmRLCRzp8RaLEvp8Iqg8jUEMxAGZEqI+o2TJBIQjnKWB76AE3uSxu/9h80W2p1bG725zzmslkEBQyDLoEH1khH5EkFRXlPbZlpHkhKJ+Su+6kmZG7k9Y6esHj3JoffMAiY/Q0cBuUKnnaFDTDZlPnq48B4aTjIj6qtu7bFTe+2y26Cso8C/+uy7mzJ6Kz7L+edKZ2nHG0d5b+7hDavMF4RMgZBgpdusu7piqegbmlmDINFgT1AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHqkw+Sc1sEfapJOHIGmbmcG/RQlAN7t+kgVY/0pP2yUmhvy4XhSqF7QqE7NK0be/YIa3aIol8Awz9VI6U3F6DSqMF7IDvdkp0grpbUyFiracEg5ppgox5yIdDw6NolZQjJclj04kifG7PRApFI4NgwtaE5na/xCEBI572Nvp+Fm+FZ6DbbbmuWW8oaHjieVzgzdGHEpMQC3YEsaNq+eoRcIGJVOKv29yve4TFqjOJXpNzs7x2Hc9wrW0XPaepnU9+Myzdp2kcQj8lftydpMQjBCyqJPHXB76VZZEUGoDRkEG3fbh12Whk9nL4UbO63msHLSF7V9bN5E6jPWFfv8AqQcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHAwoGAAMNAQYOAQEKBgACBwEGDgEBCAoABQELDAQJAwIOCcfqbpP9/Ur4AA=="
+    },
+    {
+      "name": "create an objective",
+      "action": "create",
+      "params": {
+        "colony": "7Zy3tRtMu5DPaQQEdEM1UjKZLZ32CsNjsoDqjznCf8CQ",
+        "leader": "Cc7MkkL68dqUknwRqtdnPQFAhuZu7gvJhRzWPw84qBNu",
+        "objective": "B5VtgLRN1cJMdm5xC6LpLpVqWov4PYqrGSjtFEBbxJ8s",
+        "draft": {
+          "body": {
+            "id": "B5VtgLRN1cJMdm5xC6LpLpVqWov4PYqrGSjtFEBbxJ8s",
+            "payout": "rate",
+            "title": "Thermostable binders",
+            "statement": "Find a stable binder against TR-9 — any Tm above 75 °C.",
+            "validationMode": "semantic",
+            "validatorsPerClaim": 3,
+            "claimForm": {
+              "name": "fasta-normalised",
+              "spec": "As colony default.",
+              "envelope": [
+                "sequence",
+                "melting curve"
+              ]
+            },
+            "predicates": [
+              {
+                "id": "P1",
+                "proposition": "Tm above 75C",
+                "kind": "required"
+              },
+              {
+                "id": "P2",
+                "proposition": "Expresses in E. coli",
+                "kind": "scored",
+                "weight": 2
+              }
+            ],
+            "composition": {
+              "requiredPass": true,
+              "minScoreBps": 5000
+            },
+            "awards": [
+              {
+                "index": 0,
+                "title": "Per binder",
+                "criteria": "Each binder that holds."
+              },
+              {
+                "index": 1,
+                "title": "Per method",
+                "criteria": "Each method that generalises."
+              }
+            ],
+            "claimDeadline": "1970-01-02T00:00:00.000Z",
+            "validationDeadline": "1970-01-04T00:00:00.000Z",
+            "criteriaHash": "65a42f50967588b9ae56980bc303259fdc0306c625d967689b92fab9efd33c6d"
+          },
+          "awards": [
+            {
+              "mode": "graded",
+              "allocation": "40000000"
+            },
+            {
+              "mode": "winnerTakeAll",
+              "allocation": "15000000"
+            }
+          ],
+          "commitDeadline": 172800,
+          "pool": "500000000",
+          "uri": "https://unloop.fun/api/objectives/B5VtgLRN1cJMdm5xC6LpLpVqWov4PYqrGSjtFEBbxJ8s/spec"
+        }
+      },
+      "instructions": [
+        {
+          "program": "3bPsoRTKT1J9U6V6Zua42VKHVBZ9XAuBPJq3RFFF3Qdz",
+          "accounts": [
+            {
+              "key": "Cc7MkkL68dqUknwRqtdnPQFAhuZu7gvJhRzWPw84qBNu",
+              "signer": true,
+              "writable": true
+            },
+            {
+              "key": "7Zy3tRtMu5DPaQQEdEM1UjKZLZ32CsNjsoDqjznCf8CQ",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "B5VtgLRN1cJMdm5xC6LpLpVqWov4PYqrGSjtFEBbxJ8s",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "4vxqAFP25k9PsbNFRNMA7cQkkSNe1CRrZGDVi36EoWJo",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "G5rvjjP3VXX5f52w2ZTc2665iMNZ5hiFomEXC17XnzMh",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "GPBrSaMkiCiqqLK2Nu3hNJFEkov6mfRDfDdKLXp4Gy86",
+              "signer": false,
+              "writable": true
+            },
+            {
+              "key": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+              "signer": false,
+              "writable": false
+            },
+            {
+              "key": "11111111111111111111111111111111",
+              "signer": false,
+              "writable": false
+            }
+          ],
+          "data": "d063a40a1bad8af00165a42f50967588b9ae56980bc303259fdc0306c625d967689b92fab9efd33c6d0752eb31708a8b49d6c99ee4cec6a59a69d51e4d9f53124560f9433eba6842ce0000000000000000000000000000000000000000000000000000000000000000000000005300000068747470733a2f2f756e6c6f6f702e66756e2f6170692f6f626a656374697665732f42355674674c524e31634a4d646d357843364c704c705671576f76345059717247536a7446454262784a38732f737065630200000001005a62020000000000c0e1e4000000000003805101000000000000a302000000000080f40300000000000065cd1d00000000"
+        }
+      ],
+      "message": "AQAECaxvEsXUP5emrRjeoiZM8WEHlUpvr5YjKXOvoiTU6J3uOmX4ofdGMWfyv77AeSsnaxhisRsMWQP5zzCdaG0qpTxhmBVHxiRFRcGmxTHS4Q/RHshA9f6UmsGG9tgufqzKkZW73BLDc/SGitP5HrgFHnWBM9OXzZG7J1ZEoTM0Vztk5I5aQno1+ygfst+x3XchSNaqHrLmgx7piZk/Ia+b5mMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACaG/LheFKoXtCoTs0rRt79ghrdoiiXwDDP1UjpTcXoN4B4URnLfUnGTet9D1+x+VcwlnFVKjIY0e3VRmOu1t9wG3fbh12Whk9nL4UbO63msHLSF7V9bN5E6jPWFfv8AqQcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHAQYIAAIDAQcECAX7AdBjpAobrYrwAWWkL1CWdYi5rlaYC8MDJZ/cAwbGJdlnaJuS+rnv0zxtB1LrMXCKi0nWyZ7kzsalmmnVHk2fUxJFYPlDPrpoQs4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABTAAAAaHR0cHM6Ly91bmxvb3AuZnVuL2FwaS9vYmplY3RpdmVzL0I1VnRnTFJOMWNKTWRtNXhDNkxwTHBWcVdvdjRQWXFyR1NqdEZFQmJ4SjhzL3NwZWMCAAAAAQBaYgIAAAAAAMDh5AAAAAAAA4BRAQAAAAAAAKMCAAAAAACA9AMAAAAAAABlzR0AAAAA"
+    }
+  ],
+  "hashes": [
+    {
+      "mode": "deterministic",
+      "body": {
+        "objective": "Do1aoCTuTpE41oSzbKgfCaktPKyjJwXDRD2n1Fxd3MEL",
+        "awardIndex": 0,
+        "assertion": "MKTAYIQKLKMSSAVLGSFLLALSLVSSQSVFA",
+        "significance": "Clears the 75C threshold on a topology no admitted claim uses.",
+        "evidence": {
+          "semantic": [
+            {
+              "id": "S1",
+              "kind": "semantic",
+              "statement": "Tm 81.1C.",
+              "provenance": "Five folds."
+            }
+          ]
+        },
+        "roots": [],
+        "claimHash": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+      },
+      "hash": "f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e"
+    },
+    {
+      "mode": "semantic",
+      "body": {
+        "objective": "Do1aoCTuTpE41oSzbKgfCaktPKyjJwXDRD2n1Fxd3MEL",
+        "awardIndex": 0,
+        "assertion": "MKTAYIQKLKMSSAVLGSFLLALSLVSSQSVFA",
+        "significance": "Clears the 75C threshold on a topology no admitted claim uses.",
+        "evidence": {
+          "semantic": [
+            {
+              "id": "S1",
+              "kind": "semantic",
+              "statement": "Tm 81.1C.",
+              "provenance": "Five folds."
+            }
+          ]
+        },
+        "roots": [],
+        "claimHash": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+      },
+      "hash": "3219b0dded156b20b41fa81602fd61a4faa6f359b52d1d759a05498f820be860"
+    },
+    {
+      "mode": "procedural",
+      "body": {
+        "objective": "Do1aoCTuTpE41oSzbKgfCaktPKyjJwXDRD2n1Fxd3MEL",
+        "awardIndex": 0,
+        "assertion": "MKTAYIQKLKMSSAVLGSFLLALSLVSSQSVFA",
+        "significance": "Clears the 75C threshold on a topology no admitted claim uses.",
+        "evidence": {
+          "semantic": [
+            {
+              "id": "S1",
+              "kind": "semantic",
+              "statement": "Tm 81.1C.",
+              "provenance": "Five folds."
+            }
+          ]
+        },
+        "roots": [],
+        "claimHash": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+      },
+      "hash": "3219b0dded156b20b41fa81602fd61a4faa6f359b52d1d759a05498f820be860"
+    }
+  ],
+  "documents": [
+    {
+      "body": {
+        "id": "B5VtgLRN1cJMdm5xC6LpLpVqWov4PYqrGSjtFEBbxJ8s",
+        "payout": "rate",
+        "title": "Thermostable binders",
+        "statement": "Find a stable binder against TR-9 — any Tm above 75 °C.",
+        "validationMode": "semantic",
+        "validatorsPerClaim": 3,
+        "claimForm": {
+          "name": "fasta-normalised",
+          "spec": "As colony default.",
+          "envelope": [
+            "sequence",
+            "melting curve"
+          ]
+        },
+        "predicates": [
+          {
+            "id": "P1",
+            "proposition": "Tm above 75C",
+            "kind": "required"
+          },
+          {
+            "id": "P2",
+            "proposition": "Expresses in E. coli",
+            "kind": "scored",
+            "weight": 2
+          }
+        ],
+        "composition": {
+          "requiredPass": true,
+          "minScoreBps": 5000
+        },
+        "awards": [
+          {
+            "index": 0,
+            "title": "Per binder",
+            "criteria": "Each binder that holds."
+          },
+          {
+            "index": 1,
+            "title": "Per method",
+            "criteria": "Each method that generalises."
+          }
+        ],
+        "claimDeadline": "1970-01-02T00:00:00.000Z",
+        "validationDeadline": "1970-01-04T00:00:00.000Z",
+        "criteriaHash": "65a42f50967588b9ae56980bc303259fdc0306c625d967689b92fab9efd33c6d"
+      },
+      "criteriaHash": "65a42f50967588b9ae56980bc303259fdc0306c625d967689b92fab9efd33c6d",
+      "claimFormHash": "0752eb31708a8b49d6c99ee4cec6a59a69d51e4d9f53124560f9433eba6842ce"
+    },
+    {
+      "body": {
+        "title": "Bare",
+        "statement": "Only what is required.",
+        "validationMode": "deterministic",
+        "claimForm": {
+          "name": "x",
+          "spec": "y"
+        },
+        "awards": [
+          {
+            "index": 0,
+            "title": "a",
+            "criteria": "b"
+          }
+        ]
+      },
+      "criteriaHash": "7853301d2f4d770d86d6b556f8151de2006455c754b456cc2c07d500377d8ed9",
+      "claimFormHash": "01acd43d97ba991d4f8bb3cfc47f8cefb9846141cdea3df19b2c0b9d63f591af"
+    },
+    {
+      "body": {
+        "id": "B5VtgLRN1cJMdm5xC6LpLpVqWov4PYqrGSjtFEBbxJ8s",
+        "payout": "rate",
+        "title": "Ünïcödé —   and \"quotes\"",
+        "statement": "Find a stable binder against TR-9 — any Tm above 75 °C.",
+        "validationMode": "semantic",
+        "validatorsPerClaim": 3,
+        "claimForm": {
+          "name": "fasta-normalised",
+          "spec": "As colony default.",
+          "envelope": [
+            "sequence",
+            "melting curve"
+          ]
+        },
+        "predicates": [
+          {
+            "id": "P1",
+            "proposition": "Tm above 75C",
+            "kind": "required"
+          },
+          {
+            "id": "P2",
+            "proposition": "Expresses in E. coli",
+            "kind": "scored",
+            "weight": 2
+          }
+        ],
+        "composition": {
+          "requiredPass": true,
+          "minScoreBps": 5000
+        },
+        "awards": [
+          {
+            "index": 0,
+            "title": "Per binder",
+            "criteria": "Each binder that holds."
+          },
+          {
+            "index": 1,
+            "title": "Per method",
+            "criteria": "Each method that generalises."
+          }
+        ],
+        "claimDeadline": "1970-01-02T00:00:00.000Z",
+        "validationDeadline": "1970-01-04T00:00:00.000Z",
+        "criteriaHash": "65a42f50967588b9ae56980bc303259fdc0306c625d967689b92fab9efd33c6d",
+        "samples": {
+          "root": "0000000000000000000000000000000000000000000000000000000000000000",
+          "items": [
+            "first input",
+            "second"
+          ]
+        }
+      },
+      "criteriaHash": "1f208f71be072c66dfa6fc74e7f62ab117cae54d27c584954bf851e039c3a24a",
+      "claimFormHash": "0752eb31708a8b49d6c99ee4cec6a59a69d51e4d9f53124560f9433eba6842ce"
+    }
+  ],
+  "findings": [
+    {
+      "message": {
+        "claimHash": "3219b0dded156b20b41fa81602fd61a4faa6f359b52d1d759a05498f820be860",
+        "reason": "none",
+        "claimSupport": "pass",
+        "objectiveAlignment": "insufficient",
+        "noveltyBps": 7000,
+        "scoreBps": 8150,
+        "reproduction": "pass",
+        "items": [
+          {
+            "id": "S1",
+            "holds": true
+          }
+        ],
+        "rationale": "Reproduced.",
+        "finding": "1f698c4528ce0c89c478dfd132b5034bcc813c7075795a3ee8e8e9fec0259123"
+      },
+      "nonce": "abababababababababababababababababababababababababababababababab",
+      "claim": "3s62GbKX3CqyNwA8nNjyrxFvmPgs4YTMeYSSv4TY147R",
+      "validator": "6kZW63o8BVzsEjZXuyuGXNEcM97KtiZ26nNE1a7EyCH4",
+      "finding": "1f698c4528ce0c89c478dfd132b5034bcc813c7075795a3ee8e8e9fec0259123",
+      "commitment": "08bc9f1548a57babad2c9191e04bf9311960d4f4b0900b1c8d561cbb1a0667a7"
+    }
+  ]
+}

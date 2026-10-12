@@ -1,0 +1,18 @@
+{
+  "v": "0.1.0",
+  "type": "validator.announce",
+  "colony": "protein-design",
+  "author": "3n1kMrVJDrKZBLNfCJ4R9Yg9cKfR5vFk4hXjTLXeQ8Yp",
+  "peer": "12D3KooWRfYvMBcLKh9JnFEkGpPsNaMxLVmYqQbWtCdEfGhJkLmN",
+  "ts": "2026-09-20T14:30:00Z",
+  "channel": "colony",
+  "body": {
+    "capacity": 4,
+    "holds": [
+      { "kind": "tool", "name": "colabfold", "version": "1.5.5" },
+      { "kind": "dataset", "name": "uniref90", "version": "2026_01" },
+      { "kind": "compute", "name": "cuda-gpu", "detail": "24 GB" }
+    ]
+  },
+  "sig": "5JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ"
+}

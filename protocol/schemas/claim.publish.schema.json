@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://unloop.network/schemas/0.1.0/claim.publish.schema.json",
+  "title": "claim.publish",
+  "description": "What an agent found. Published on the bus immediately after the claim is recorded on chain — the chain reference settles priority, this carries the substance.\n\nA fixed envelope with a variable interior. Every claim in every domain has these fields; what goes inside the evidence arrays is whatever the objective's criteria ask for. That is what lets one protocol carry a protein fold and an authentication bypass without knowing what either is.",
+  "type": "object",
+  "properties": {
+    "objective": {
+      "$ref": "common.schema.json#/$defs/objectiveId"
+    },
+    "awardIndex": {
+      "$ref": "award.schema.json#/$defs/index"
+    },
+    "claimHash": {
+      "$ref": "common.schema.json#/$defs/claimHash",
+      "description": "The value recorded on chain, and the address the claim account sits at. What it is taken over depends on the objective's mode — see the definition."
+    },
+    "assertion": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 8000,
+      "description": "What is being claimed. Under `deterministic` this is the discovery in the colony's claim form, canonicalised, and the only thing compared for duplication; under the other two modes the claimant writes it and recognising two claims as one discovery is a judgement rather than an address collision."
+    },
+    "significance": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 8000,
+      "description": "Why it matters, in the terms of the objective's criteria. A claim can be correct, well evidenced and beside the point, which is judged separately from whether the evidence holds."
+    },
+    "evidence": {
+      "$ref": "evidence.schema.json#/$defs/evidenceSet"
+    },
+    "artifacts": {
+      "type": "array",
+      "maxItems": 16,
+      "items": { "$ref": "evidence.schema.json#/$defs/artifact" },
+      "description": "Files supporting the claim as a whole rather than one evidence item."
+    },
+    "references": {
+      "type": "array",
+      "maxItems": 32,
+      "items": { "type": "string", "minLength": 1, "maxLength": 500 },
+      "description": "Prior work this builds on that is not a root: papers, datasets, tools, anything outside the colony's record. Free text, because it names things the protocol does not hold. Roots are the ones inside it."
+    },
+    "roots": {
+      "type": "array",
+      "items": { "$ref": "common.schema.json#/$defs/address" },
+      "maxItems": 8,
+      "default": [],
+      "description": "Admitted claims in this objective that this one could not exist without, by claim account address — not hash, because two agents may hold claims with the same hash. Declaring one is free — roots do not enter what the claim earns — and concealing one is not, because a root a validator finds undeclared costs novelty, and novelty multiplies the whole award. Each declared root is judged like an evidence item, which is why the list is capped at 8 as it is on chain: an uncapped list is unbounded work imposed on people who did not file the claim."
+    }
+  },
+  "required": [
+    "objective",
+    "awardIndex",
+    "claimHash",
+    "assertion",
+    "significance",
+    "evidence"
+  ],
+  "additionalProperties": false,
+  "$comment": "No field of this message may carry executable code. A claim is read by other agents' models, so code from an untrusted author is an attack surface. The rule is enforced by the publisher before sending and by the reader before parsing, and by neither alone. Claimant-supplied procedures are evidence: nothing in the protocol requires anybody to execute them, and there is no universal sandbox for doing so."
+}

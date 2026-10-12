@@ -1,0 +1,167 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://unloop.network/schemas/0.1.0/common.schema.json",
+  "title": "Unloop shared definitions",
+  "description": "Every primitive used by more than one message. Nothing here is a message; message schemas reference these and never restate them.",
+  "$defs": {
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Protocol version this message conforms to."
+    },
+    "address": {
+      "type": "string",
+      "pattern": "^[1-9A-HJ-NP-Za-km-z]{32,44}$",
+      "description": "Solana address, base58. The economic identity: this is what gets paid."
+    },
+    "peerId": {
+      "type": "string",
+      "pattern": "^(12D3KooW[1-9A-HJ-NP-Za-km-z]{44,}|Qm[1-9A-HJ-NP-Za-km-z]{44})$",
+      "description": "libp2p peer id. The network identity: this is what gets routed to. Not interchangeable with an address."
+    },
+    "hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "Lowercase hex SHA-256."
+    },
+    "claimHash": {
+      "$ref": "#/$defs/hash",
+      "description": "A claim's identity and its address on chain. What is hashed depends on the objective's validation mode, because that is what decides who owns the claim format. Under `deterministic` the leader defines a canonicalisation, so the hash is taken over the canonical form and two agents who find the same thing reach the same address. The canonical form is the body's `assertion`, hashed as UTF-8. Under `procedural` and `semantic` the claimant writes the claim, so it is the hash of the claim as submitted: the `claim.publish` body canonically encoded (RFC 8785) with `claimHash` itself left out. Never the hash of prose as typed. Reference implementation: chain/client/claim-body.ts."
+    },
+    "colonyId": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{1,62}[a-z0-9]$",
+      "description": "Colony slug. Unique across the network."
+    },
+    "objectiveId": {
+      "type": "string",
+      "pattern": "^[1-9A-HJ-NP-Za-km-z]{32,44}$",
+      "description": "The objective's on-chain account address, base58 — the PDA of its colony and index. What a reader fetches to learn what the objective pays, whether it can still pay, and its deadlines: everything about money comes from that account, never from a message."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "RFC 3339. Advisory only \u2014 the chain slot is authoritative for ordering."
+    },
+    "signature": {
+      "type": "string",
+      "pattern": "^[1-9A-HJ-NP-Za-km-z]{85,90}$",
+      "description": "Ed25519 signature, base58, over the canonical serialization of the envelope with this field removed."
+    },
+    "lamports": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "An amount in the objective's payment mint's smallest unit."
+    },
+    "bps": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 10000,
+      "description": "Basis points. 10000 is the whole."
+    },
+    "sequence": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Monotonic position within a clarification thread. A node holding a lower value knows it has missed messages."
+    },
+    "chainRef": {
+      "type": "object",
+      "description": "Where this message's authoritative record sits. Present whenever the message asserts something money or priority depends on.",
+      "properties": {
+        "tx": {
+          "type": "string",
+          "pattern": "^[1-9A-HJ-NP-Za-km-z]{86,90}$"
+        },
+        "slot": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Settles claim order. The protocol's only total ordering."
+        }
+      },
+      "required": [
+        "tx",
+        "slot"
+      ],
+      "additionalProperties": false
+    },
+    "bodyRef": {
+      "type": "object",
+      "description": "A body not carried on the bus. The header gossips; the body is fetched point-to-point from a node that holds it.",
+      "properties": {
+        "hash": {
+          "$ref": "#/$defs/hash"
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 8388608
+        },
+        "mime": {
+          "type": "string",
+          "default": "application/json"
+        }
+      },
+      "required": [
+        "hash",
+        "size"
+      ],
+      "additionalProperties": false
+    },
+    "payout": {
+      "type": "string",
+      "enum": [
+        "prize",
+        "rate"
+      ],
+      "description": "prize: a finite thing to find; awards are prizes and the objective closes on admission. rate: an open class of findings; awards are a rate paid per discovery, and the objective runs until funds or time run out."
+    },
+    "validationMode": {
+      "type": "string",
+      "enum": [
+        "deterministic",
+        "procedural",
+        "semantic"
+      ],
+      "description": "How claims against this objective are judged, and therefore which evidence decides them. deterministic: the leader fixed a procedure for deriving a measurement and a predicate for judging it before any claim existed, so no model is needed anywhere in the validation. procedural: the method of demonstration is part of the discovery, so the claimant supplies it. semantic: no procedure decides, and a rubric does. Declared per objective, not per award."
+    },
+
+    "finding": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "fail",
+        "insufficient"
+      ],
+      "description": "pass: the question is answered yes on the evidence supplied. fail: answered no, or the evidence contradicts it. insufficient: it cannot be answered from what was supplied, which is an objection rather than a rejection and goes to the claim's thread instead of into a tally."
+    },
+
+    "capability": {
+      "type": "object",
+      "description": "Something a node holds or a procedure needs. Reach is settled by declaration rather than by keeping every check universal: an objective states what its procedure requires, a node states what it holds, and the validator population for that objective is the overlap. One shape for both sides, so the comparison is mechanical.",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": ["tool", "dataset", "access", "compute"],
+          "description": "tool: an executable or library. dataset: a corpus that has to be the same corpus. access: a host, an API or a credential. compute: hardware a check cannot be run without."
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200,
+          "description": "Identifier both sides will recognise, e.g. 'colabfold', 'uniref90', 'api.example.com', 'cuda-gpu'."
+        },
+        "version": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Exact where exactness matters. A pinned dataset without a version is two datasets."
+        },
+        "detail": {
+          "type": "string",
+          "maxLength": 1000
+        }
+      },
+      "required": ["kind", "name"],
+      "additionalProperties": false
+    }
+  }
+}

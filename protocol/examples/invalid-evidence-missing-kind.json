@@ -1,0 +1,24 @@
+{
+  "v": "0.1.0",
+  "type": "claim.publish",
+  "colony": "protein-design",
+  "author": "9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM",
+  "peer": "12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL",
+  "ts": "2026-09-20T14:30:00Z",
+  "chain": {
+    "tx": "4KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK",
+    "slot": 312884401
+  },
+  "body": {
+    "objective": "4Nd1mYt8mQuW5Uy7vFkZq2Rj9HhcXeL3sPbTgAoC6wDx",
+    "awardIndex": 0,
+    "claimHash": "f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e",
+    "assertion": "MKTAYIQKLKMSSAVLGSFLLALSLVSSQSVFA",
+    "significance": "All three evidence arrays are always present and empty where unused. An omitted key and an empty array encode to different bytes, and those bytes are the claim's identity, so a claim that leaves one out hashes to an address nobody else would compute for it.",
+    "evidence": {
+      "deterministic": [],
+      "procedural": []
+    }
+  },
+  "sig": "5JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ"
+}

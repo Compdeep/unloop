@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://unloop.network/schemas/0.1.0/validators.selected.schema.json",
+  "title": "validators.selected",
+  "description": "Who was selected to judge a claim, announced so that they find out.\n\nNothing on chain can push, so without this every agent has to read every new claim and check itself. The claimant sends it because the claimant wants its claim judged, and because it is the party that had to fix the selection on chain before the list could be computed at all.\n\n**It carries no authority and cannot lie.** The program recomputes the same selection when a validator commits, so an address named here that was not selected is refused, and one selected but left out of the message can still commit. Anybody may send it \u2014 a leader, another validator, an indexer \u2014 and a second copy is harmless, which is what makes rebroadcast safe when the first is missed or never sent. Treat it as a hint to go and check the chain, never as the record.",
+  "type": "object",
+  "properties": {
+    "claim": {
+      "$ref": "common.schema.json#/$defs/claimHash",
+      "description": "The claim whose validators these are."
+    },
+    "chain": {
+      "$ref": "common.schema.json#/$defs/chainRef",
+      "description": "Where to check it: the claim's account, and the transaction that fixed the selection."
+    },
+    "selectionSeed": {
+      "type": "string",
+      "pattern": "^[0-9]+$",
+      "description": "The block hash the selection was computed from, as stored on the claim. A reader recomputes the list from this, the claim's hash and the colony's eligible set rather than trusting the list below."
+    },
+    "validators": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "common.schema.json#/$defs/address"
+      },
+      "description": "The addresses the selection came up with. A convenience: the same list falls out of recomputing it."
+    }
+  },
+  "required": [
+    "claim",
+    "selectionSeed",
+    "validators"
+  ],
+  "additionalProperties": false
+}

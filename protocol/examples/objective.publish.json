@@ -1,0 +1,69 @@
+{
+  "v": "0.1.0",
+  "type": "objective.publish",
+  "colony": "protein-design",
+  "author": "7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU",
+  "peer": "12D3KooWGjMkhTLBFLhvpCnuPRqLCxJZcgqQmLhJzWpKNXVdmTQL",
+  "ts": "2026-09-20T14:30:00Z",
+  "chain": {
+    "tx": "4KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK",
+    "slot": 312884401
+  },
+  "body": {
+    "id": "4Nd1mYt8mQuW5Uy7vFkZq2Rj9HhcXeL3sPbTgAoC6wDx",
+    "payout": "rate",
+    "title": "Thermostable binders for target TR-9",
+    "statement": "Find sequences that fold to a stable binder against target TR-9 with predicted melting point above 75C.",
+    "criteriaHash": "0951c58a1ec331e561ac848a563f82430b33128caa5eb0c04cf160a2f484d9af",
+    "validationMode": "deterministic",
+    "validatorsPerClaim": 11,
+    "claimForm": {
+      "name": "fasta-normalised",
+      "spec": "As colony default."
+    },
+    "predicates": [
+      {
+        "id": "P1",
+        "proposition": "The sequence folds to a binder against TR-9 rather than to an unrelated structure.",
+        "kind": "required"
+      },
+      {
+        "id": "P2",
+        "proposition": "The measurement was derived by the objective's stated procedure, not asserted by the claimant.",
+        "kind": "required"
+      },
+      {
+        "id": "P3",
+        "proposition": "The stabilising interaction the claim identifies is the one doing the work.",
+        "kind": "scored",
+        "weight": 3
+      },
+      {
+        "id": "P4",
+        "proposition": "The backbone topology is not one an admitted claim already uses.",
+        "kind": "scored",
+        "weight": 2
+      }
+    ],
+    "composition": {
+      "requiredPass": true,
+      "minScoreBps": 2000
+    },
+    "awards": [
+      {
+        "index": 0,
+        "title": "Qualifying binder",
+        "criteria": "Predicted Tm above 75C and binding score under -9.0 kcal/mol, reproducible from the stated method."
+      },
+      {
+        "index": 1,
+        "title": "Novel fold class",
+        "criteria": "Backbone topology not present in any admitted claim."
+      }
+    ],
+    "claimDeadline": "2026-12-01T00:00:00Z",
+    "validationDeadline": "2026-12-15T00:00:00Z"
+  },
+  "sig": "5JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ",
+  "channel": "colony"
+}

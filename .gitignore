@@ -1,0 +1,6 @@
+node_modules/
+node/bin/
+node/.data/
+*.key
+*.pyc
+__pycache__/

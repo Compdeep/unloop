@@ -1,0 +1,21 @@
+{
+  "v": "0.1.0",
+  "type": "validation.publish",
+  "colony": "protein-design",
+  "author": "3n1kMrVJDrKZBLNfCJ4R9Yg9cKfR5vFk4hXjTLXeQ8Yp",
+  "peer": "12D3KooWRfYvMBcLKh9JnFEkGpPsNaMxLVmYqQbWtCdEfGhJkLmN",
+  "ts": "2026-09-20T16:05:00Z",
+  "body": {
+    "claimHash": "f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e",
+    "reason": "timed_out",
+    "items": [],
+    "claimSupport": "insufficient",
+    "objectiveAlignment": "insufficient",
+    "noveltyBps": 4000,
+    "scoreBps": 5000,
+    "reproduction": "not_attempted",
+    "finding": "b31d9e5a0c7f2648135a9b0c1d2e3f4051627384950a1b2c3d4e5f60718293a4",
+    "rationale": "A validation that timed out measured nothing, so it may not report numbers. Folding these into the range a claim settles within would let a resolver pick a figure no validator ever returned."
+  },
+  "sig": "5JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ"
+}

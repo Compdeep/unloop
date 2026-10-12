@@ -1,0 +1,400 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://unloop.network/schemas/0.1.0/envelope.schema.json",
+  "title": "Unloop message envelope",
+  "description": "The single entry point. Validate any protocol message against this schema and nothing else \u2014 the envelope binds `type` to the matching body schema, so a caller never assembles the pieces itself.\n\nThere are three topics and a message type belongs to one of them.\n\n`directory` is global and is how a node finds a colony it is not already in. Without it discovery is out of band: you can only join a colony somebody told you about. It carries announcements only \u2014 a colony, an objective, an objective's status \u2014 and never claims, validations or thread traffic, which is what keeps it low volume by construction, since an objective is announced once and then argued about somewhere else.\n\nIt needs no anti-spam machinery of its own. A colony and an objective are both on-chain accounts, so a reader checks any announcement against the account before showing it \u2014 which is the rule every message here already runs on: messages say what changed and where to look, and the numbers come from Solana. An announcement with no account behind it is discarded and costs a reader one lookup.\n\n`colony` carries what everybody inside one colony needs: colony and validator announcements, objectives, resolutions and payments. `claims` carries the traffic of individual claims: notices, claims, amendments, validations, and the thread. Two rather than one because a topic per claim would fail on population \u2014 a mesh needs peers subscribed to it, and a claim has a handful of interested validators for a few hours \u2014 while one topic for everything makes a node that only wants objectives read every objection in the colony.",
+  "type": "object",
+  "properties": {
+    "v": {
+      "$ref": "common.schema.json#/$defs/version"
+    },
+    "type": {
+      "$ref": "#/$defs/messageType"
+    },
+    "colony": {
+      "$ref": "common.schema.json#/$defs/colonyId"
+    },
+    "author": {
+      "$ref": "common.schema.json#/$defs/address"
+    },
+    "peer": {
+      "$ref": "common.schema.json#/$defs/peerId"
+    },
+    "ts": {
+      "$ref": "common.schema.json#/$defs/timestamp"
+    },
+    "chain": {
+      "$ref": "common.schema.json#/$defs/chainRef"
+    },
+    "sig": {
+      "$ref": "common.schema.json#/$defs/signature"
+    },
+    "channel": {
+      "$ref": "#/$defs/channel"
+    },
+    "body": {
+      "type": "object"
+    },
+    "body_ref": {
+      "$ref": "common.schema.json#/$defs/bodyRef"
+    }
+  },
+  "required": [
+    "v",
+    "type",
+    "colony",
+    "author",
+    "peer",
+    "ts",
+    "sig"
+  ],
+  "additionalProperties": false,
+  "oneOf": [
+    {
+      "required": [
+        "body"
+      ],
+      "not": {
+        "required": [
+          "body_ref"
+        ]
+      }
+    },
+    {
+      "required": [
+        "body_ref"
+      ],
+      "not": {
+        "required": [
+          "body"
+        ]
+      }
+    }
+  ],
+  "allOf": [
+    {
+      "$ref": "#/$defs/bindBody"
+    },
+    {
+      "$ref": "#/$defs/requireChainRef"
+    }
+  ],
+  "$defs": {
+    "messageType": {
+      "type": "string",
+      "enum": [
+        "colony.announce",
+        "validator.announce",
+        "objective.publish",
+        "objective.update",
+        "claim.resolved",
+        "claim.paid",
+        "claim.notice",
+        "claim.publish",
+        "amendment",
+        "validation.publish",
+        "cannot_verify",
+        "clarification",
+        "validators.selected"
+      ],
+      "$comment": "The first six travel on the colony channel and the rest on the claims channel. Announcement-only types also travel on the global directory."
+    },
+    "channel": {
+      "type": "string",
+      "enum": [
+        "directory",
+        "colony",
+        "claims"
+      ],
+      "description": "Which topic this was published on. Advisory: a reader that received the message already knows, and a reader that did not cannot be told by it.\n\n`directory` is the one global topic; `colony` and `claims` are per colony."
+    },
+    "bindBody": {
+      "description": "Each type admits exactly one body shape. Bodies delivered by reference are checked on fetch against the same schema.",
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "colony.announce"
+              }
+            },
+            "required": [
+              "type",
+              "body"
+            ]
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "$ref": "colony.announce.schema.json"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "validator.announce"
+              }
+            },
+            "required": [
+              "type",
+              "body"
+            ]
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "$ref": "validator.announce.schema.json"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "objective.publish"
+              }
+            },
+            "required": [
+              "type",
+              "body"
+            ]
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "$ref": "objective.publish.schema.json"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "objective.update"
+              }
+            },
+            "required": [
+              "type",
+              "body"
+            ]
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "$ref": "objective.update.schema.json"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "claim.notice"
+              }
+            },
+            "required": [
+              "type",
+              "body"
+            ]
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "$ref": "claim.notice.schema.json"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "claim.publish"
+              }
+            },
+            "required": [
+              "type",
+              "body"
+            ]
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "$ref": "claim.publish.schema.json"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "amendment"
+              }
+            },
+            "required": [
+              "type",
+              "body"
+            ]
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "$ref": "amendment.schema.json"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "validation.publish"
+              }
+            },
+            "required": [
+              "type",
+              "body"
+            ]
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "$ref": "validation.publish.schema.json"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "cannot_verify"
+              }
+            },
+            "required": [
+              "type",
+              "body"
+            ]
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "$ref": "cannot_verify.schema.json"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "clarification"
+              }
+            },
+            "required": [
+              "type",
+              "body"
+            ]
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "$ref": "clarification.schema.json"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "claim.resolved"
+              }
+            },
+            "required": [
+              "type",
+              "body"
+            ]
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "$ref": "claim.resolved.schema.json"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "claim.paid"
+              }
+            },
+            "required": [
+              "type",
+              "body"
+            ]
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "$ref": "claim.paid.schema.json"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "validators.selected"
+              }
+            },
+            "required": [
+              "type",
+              "body"
+            ]
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "$ref": "validators.selected.schema.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "requireChainRef": {
+      "description": "A message asserting something money or priority depends on must name its on-chain record. Anything else is advisory and may omit it.",
+      "if": {
+        "properties": {
+          "type": {
+            "enum": [
+              "objective.publish",
+              "claim.publish",
+              "claim.resolved",
+              "claim.paid"
+            ]
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "required": [
+          "chain"
+        ]
+      }
+    }
+  }
+}

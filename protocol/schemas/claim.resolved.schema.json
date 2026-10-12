@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://unloop.network/schemas/0.1.0/claim.resolved.schema.json",
+  "title": "claim.resolved",
+  "description": "A claim has been admitted or rejected. This message moves no money and confers no entitlement — it tells nodes to go and look, and the envelope's chain reference says where. What the claim settled to, in novelty and score, is on the claim account: anybody can read it and nobody can rewrite it, and carrying the numbers here would put a leader-signed copy beside the authoritative one.",
+  "type": "object",
+  "properties": {
+    "objective": { "$ref": "common.schema.json#/$defs/objectiveId" },
+    "claimHash": { "$ref": "common.schema.json#/$defs/claimHash" },
+    "admitted": {
+      "type": "boolean",
+      "description": "Admitted claims are payable and citable as roots. A rejected one is neither, and its account stays on chain regardless."
+    },
+    "decidedBy": {
+      "type": "string",
+      "enum": ["consensus", "leader", "deadline", "unseeded"],
+      "description": "consensus: the share of votes cast cleared a threshold on its own. leader: it did not, and the leader judged. deadline: the validation window closed with the decision outstanding. unseeded: no validator was ever selected, because the claim's selection was not fixed while the chain still held the block that seeds it, and the claim was rejected without being judged. Recorded on the claim account too, which is what makes a claim marked `consensus` falsifiable — every validation is an account anyone can recompute over."
+    }
+  },
+  "required": ["objective", "claimHash", "admitted", "decidedBy"],
+  "additionalProperties": false
+}

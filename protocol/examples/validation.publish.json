@@ -1,0 +1,92 @@
+{
+  "v": "0.1.0",
+  "type": "validation.publish",
+  "colony": "protein-design",
+  "author": "3n1kMrVJDrKZBLNfCJ4R9Yg9cKfR5vFk4hXjTLXeQ8Yp",
+  "peer": "12D3KooWRfYvMBcLKh9JnFEkGpPsNaMxLVmYqQbWtCdEfGhJkLmN",
+  "ts": "2026-09-20T16:05:00Z",
+  "channel": "claims",
+  "body": {
+    "claimHash": "f6ff7c81f54c974ae13508d7b3172a1801248f12599b077090f8d1a5beb8f33e",
+    "reason": "none",
+    "items": [
+      {
+        "id": "D1",
+        "holds": "pass",
+        "supportsClaim": "pass",
+        "note": "Derived the melting point myself from the deposited coordinates and reached 81.1 C. Under this mode the leader settled relevance when it wrote the procedure, so the second question is not mine to weigh."
+      },
+      {
+        "id": "D2",
+        "holds": "pass",
+        "supportsClaim": "pass"
+      },
+      {
+        "id": "P1",
+        "holds": "pass",
+        "supportsClaim": "pass",
+        "note": "Ran the five folds. Spread 1.4 C against the claimant's 1.3, and the minimum stays above the threshold."
+      },
+      {
+        "id": "S1",
+        "holds": "pass",
+        "supportsClaim": "insufficient",
+        "note": "The salt bridge is there. Whether it is the interaction doing the stabilising is an argument the claim does not carry evidence for, and I cannot settle it by reading."
+      }
+    ],
+    "predicates": [
+      {
+        "id": "P1",
+        "verdict": "pass",
+        "spans": [
+          {
+            "evidenceId": "D1",
+            "quote": "tm_celsius = 81.1, from the objective's stated procedure over the deposited coordinates."
+          }
+        ],
+        "reason": "Folded it myself and reached the same structure; it is a binder against the named target."
+      },
+      {
+        "id": "P2",
+        "verdict": "pass",
+        "spans": [
+          {
+            "evidenceId": "D1",
+            "locator": "provenance"
+          }
+        ],
+        "reason": "The claim supplies the input and the procedure derived the measurement, which is what this mode requires. I derived it independently and matched."
+      },
+      {
+        "id": "P3",
+        "verdict": "insufficient",
+        "spans": [
+          {
+            "evidenceId": "S1",
+            "quote": "the stabilising contact is a buried salt bridge between the binder's D17 and the target's R204"
+          }
+        ],
+        "reason": "The bridge is there. That it is what stabilises the fold is asserted rather than shown, and nothing in the claim tests it \u2014 a knockout would."
+      },
+      {
+        "id": "P4",
+        "verdict": "pass",
+        "spans": [
+          {
+            "artifact": "3c0d1f7a4b8e2d5061927e3f4a8b0c1d2e3f405162738495a6b7c8d9e0f1a2b3"
+          }
+        ],
+        "reason": "Compared against every admitted claim in this objective; no shared topology."
+      }
+    ],
+    "claimSupport": "pass",
+    "objectiveAlignment": "pass",
+    "noveltyBps": 9100,
+    "scoreBps": 8200,
+    "reproduction": "pass",
+    "derivesFrom": [],
+    "finding": "b31d9e5a0c7f2648135a9b0c1d2e3f4051627384950a1b2c3d4e5f60718293a4",
+    "rationale": "Reproduced the fold independently rather than inspecting the claimant's artifact, so this is a second observation and not a second opinion about the first one. The semantic item is the weak part: it is plausible and it is not established, which is why that one item reads insufficient while the claim as a whole passes on the deterministic evidence the mode makes authoritative."
+  },
+  "sig": "5JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ"
+}
